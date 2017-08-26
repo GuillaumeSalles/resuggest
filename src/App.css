@@ -1,0 +1,63 @@
+html, body { margin: 0; padding: 0; }
+
+body {
+  color: hsla(0,0%,0%,0.8);
+  background: #f6f4f4;
+}
+
+h4 {
+  margin-bottom: .5em;
+}
+
+pre {
+  background: white;
+  border: 1px solid #eee;
+  display: block;
+  padding: 10px;
+  border-radius: 1px;
+  overflow: auto;
+}
+
+input {
+  background: white;
+  border: 1px solid #eee;
+  display: block;
+  padding: 10px;
+  border-radius: 1px;
+  font-family: monospace;
+  font-size: 13px;
+  color: hsla(0,0%,0%,0.8);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  align-items: flex-end;
+  margin: 15px;
+}
+
+.logo-re-container {
+  position: relative;
+  background: #db4d3f;
+  color: white;
+  height: 100px;
+  width: 100px;
+}
+
+.logo-re {
+  position: absolute;
+  bottom: 0px;
+  right: 3px;
+}
+
+.app-form {
+  margin: 15px;
+}
