@@ -101,6 +101,10 @@ class App extends Component {
           </div>
           <div>SUGGEST</div>
         </div>
+        <p style={{ margin: "15px" }}>
+          Discover ReasonML functions based on examples. You supply an example
+          input and output, and it makes suggestions.
+        </p>
         <div className="app-form">
           <InputsForm
             inputs={this.state.inputs}
@@ -125,6 +129,12 @@ class App extends Component {
             </code>
           </pre>
         </div>
+        <p style={{ margin: "15px" }}>
+          <i>
+            Warning! There are a lot false suggestions right now. Should be
+            fixed soon.
+          </i>
+        </p>
       </div>
     );
   }
