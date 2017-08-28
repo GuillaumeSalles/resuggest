@@ -2,6 +2,8 @@
 
 Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
+![](https://media.giphy.com/media/l1J9Pb4rijn9Slxf2/giphy.gif)
+
 ## Improvements 
 
 - [ ] Only try functions based on inputs types to improve perf and remove false positives
