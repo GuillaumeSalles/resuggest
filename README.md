@@ -1,11 +1,11 @@
-# Resuggest
+# [Resuggest](https://GuillaumeSalles.github.io/resuggest)
 
 Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
 ## Improvements 
 
-- [ ] Permute inputs to find more functions
 - [ ] Only try functions based on inputs types to improve perf and remove false positives
+- [ ] Permute inputs to find more functions
 - [ ] Add more functions to the database
 - [ ] Display compilation errors
 - [ ] Links suggestions to https://reasonml.github.io/api/
