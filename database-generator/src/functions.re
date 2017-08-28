@@ -55,8 +55,6 @@ let float_float_float = [|
   (mod_float, "mod_float")
 |];
 
-let string_int = [|(String.length, "String.length")|];
-
 let string_int_chat = [|(String.get, "String.get")|];
 
 let int_char_string = [|(String.make, "String.make")|];
@@ -100,7 +98,7 @@ let string_bool = [|(bool_of_string, "bool_of_string")|];
 
 let int_string = [|(string_of_int, "string_of_int")|];
 
-let string_int = [|(int_of_string, "int_of_string")|];
+let string_int = [|(int_of_string, "int_of_string"), (String.length, "String.length")|];
 
 let float_string = [|(string_of_float, "string_of_float")|];
 

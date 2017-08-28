@@ -389,10 +389,18 @@ var int_string = /* array */[/* tuple */[
     "string_of_int"
   ]];
 
-var string_int = /* array */[/* tuple */[
+var string_int = /* array */[
+  /* tuple */[
     Caml_format.caml_int_of_string,
     "int_of_string"
-  ]];
+  ],
+  /* tuple */[
+    (function (prim) {
+        return prim.length;
+      }),
+    "String.length"
+  ]
+];
 
 var float_string = /* array */[/* tuple */[
     Pervasives.string_of_float,
