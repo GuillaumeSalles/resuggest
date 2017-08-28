@@ -1,7 +1,11 @@
-html, body { margin: 0; padding: 0; }
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  color: hsla(0,0%,0%,0.8);
+  color: hsla(0, 0%, 0%, 0.8);
   background: #f6f4f4;
 }
 
@@ -26,7 +30,7 @@ input {
   border-radius: 1px;
   font-family: monospace;
   font-size: 13px;
-  color: hsla(0,0%,0%,0.8);
+  color: hsla(0, 0%, 0%, 0.8);
 }
 
 .App {
@@ -60,4 +64,10 @@ input {
 
 .app-form {
   margin: 15px;
+}
+
+.github {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
