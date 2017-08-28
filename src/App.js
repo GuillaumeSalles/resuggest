@@ -34,8 +34,6 @@ const reasonExpToJs = reasonExp => {
 const isValidInput = str => str !== "";
 
 const suggest = (inputs, output) => {
-  console.log("Inputs: ", inputs);
-  console.log("Output: ", output);
   const jsInputs = inputs.filter(isValidInput).map(reasonExpToJs);
   const jsOutput = reasonExpToJs(output);
   return database.filter(def =>
@@ -44,13 +42,11 @@ const suggest = (inputs, output) => {
 };
 
 const isFunctionMatching = (inputs, output, func) => {
-  console.log(func.name);
   if (func.length !== inputs.length) {
     return false;
   }
   try {
     const result = func.apply(null, inputs);
-    console.log(result);
     return Caml_obj.caml_equal(result, output) === 1;
   } catch (er) {
     return false;
