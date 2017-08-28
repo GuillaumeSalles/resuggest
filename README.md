@@ -2,7 +2,7 @@
 
 Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
-![](http://i.imgur.com/CHDaKlt.gif?1)
+![](https://media.giphy.com/media/3ohhwym9LNizsXp3Es/giphy.gif)
 
 ## Improvements 
 
