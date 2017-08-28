@@ -1,4 +1,4 @@
-# Resuggest
+# [Resuggest](https://GuillaumeSalles.github.io/resuggest)
 
 Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
