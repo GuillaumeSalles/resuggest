@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "./App.css";
 import database from "./database";
 import InputsForm from "./InputsForm";
-
-import Caml_obj from "bs-platform/lib/js/caml_obj.js";
+import debounce from "./debounce";
+import reasonExpToJs from "./reasonExpToJs";
+import ReasonExpressionInput from "./ReasonExpressionInput";
 
 const waitUntilScriptsLoaded = done => {
   const tout = setInterval(() => {
@@ -14,48 +15,19 @@ const waitUntilScriptsLoaded = done => {
   }, 10);
 };
 
-const wrapInExports = code =>
-  `(function(exports) {${code}})(window.exports = {})`;
-
-function reasonToJs(reason) {
-  const converted = window.refmt(reason, "RE", "implementation", "ML");
-  const ocaml = converted[1];
-  const res = JSON.parse(window.ocaml.compile(ocaml));
-  return res.js_code;
-}
-
-const reasonExpToJs = reasonExp => {
-  const reasonCode = `let exp = ${reasonExp};`;
-  const jsCode = reasonToJs(reasonCode);
-  window.eval(wrapInExports(jsCode));
-  return window.exports.exp;
+const validateReasonExpression = expression => {
+  const error =
+    expression.code.length > 0 ? reasonExpToJs(expression.code).error : null;
+  const result = {
+    code: expression.code,
+    error: error
+  };
+  return result;
 };
 
-const isValidInput = str => str !== "";
-
-const suggest = (inputs, output) => {
-  const jsInputs = inputs.filter(isValidInput).map(reasonExpToJs);
-  const jsOutput = reasonExpToJs(output);
-  return database.filter(def =>
-    isFunctionMatching(jsInputs, jsOutput, def.func)
-  );
-};
-
-const isFunctionMatching = (inputs, output, func) => {
-  if (func.length !== inputs.length) {
-    return false;
-  }
-  try {
-    const result = func.apply(null, inputs);
-    return Caml_obj.caml_equal(result, output) === 1;
-  } catch (er) {
-    return false;
-  }
-};
-
-const renderSuggestion = (suggestion, inputs, output) => {
-  return [suggestion.name]
-    .concat(inputs.filter(isValidInput))
+const renderSuggestion = (def, inputs, output) => {
+  return [def.functionName]
+    .concat(inputs.filter(str => str !== ""))
     .concat("=>")
     .concat(output)
     .join(" ");
@@ -64,24 +36,79 @@ const renderSuggestion = (suggestion, inputs, output) => {
 class App extends Component {
   componentDidMount() {
     waitUntilScriptsLoaded(() => {
-      this.setState({
-        inputs: ['"Hello World"', "", ""],
-        output: '"HELLO WORLD"'
-      });
+      this.setState(
+        {
+          inputs: [
+            { code: '"Hello World"', error: null },
+            { code: "", error: null },
+            { code: "", error: null },
+            { code: "", error: null }
+          ],
+          output: { code: '"HELLO WORLD"', error: null },
+          suggestions: null
+        },
+        () => this.suggest(this.state.inputs, this.state.output)
+      );
     });
   }
 
-  onInputChange = event => {
-    this.setState({
-      inputs: event.target.value
-    });
+  onInputsChange = inputs => {
+    this.setState(
+      {
+        inputs,
+        suggestions: null
+      },
+      () => this.suggest(this.state.inputs, this.state.output)
+    );
   };
 
-  onOutputChange = event => {
-    this.setState({
-      output: event.target.value
-    });
+  onOutputChange = output => {
+    this.setState(
+      {
+        output: { code: output, error: null },
+        suggestions: null
+      },
+      () => this.suggest(this.state.inputs, this.state.output)
+    );
   };
+
+  suggest = debounce((newInputs, newOutput) => {
+    const inputs = newInputs.map(validateReasonExpression);
+    const output = validateReasonExpression(newOutput);
+
+    if (inputs.some(i => i.error !== null) || output.error !== null) {
+      this.setState({
+        inputs,
+        output,
+        suggestions: []
+      });
+      return;
+    }
+
+    const validInputs = inputs.map(i => i.code).filter(str => str !== "");
+    const expressionTail = validInputs
+      .map(i => `(${i})`)
+      .concat("==")
+      .concat(output.code)
+      .join(" ");
+    const suggestions = database.filter(def => {
+      if (def.numberOfArgs !== validInputs.length) {
+        return false;
+      }
+      const exp = def.functionName + " " + expressionTail;
+      try {
+        return reasonExpToJs(exp).jsValue === 1;
+      } catch (er) {
+        return false;
+      }
+    });
+
+    this.setState({
+      inputs,
+      output,
+      suggestions
+    });
+  }, 100);
 
   render() {
     if (!this.state) {
@@ -108,33 +135,43 @@ class App extends Component {
         <div className="app-form">
           <InputsForm
             inputs={this.state.inputs}
-            onChange={newInputs => this.setState({ inputs: newInputs })}
+            onChange={this.onInputsChange}
           />
 
           <h4>Desired Output</h4>
-          <input value={this.state.output} onChange={this.onOutputChange} />
+          <ReasonExpressionInput
+            code={this.state.output.code}
+            error={this.state.output.error}
+            onChange={this.onOutputChange}
+          />
 
           <h4>Suggestions</h4>
           <pre>
             <code>
-              {suggest(this.state.inputs, this.state.output).map(suggestion =>
-                <div key={suggestion.name}>
-                  {renderSuggestion(
-                    suggestion,
-                    this.state.inputs,
-                    this.state.output
-                  )}
-                </div>
-              )}
+              {this.renderSuggestions(this.state.suggestions)}
             </code>
           </pre>
         </div>
-        <p style={{ margin: "15px" }}>
-          <i>
-            Warning! There are a lot false suggestions right now. Should be
-            fixed soon.
-          </i>
-        </p>
+      </div>
+    );
+  }
+
+  renderSuggestions(suggestions) {
+    if (suggestions === null) {
+      return "Loading...";
+    }
+
+    if (suggestions.length === 0) {
+      return "Nothing to suggest...";
+    }
+
+    return suggestions.map(suggestion =>
+      <div key={suggestion.name}>
+        {renderSuggestion(
+          suggestion,
+          this.state.inputs.map(x => x.code),
+          this.state.output.code
+        )}
       </div>
     );
   }
