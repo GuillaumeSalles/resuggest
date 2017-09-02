@@ -1,9 +1,30 @@
 import React, { Component } from "react";
 import "./App.css";
-import database from "./database";
+import parseType from "./parseType";
 import InputsForm from "./InputsForm";
+import { isEqual } from "lodash";
 
 import Caml_obj from "bs-platform/lib/js/caml_obj.js";
+import {
+  int_int,
+  int_int_int,
+  float_float,
+  float_float_float,
+  string_int_char,
+  a_a_bool
+} from "./generated/functions";
+
+const typeToFunctionPairs = [
+  ["int -> int", int_int],
+  ["int -> int -> int", int_int_int],
+  ["float -> float", float_float],
+  ["float -> float -> float", float_float]
+];
+
+const astTypeToFunctionPairs = typeToFunctionPairs.map(([type, func]) => [
+  parseType(type),
+  func
+]);
 
 const waitUntilScriptsLoaded = done => {
   const tout = setInterval(() => {
@@ -18,43 +39,74 @@ const wrapInExports = code =>
   `(function(exports) {${code}})(window.exports = {})`;
 
 function reasonToJs(reason) {
-  const converted = window.refmt(reason, "RE", "implementation", "ML");
+  const converted = window.refmt(reason, "RE", "implementatio", "ML");
   const ocaml = converted[1];
-  const res = JSON.parse(window.ocaml.compile(ocaml));
-  return res.js_code;
+  return JSON.parse(window.ocaml.compile(ocaml));
 }
 
-const reasonExpToJs = reasonExp => {
-  const reasonCode = `let exp = ${reasonExp};`;
-  const jsCode = reasonToJs(reasonCode);
-  window.eval(wrapInExports(jsCode));
-  return window.exports.exp;
+const guessType = reasonExpression => {
+  const compilationResult = reasonToJs(`let exp = ${reasonExpression} == 1;`);
+  if (compilationResult.js_code) {
+    return "int";
+  } else {
+    // error format : "This expression has type int but an expression was expected of type {expressionType}"
+    const type = compilationResult.text.substring(69).trim();
+    console.log(type);
+    return type;
+  }
+};
+
+const parseReasonExpression = reasonExp => {
+  const compilationResult = reasonToJs(`let exp = ${reasonExp};`);
+  if (compilationResult.js_code) {
+    window.eval(wrapInExports(compilationResult.js_code));
+    return {
+      jsValue: window.exports.exp,
+      type: guessType(reasonExp),
+      error: null
+    };
+  } else {
+    return {
+      jsValue: null,
+      type: null,
+      error: compilationResult.error
+    };
+  }
 };
 
 const isValidInput = str => str !== "";
 
-const suggest = (inputs, output) => {
-  const jsInputs = inputs.filter(isValidInput).map(reasonExpToJs);
-  const jsOutput = reasonExpToJs(output);
-  return database.filter(def =>
-    isFunctionMatching(jsInputs, jsOutput, def.func)
-  );
+const makeAstFunctionType = (inputs, output) => {
+  return parseType(inputs.map(i => i.type).concat(output.type).join(" -> "));
 };
 
-const isFunctionMatching = (inputs, output, func) => {
-  if (func.length !== inputs.length) {
-    return false;
-  }
-  try {
-    const result = func.apply(null, inputs);
-    return Caml_obj.caml_equal(result, output) === 1;
-  } catch (er) {
-    return false;
+const suggest = (inputs, output) => {
+  const jsInputs = inputs.filter(isValidInput).map(parseReasonExpression);
+  const jsOutput = parseReasonExpression(output);
+
+  if (jsInputs.some(i => i.error !== null) || jsOutput.error !== null) {
+    // Todo: display compilation errors
+    return [];
+  } else {
+    const expectedFunctionType = makeAstFunctionType(jsInputs, jsOutput);
+    const typedSuggestFunction = astTypeToFunctionPairs.find(([ast, func]) =>
+      isEqual(expectedFunctionType, ast)
+    )[1];
+
+    if (typedSuggestFunction === undefined) {
+      // No functions with that signature
+      return [];
+    } else {
+      return typedSuggestFunction.apply(
+        null,
+        jsInputs.map(i => i.jsValue).concat(jsOutput.jsValue)
+      );
+    }
   }
 };
 
 const renderSuggestion = (suggestion, inputs, output) => {
-  return [suggestion.name]
+  return [suggestion]
     .concat(inputs.filter(isValidInput))
     .concat("=>")
     .concat(output)
@@ -65,8 +117,8 @@ class App extends Component {
   componentDidMount() {
     waitUntilScriptsLoaded(() => {
       this.setState({
-        inputs: ['"Hello World"', "", ""],
-        output: '"HELLO WORLD"'
+        inputs: ["2", "3", ""],
+        output: "5"
       });
     });
   }
