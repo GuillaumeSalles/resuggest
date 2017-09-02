@@ -6,10 +6,9 @@ Discover [ReasonML](https://reasonml.github.io/) functions based on examples. Yo
 
 ## Improvements 
 
-- [ ] Only try functions based on inputs types to improve perf and remove false positives
+- [ ] Only try functions based on inputs types to improve perf
 - [ ] Permute inputs to find more functions
 - [ ] Add more functions to the database
-- [ ] Display compilation errors
 - [ ] Links suggestions to https://reasonml.github.io/api/
 
 ## Inspiration
