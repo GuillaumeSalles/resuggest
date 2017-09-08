@@ -5,6 +5,15 @@ import InputsForm from "./InputsForm";
 import debounce from "./debounce";
 import reasonExpToJs from "./reasonExpToJs";
 import ReasonExpressionInput from "./ReasonExpressionInput";
+import suggest from "./suggest";
+
+const safeSuggest = (inputs, output) => {
+  try {
+    return suggest(inputs, output);
+  } catch (er) {
+    return [];
+  }
+};
 
 const waitUntilScriptsLoaded = done => {
   const tout = setInterval(() => {
@@ -25,8 +34,8 @@ const validateReasonExpression = expression => {
   return result;
 };
 
-const renderSuggestion = (def, inputs, output) => {
-  return [def.functionName]
+const renderSuggestion = (functionName, inputs, output) => {
+  return [functionName]
     .concat(inputs.filter(str => str !== ""))
     .concat("=>")
     .concat(output)
@@ -73,8 +82,8 @@ class App extends Component {
   };
 
   suggest = debounce((newInputs, newOutput) => {
-    const inputs = newInputs.map(validateReasonExpression);
-    const output = validateReasonExpression(newOutput);
+    const inputs = newInputs.map(x => reasonExpToJs(x.code));
+    const output = reasonExpToJs(newOutput.code);
 
     if (inputs.some(i => i.error !== null) || output.error !== null) {
       this.setState({
@@ -85,30 +94,24 @@ class App extends Component {
       return;
     }
 
-    const validInputs = inputs.map(i => i.code).filter(str => str !== "");
-    const expressionTail = validInputs
-      .map(i => `(${i})`)
-      .concat("==")
-      .concat(output.code)
-      .join(" ");
-    const suggestions = database.filter(def => {
-      if (def.numberOfArgs !== validInputs.length) {
-        return false;
-      }
-      const exp = def.functionName + " " + expressionTail;
-      try {
-        return reasonExpToJs(exp).jsValue === 1;
-      } catch (er) {
-        return false;
-      }
-    });
+    var validInputs = inputs.filter(i => i.code.length > 0);
+
+    if (validInputs.length === 0 || output.code.length === 0) {
+      this.setState({
+        inputs,
+        output,
+        suggestions: []
+      });
+    }
+
+    const suggestions = safeSuggest(validInputs, output);
 
     this.setState({
       inputs,
       output,
       suggestions
     });
-  }, 100);
+  }, 0);
 
   render() {
     if (!this.state) {
@@ -147,9 +150,7 @@ class App extends Component {
 
           <h4>Suggestions</h4>
           <pre>
-            <code>
-              {this.renderSuggestions(this.state.suggestions)}
-            </code>
+            <code>{this.renderSuggestions(this.state.suggestions)}</code>
           </pre>
         </div>
       </div>
@@ -165,7 +166,7 @@ class App extends Component {
       return "Nothing to suggest...";
     }
 
-    return suggestions.map(suggestion =>
+    return suggestions.map(suggestion => (
       <div key={suggestion.name}>
         {renderSuggestion(
           suggestion,
@@ -173,13 +174,13 @@ class App extends Component {
           this.state.output.code
         )}
       </div>
-    );
+    ));
   }
 }
 
 export default App;
 
-var GithubIcon = () =>
+var GithubIcon = () => (
   <svg
     version="1.1"
     id="Capa_1"
@@ -211,4 +212,5 @@ var GithubIcon = () =>
         c44.163-14.653,80.185-41.062,108.068-79.226c27.88-38.161,41.825-81.126,41.825-128.906
         C438.536,184.851,428.728,148.168,409.132,114.573z" />
     </g>
-  </svg>;
+  </svg>
+);
