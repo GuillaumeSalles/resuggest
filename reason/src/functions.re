@@ -90,7 +90,7 @@ let string_string =
     (String.uncapitalize, "String.uncapitalize")
   ];
 
-let suggest_string_char_int =
+let string_char_int =
   suggest_2 [(String.index, "String.index"), (String.rindex, "String.rindex")];
 
 let string_int_char_int =

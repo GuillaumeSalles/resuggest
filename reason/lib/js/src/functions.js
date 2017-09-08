@@ -568,7 +568,7 @@ var partial_arg$11 = /* :: */[
   partial_arg_001$5
 ];
 
-function suggest_string_char_int(param, param$1, param$2) {
+function string_char_int(param, param$1, param$2) {
   return suggest_2(partial_arg$11, param, param$1, param$2);
 }
 
@@ -977,7 +977,7 @@ exports.string_int_int_string         = string_int_int_string;
 exports.intToCharToChar_string_string = intToCharToChar_string_string;
 exports.charToChar_string_string      = charToChar_string_string;
 exports.string_string                 = string_string;
-exports.suggest_string_char_int       = suggest_string_char_int;
+exports.string_char_int               = string_char_int;
 exports.string_int_char_int           = string_int_char_int;
 exports.string_char_bool              = string_char_bool;
 exports.string_int_char_bool          = string_int_char_bool;
