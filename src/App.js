@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-import database from "./database";
 import InputsForm from "./InputsForm";
 import debounce from "./debounce";
 import reasonExpToJs from "./reasonExpToJs";

@@ -7,6 +7,10 @@ let suggest_2 funcs input1 input2 output =>
 let suggest_3 funcs input1 input2 input3 output =>
   funcs |> List.filter (fun (func, _name) => func input1 input2 input3 == output) |> List.map snd |> Array.of_list;
 
+let suggest_4 funcs input1 input2 input3 input4 output =>
+  funcs |> List.filter (fun (func, _name) => func input1 input2 input3 input4 == output) |>
+  List.map snd |> Array.of_list;
+
 let int_int =
   suggest_1 [
     ((~-), "(~-)"),
@@ -90,8 +94,7 @@ let string_string =
     (String.uncapitalize, "String.uncapitalize")
   ];
 
-let string_char_int =
-  suggest_2 [(String.index, "String.index"), (String.rindex, "String.rindex")];
+let string_char_int = suggest_2 [(String.index, "String.index"), (String.rindex, "String.rindex")];
 
 let string_int_char_int =
   suggest_2 [(String.index_from, "String.index_from"), (String.rindex_from, "String.rindex_from")];
@@ -144,36 +147,38 @@ let aToBToA_a_listb_a i1 i2 i3 o => suggest_3 [(List.fold_left, "List.fold_left"
 
 let aToBToB_lista_b_b i1 i2 i3 o => suggest_3 [(List.fold_right, "List.fold_right")] i1 i2 i3 o;
 
-let list_map2 = (List.map2, "List.map2");
+let aToBToC_lista_listb_listc i1 i2 i3 o =>
+  suggest_3 [(List.map2, "List.map2"), (List.rev_map2, "List.rev_map2")] i1 i2 i3 o;
 
-let list_rev_map2 = (List.rev_map2, "List.rev_map2");
+let aToBToCToA_a_listb_listc_a i1 i2 i3 i4 o =>
+  suggest_4 [(List.fold_left2, "List.fold_left2")] i1 i2 i3 i4 o;
 
-let list_fold_left2 = (List.fold_left2, "List.fold_left2");
+let aToBToCToC_lista_listb_c_c i1 i2 i3 i4 o =>
+  suggest_4 [(List.fold_right2, "List.fold_right2")] i1 i2 i3 i4 o;
 
-let list_fold_right2 = (List.fold_right2, "List.fold_right2");
+let aToBool_lista_bool i1 i2 o => suggest_2 [(List.exists, "List.exists")] i1 i2 o;
 
-let list_exists = (List.exists, "List.exists");
+let aToBToBool_lista_listb_bool i1 i2 i3 o =>
+  suggest_3 [(List.exists2, "List.exists2")] i1 i2 i3 o;
 
-let list_exists2 = (List.exists2, "List.exists2");
+let a_lista_bool i1 i2 o => suggest_2 [(List.mem, "List.mem"), (List.memq, "List.memq")] i1 i2 o;
 
-let list_mem = (List.mem, "List.mem");
+let aToBool_lista_a i1 i2 o => suggest_2 [(List.find, "List.find")] i1 i2 o;
 
-let list_memq = (List.memq, "List.memq");
+let aToBool_lista_lista i1 i2 o =>
+  suggest_2 [(List.filter, "List.filter"), (List.find_all, "List.find_all")] i1 i2 o;
 
-let list_find = (List.find, "List.find");
+let aToAToInt_lista_lista i1 i2 o =>
+  suggest_2
+    [
+      (List.sort, "List.sort"),
+      (List.stable_sort, "List.stable_sort"),
+      (List.fast_sort, "List.fast_sort"),
+      (List.sort_uniq, "List.sort_uniq")
+    ]
+    i1
+    i2
+    o;
 
-let list_filter = (List.filter, "List.filter");
-
-let list_find_all = (List.find_all, "List.find_all");
-
-let list_partition = (List.partition, "List.partition");
-
-let list_sort = (List.sort, "List.sort");
-
-let list_stable_sort = (List.stable_sort, "List.stable_sort");
-
-let list_fast_sort = (List.fast_sort, "List.fast_sort");
-
-let list_sort_uniq = (List.sort_uniq, "List.sort_uniq");
-
-let list_merge = (List.merge, "List.merge");
+let aToAToLista_lista_lista_lista i1 i2 i3 o => suggest_3 [(List.merge, "List.merge")] i1 i2 i3 o;
+/*let list_partition = (List.partition, "List.partition");*/

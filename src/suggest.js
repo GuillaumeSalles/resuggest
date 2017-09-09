@@ -14,7 +14,7 @@ import {
   intToCharToChar_string_string,
   charToChar_string_string,
   string_string,
-  suggest_string_char_int,
+  string_char_int,
   string_int_char_int,
   string_char_bool,
   string_int_char_bool,
@@ -35,7 +35,17 @@ import {
   aToB_lista_listb,
   intToAToB_lista_listb,
   aToBToA_a_listb_a,
-  aToBToB_lista_b_b
+  aToBToB_lista_b_b,
+  aToBToC_lista_listb_listc,
+  aToBToCToA_a_listb_listc_a,
+  aToBToCToC_lista_listb_c_c,
+  aToBool_lista_bool,
+  aToBToBool_lista_listb_bool,
+  a_lista_bool,
+  aToBool_lista_a,
+  aToBool_lista_lista,
+  aToAToInt_lista_lista,
+  aToAToLista_lista_lista_lista
 } from "./generated/functions";
 
 const typeToFunctionPairs = [
@@ -71,7 +81,32 @@ const typeToFunctionPairs = [
   ["('a -> 'b) -> 'a list -> 'b list", aToB_lista_listb],
   ["(int -> 'a -> 'b) -> 'a list -> 'b list", intToAToB_lista_listb],
   ["('a -> 'b -> 'a) -> 'a -> 'b list -> 'a", aToBToA_a_listb_a],
-  ["('a -> 'b -> 'b) -> 'a list -> 'b -> 'b", aToBToB_lista_b_b]
+  ["('a -> 'b -> 'b) -> 'a list -> 'b -> 'b", aToBToB_lista_b_b],
+  [
+    "('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list",
+    aToBToC_lista_listb_listc
+  ],
+  [
+    "('a -> 'b -> 'c -> 'a) -> 'a -> 'b list -> 'c list -> 'a",
+    aToBToCToA_a_listb_listc_a
+  ],
+  [
+    "('a -> 'b -> 'c -> 'c) -> 'a list -> 'b list -> 'c -> 'c",
+    aToBToCToC_lista_listb_c_c
+  ],
+  ["('a -> bool) -> 'a list -> bool", aToBool_lista_bool],
+  [
+    "('a -> 'b -> bool) -> 'a list -> 'b list -> bool",
+    aToBToBool_lista_listb_bool
+  ],
+  ["'a -> 'a list -> bool", a_lista_bool],
+  ["('a -> bool) -> 'a list -> 'a", aToBool_lista_a],
+  ["('a -> bool) -> 'a list -> 'a list", aToBool_lista_lista],
+  ["('a -> 'a -> int) -> 'a list -> 'a list", aToAToInt_lista_lista],
+  [
+    "('a -> 'a -> 'a list) -> 'a list -> 'a list -> 'a list",
+    aToAToLista_lista_lista_lista
+  ]
 ];
 
 const astTypeToFunctionPairs = typeToFunctionPairs.map(([type, func]) => [

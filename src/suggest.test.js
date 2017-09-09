@@ -19,6 +19,11 @@ testCase("'a -> 'a", "int -> int", true);
 testCase("'a -> 'a", "int -> string", false);
 testCase("int -> int -> int", "int -> int -> int", true);
 testCase(
+  "('a -> 'a -> bool) -> 'a list -> 'a list",
+  "(int -> int -> bool) -> int list -> int list",
+  true
+);
+testCase(
   "('a -> 'b) -> 'a list -> 'b list",
   "(int -> int) -> int list -> int list",
   true

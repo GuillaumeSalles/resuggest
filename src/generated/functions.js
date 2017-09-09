@@ -36,6 +36,14 @@ function suggest_3(funcs, input1, input2, input3, output) {
                         }))(funcs)));
 }
 
+function suggest_4(funcs, input1, input2, input3, input4, output) {
+  return $$Array.of_list(List.map((function (prim) {
+                    return prim[1];
+                  }), List.filter((function (param) {
+                          return Caml_obj.caml_equal(Curry._4(param[0], input1, input2, input3, input4), output);
+                        }))(funcs)));
+}
+
 var partial_arg_000 = /* tuple */[
   (function (prim) {
       return -prim | 0;
@@ -568,7 +576,7 @@ var partial_arg$11 = /* :: */[
   partial_arg_001$5
 ];
 
-function suggest_string_char_int(param, param$1, param$2) {
+function string_char_int(param, param$1, param$2) {
   return suggest_2(partial_arg$11, param, param$1, param$2);
 }
 
@@ -878,94 +886,146 @@ function aToBToB_lista_b_b(i1, i2, i3, o) {
             ], i1, i2, i3, o);
 }
 
-var list_map2 = /* tuple */[
-  List.map2,
-  "List.map2"
-];
+function aToBToC_lista_listb_listc(i1, i2, i3, o) {
+  return suggest_3(/* :: */[
+              /* tuple */[
+                List.map2,
+                "List.map2"
+              ],
+              /* :: */[
+                /* tuple */[
+                  List.rev_map2,
+                  "List.rev_map2"
+                ],
+                /* [] */0
+              ]
+            ], i1, i2, i3, o);
+}
 
-var list_rev_map2 = /* tuple */[
-  List.rev_map2,
-  "List.rev_map2"
-];
+function aToBToCToA_a_listb_listc_a(i1, i2, i3, i4, o) {
+  return suggest_4(/* :: */[
+              /* tuple */[
+                List.fold_left2,
+                "List.fold_left2"
+              ],
+              /* [] */0
+            ], i1, i2, i3, i4, o);
+}
 
-var list_fold_left2 = /* tuple */[
-  List.fold_left2,
-  "List.fold_left2"
-];
+function aToBToCToC_lista_listb_c_c(i1, i2, i3, i4, o) {
+  return suggest_4(/* :: */[
+              /* tuple */[
+                List.fold_right2,
+                "List.fold_right2"
+              ],
+              /* [] */0
+            ], i1, i2, i3, i4, o);
+}
 
-var list_fold_right2 = /* tuple */[
-  List.fold_right2,
-  "List.fold_right2"
-];
+function aToBool_lista_bool(i1, i2, o) {
+  return suggest_2(/* :: */[
+              /* tuple */[
+                List.exists,
+                "List.exists"
+              ],
+              /* [] */0
+            ], i1, i2, o);
+}
 
-var list_exists = /* tuple */[
-  List.exists,
-  "List.exists"
-];
+function aToBToBool_lista_listb_bool(i1, i2, i3, o) {
+  return suggest_3(/* :: */[
+              /* tuple */[
+                List.exists2,
+                "List.exists2"
+              ],
+              /* [] */0
+            ], i1, i2, i3, o);
+}
 
-var list_exists2 = /* tuple */[
-  List.exists2,
-  "List.exists2"
-];
+function a_lista_bool(i1, i2, o) {
+  return suggest_2(/* :: */[
+              /* tuple */[
+                List.mem,
+                "List.mem"
+              ],
+              /* :: */[
+                /* tuple */[
+                  List.memq,
+                  "List.memq"
+                ],
+                /* [] */0
+              ]
+            ], i1, i2, o);
+}
 
-var list_mem = /* tuple */[
-  List.mem,
-  "List.mem"
-];
+function aToBool_lista_a(i1, i2, o) {
+  return suggest_2(/* :: */[
+              /* tuple */[
+                List.find,
+                "List.find"
+              ],
+              /* [] */0
+            ], i1, i2, o);
+}
 
-var list_memq = /* tuple */[
-  List.memq,
-  "List.memq"
-];
+function aToBool_lista_lista(i1, i2, o) {
+  return suggest_2(/* :: */[
+              /* tuple */[
+                List.filter,
+                "List.filter"
+              ],
+              /* :: */[
+                /* tuple */[
+                  List.find_all,
+                  "List.find_all"
+                ],
+                /* [] */0
+              ]
+            ], i1, i2, o);
+}
 
-var list_find = /* tuple */[
-  List.find,
-  "List.find"
-];
+function aToAToInt_lista_lista(i1, i2, o) {
+  return suggest_2(/* :: */[
+              /* tuple */[
+                List.sort,
+                "List.sort"
+              ],
+              /* :: */[
+                /* tuple */[
+                  List.stable_sort,
+                  "List.stable_sort"
+                ],
+                /* :: */[
+                  /* tuple */[
+                    List.fast_sort,
+                    "List.fast_sort"
+                  ],
+                  /* :: */[
+                    /* tuple */[
+                      List.sort_uniq,
+                      "List.sort_uniq"
+                    ],
+                    /* [] */0
+                  ]
+                ]
+              ]
+            ], i1, i2, o);
+}
 
-var list_filter = /* tuple */[
-  List.filter,
-  "List.filter"
-];
-
-var list_find_all = /* tuple */[
-  List.find_all,
-  "List.find_all"
-];
-
-var list_partition = /* tuple */[
-  List.partition,
-  "List.partition"
-];
-
-var list_sort = /* tuple */[
-  List.sort,
-  "List.sort"
-];
-
-var list_stable_sort = /* tuple */[
-  List.stable_sort,
-  "List.stable_sort"
-];
-
-var list_fast_sort = /* tuple */[
-  List.fast_sort,
-  "List.fast_sort"
-];
-
-var list_sort_uniq = /* tuple */[
-  List.sort_uniq,
-  "List.sort_uniq"
-];
-
-var list_merge = /* tuple */[
-  List.merge,
-  "List.merge"
-];
+function aToAToLista_lista_lista_lista(i1, i2, i3, o) {
+  return suggest_3(/* :: */[
+              /* tuple */[
+                List.merge,
+                "List.merge"
+              ],
+              /* [] */0
+            ], i1, i2, i3, o);
+}
 
 exports.suggest_1                     = suggest_1;
 exports.suggest_2                     = suggest_2;
 exports.suggest_3                     = suggest_3;
+exports.suggest_4                     = suggest_4;
 exports.int_int                       = int_int;
 exports.float_float                   = float_float;
 exports.int_int_int                   = int_int_int;
@@ -977,7 +1037,7 @@ exports.string_int_int_string         = string_int_int_string;
 exports.intToCharToChar_string_string = intToCharToChar_string_string;
 exports.charToChar_string_string      = charToChar_string_string;
 exports.string_string                 = string_string;
-exports.suggest_string_char_int       = suggest_string_char_int;
+exports.string_char_int               = string_char_int;
 exports.string_int_char_int           = string_int_char_int;
 exports.string_char_bool              = string_char_bool;
 exports.string_int_char_bool          = string_int_char_bool;
@@ -999,21 +1059,14 @@ exports.aToB_lista_listb              = aToB_lista_listb;
 exports.intToAToB_lista_listb         = intToAToB_lista_listb;
 exports.aToBToA_a_listb_a             = aToBToA_a_listb_a;
 exports.aToBToB_lista_b_b             = aToBToB_lista_b_b;
-exports.list_map2                     = list_map2;
-exports.list_rev_map2                 = list_rev_map2;
-exports.list_fold_left2               = list_fold_left2;
-exports.list_fold_right2              = list_fold_right2;
-exports.list_exists                   = list_exists;
-exports.list_exists2                  = list_exists2;
-exports.list_mem                      = list_mem;
-exports.list_memq                     = list_memq;
-exports.list_find                     = list_find;
-exports.list_filter                   = list_filter;
-exports.list_find_all                 = list_find_all;
-exports.list_partition                = list_partition;
-exports.list_sort                     = list_sort;
-exports.list_stable_sort              = list_stable_sort;
-exports.list_fast_sort                = list_fast_sort;
-exports.list_sort_uniq                = list_sort_uniq;
-exports.list_merge                    = list_merge;
+exports.aToBToC_lista_listb_listc     = aToBToC_lista_listb_listc;
+exports.aToBToCToA_a_listb_listc_a    = aToBToCToA_a_listb_listc_a;
+exports.aToBToCToC_lista_listb_c_c    = aToBToCToC_lista_listb_c_c;
+exports.aToBool_lista_bool            = aToBool_lista_bool;
+exports.aToBToBool_lista_listb_bool   = aToBToBool_lista_listb_bool;
+exports.a_lista_bool                  = a_lista_bool;
+exports.aToBool_lista_a               = aToBool_lista_a;
+exports.aToBool_lista_lista           = aToBool_lista_lista;
+exports.aToAToInt_lista_lista         = aToAToInt_lista_lista;
+exports.aToAToLista_lista_lista_lista = aToAToLista_lista_lista_lista;
 /* No side effect */
