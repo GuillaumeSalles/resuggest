@@ -127,6 +127,9 @@ const makeAstFunctionType = (inputs, output) => {
 
 export function isTypeAssignable(left, right, genericsMap = {}) {
   if (left.kind === typeKinds.generic) {
+    if (right.kind === typeKinds.generic && left.type === right.type) {
+      return true;
+    }
     if (genericsMap[left.type] === undefined) {
       genericsMap[left.type] = right;
       return true;
