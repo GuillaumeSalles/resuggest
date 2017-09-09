@@ -33,12 +33,34 @@ const validateReasonExpression = expression => {
   return result;
 };
 
+const functionNameToDocumentionLink = name => {
+  var words = name.split(".");
+  if (words.length === 1) {
+    return "Pervasives.html#VAL" + words[0];
+  } else {
+    return words[0] + ".html#VAL" + words[1];
+  }
+};
+
 const renderSuggestion = (functionName, inputs, output) => {
-  return [functionName]
-    .concat(inputs.filter(str => str !== ""))
-    .concat("=>")
-    .concat(output)
-    .join(" ");
+  return (
+    <span>
+      <a
+        href={
+          "https://reasonml.github.io/api/" +
+          functionNameToDocumentionLink(functionName)
+        }
+      >
+        {functionName}
+      </a>
+      {" " +
+        inputs
+          .filter(str => str !== "")
+          .concat("=>")
+          .concat(output)
+          .join(" ")}
+    </span>
+  );
 };
 
 class App extends Component {
