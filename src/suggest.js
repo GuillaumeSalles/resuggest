@@ -45,7 +45,7 @@ import {
   aToBool_lista_a,
   aToBool_lista_lista,
   aToAToInt_lista_lista,
-  aToAToLista_lista_lista_lista
+  aToAToInt_lista_lista_lista
 } from "./generated/functions";
 
 const typeToFunctionPairs = [
@@ -104,10 +104,30 @@ const typeToFunctionPairs = [
   ["('a -> bool) -> 'a list -> 'a list", aToBool_lista_lista],
   ["('a -> 'a -> int) -> 'a list -> 'a list", aToAToInt_lista_lista],
   [
-    "('a -> 'a -> 'a list) -> 'a list -> 'a list -> 'a list",
-    aToAToLista_lista_lista_lista
+    "('a -> 'a -> int) -> 'a list -> 'a list -> 'a list",
+    aToAToInt_lista_lista_lista
   ]
 ];
+
+const permutator = inputArr => {
+  let result = [];
+
+  const permute = (arr, m = []) => {
+    if (arr.length === 0) {
+      result.push(m);
+    } else {
+      for (let i = 0; i < arr.length; i++) {
+        let curr = arr.slice();
+        let next = curr.splice(i, 1);
+        permute(curr.slice(), m.concat(next));
+      }
+    }
+  };
+
+  permute(inputArr);
+
+  return result;
+};
 
 const astTypeToFunctionPairs = typeToFunctionPairs.map(([type, func]) => [
   parseType(type),
@@ -161,7 +181,7 @@ export function isTypeAssignable(left, right, genericsMap = {}) {
   throw new Error("Unsupported type kind", left.kind);
 }
 
-export default function suggest(inputs, output) {
+export function orderedSuggest(inputs, output) {
   const expectedFunctionType = makeAstFunctionType(inputs, output);
   const typedSuggestFunctions = astTypeToFunctionPairs
     .filter(([ast, func]) => {
@@ -176,5 +196,17 @@ export default function suggest(inputs, output) {
       var result = func.apply(null, reasonInputs);
       return result;
     })
+  ).map(functionName => ({
+    functionName,
+    inputs,
+    output
+  }));
+}
+
+export default function suggest(inputs, output) {
+  return flatten(
+    permutator(inputs).map(permutedInputs =>
+      orderedSuggest(permutedInputs, output)
+    )
   );
 }

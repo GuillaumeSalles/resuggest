@@ -1012,7 +1012,7 @@ function aToAToInt_lista_lista(i1, i2, o) {
             ], i1, i2, o);
 }
 
-function aToAToLista_lista_lista_lista(i1, i2, i3, o) {
+function aToAToInt_lista_lista_lista(i1, i2, i3, o) {
   return suggest_3(/* :: */[
               /* tuple */[
                 List.merge,
@@ -1068,5 +1068,5 @@ exports.a_lista_bool                  = a_lista_bool;
 exports.aToBool_lista_a               = aToBool_lista_a;
 exports.aToBool_lista_lista           = aToBool_lista_lista;
 exports.aToAToInt_lista_lista         = aToAToInt_lista_lista;
-exports.aToAToLista_lista_lista_lista = aToAToLista_lista_lista_lista;
+exports.aToAToInt_lista_lista_lista   = aToAToInt_lista_lista_lista;
 /* No side effect */

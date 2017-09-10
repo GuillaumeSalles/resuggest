@@ -4,7 +4,7 @@ import InputsForm from "./InputsForm";
 import debounce from "./debounce";
 import reasonExpToJs from "./reasonExpToJs";
 import ReasonExpressionInput from "./ReasonExpressionInput";
-import suggest from "./suggest";
+import suggest, { orderedSuggest } from "./suggest";
 
 const safeSuggest = (inputs, output) => {
   try {
@@ -42,22 +42,22 @@ const functionNameToDocumentionLink = name => {
   }
 };
 
-const renderSuggestion = (functionName, inputs, output) => {
+const renderSuggestion = suggestion => {
   return (
     <span>
       <a
         href={
           "https://reasonml.github.io/api/" +
-          functionNameToDocumentionLink(functionName)
+          functionNameToDocumentionLink(suggestion.functionName)
         }
       >
-        {functionName}
+        {suggestion.functionName}
       </a>
       {" " +
-        inputs
-          .filter(str => str !== "")
+        suggestion.inputs
+          .map(i => i.code)
           .concat("=>")
-          .concat(output)
+          .concat(suggestion.output.code)
           .join(" ")}
     </span>
   );
@@ -70,7 +70,6 @@ class App extends Component {
         {
           inputs: [
             { code: '"Hello World"', error: null },
-            { code: "", error: null },
             { code: "", error: null },
             { code: "", error: null }
           ],
@@ -124,7 +123,6 @@ class App extends Component {
         suggestions: []
       });
     }
-
     const suggestions = safeSuggest(validInputs, output);
 
     this.setState({
@@ -188,13 +186,7 @@ class App extends Component {
     }
 
     return suggestions.map(suggestion => (
-      <div key={suggestion.name}>
-        {renderSuggestion(
-          suggestion,
-          this.state.inputs.map(x => x.code),
-          this.state.output.code
-        )}
-      </div>
+      <div key={suggestion.name}>{renderSuggestion(suggestion)}</div>
     ));
   }
 }

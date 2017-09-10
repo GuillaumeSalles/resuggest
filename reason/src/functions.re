@@ -180,5 +180,5 @@ let aToAToInt_lista_lista i1 i2 o =>
     i2
     o;
 
-let aToAToLista_lista_lista_lista i1 i2 i3 o => suggest_3 [(List.merge, "List.merge")] i1 i2 i3 o;
+let aToAToInt_lista_lista_lista i1 i2 i3 o => suggest_3 [(List.merge, "List.merge")] i1 i2 i3 o;
 /*let list_partition = (List.partition, "List.partition");*/
