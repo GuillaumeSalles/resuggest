@@ -1,8 +1,8 @@
-# [Resuggest](https://GuillaumeSalles.github.io/resuggest)
+# [resuggest](https://GuillaumeSalles.github.io/resuggest)
 
 Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
-![](https://media.giphy.com/media/l378a51UO3bsXq9Ow/giphy.gif)
+![](https://i.imgur.com/k8lo17f.gif?1)
 
 ## Improvements 
 
