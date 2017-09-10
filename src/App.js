@@ -74,7 +74,8 @@ class App extends Component {
             { code: "", error: null }
           ],
           output: { code: '"HELLO WORLD"', error: null },
-          suggestions: null
+          suggestions: null,
+          duration: null
         },
         () => this.suggest(this.state.inputs, this.state.output)
       );
@@ -102,6 +103,7 @@ class App extends Component {
   };
 
   suggest = debounce((newInputs, newOutput) => {
+    const t0 = performance.now();
     const inputs = newInputs.map(x => reasonExpToJs(x.code));
     const output = reasonExpToJs(newOutput.code);
 
@@ -109,7 +111,8 @@ class App extends Component {
       this.setState({
         inputs,
         output,
-        suggestions: []
+        suggestions: [],
+        duration: performance.now() - t0
       });
       return;
     }
@@ -120,7 +123,8 @@ class App extends Component {
       this.setState({
         inputs,
         output,
-        suggestions: []
+        suggestions: [],
+        duration: performance.now() - t0
       });
     }
     const suggestions = safeSuggest(validInputs, output);
@@ -128,7 +132,8 @@ class App extends Component {
     this.setState({
       inputs,
       output,
-      suggestions
+      suggestions,
+      duration: performance.now() - t0
     });
   }, 0);
 
@@ -167,7 +172,14 @@ class App extends Component {
             onChange={this.onOutputChange}
           />
 
-          <h4>Suggestions</h4>
+          <h4>
+            Suggestions{" "}
+            {this.state.duration && (
+              <small style={{ fontSize: "13px", fontWeight: "100" }}>
+                (computed in {this.state.duration.toFixed(2)}ms)
+              </small>
+            )}
+          </h4>
           <pre>
             <code>{this.renderSuggestions(this.state.suggestions)}</code>
           </pre>
