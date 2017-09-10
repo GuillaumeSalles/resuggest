@@ -6,7 +6,6 @@ Discover [ReasonML](https://reasonml.github.io/) functions based on examples. Yo
 
 ## Improvements 
 
-- [ ] Permute inputs to find more functions
 - [ ] Add more functions to the database
 
 ## Inspiration
