@@ -94,7 +94,7 @@ class App extends Component {
   onOutputChange = output => {
     this.setState(
       {
-        output: { code: output, error: null },
+        output: { ...this.state.output, code: output },
         suggestions: null
       },
       () => this.suggest(this.state.inputs, this.state.output)
@@ -186,7 +186,7 @@ class App extends Component {
     }
 
     return suggestions.map(suggestion => (
-      <div key={suggestion.name}>{renderSuggestion(suggestion)}</div>
+      <div>{renderSuggestion(suggestion)}</div>
     ));
   }
 }

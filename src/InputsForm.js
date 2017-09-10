@@ -6,7 +6,7 @@ class InputsForm extends Component {
     return (
       <div>
         <h4>Inputs</h4>
-        {this.props.inputs.map((input, index) =>
+        {this.props.inputs.map((input, index) => (
           <ReasonExpressionInput
             value={input}
             key={"input" + index}
@@ -15,12 +15,12 @@ class InputsForm extends Component {
             onChange={newCode => {
               const newInputs = this.props.inputs.map(
                 (input, i) =>
-                  index === i ? { code: newCode, error: null } : input
+                  index === i ? { ...input, code: newCode } : input
               );
               this.props.onChange(newInputs);
             }}
           />
-        )}
+        ))}
       </div>
     );
   }
