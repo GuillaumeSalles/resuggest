@@ -14,11 +14,7 @@ class ReasonExpressionInput extends Component {
           alignItems: "center"
         }}
       >
-        <input
-          style={this.props.error ? { background: "#EF9A9A" } : {}}
-          value={this.props.code}
-          onChange={this.onChange}
-        />
+        <input value={this.props.code} onChange={this.onChange} />
         <span
           style={{
             color: "red",
