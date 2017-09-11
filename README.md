@@ -7,6 +7,7 @@ Discover [ReasonML](https://reasonml.github.io/) functions based on examples. Yo
 ## Improvements 
 
 - [ ] Add more functions to the database
+- [ ] Array and tupple support
 
 ## Inspiration
 
