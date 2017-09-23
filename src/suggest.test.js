@@ -1,4 +1,9 @@
-import { isTypeAssignable } from "./suggest";
+import suggest, {
+  orderedSuggest,
+  isTypeAssignable,
+  makeAstFunctionType
+} from "./suggest";
+import typeKinds from "./typeKinds";
 import parseType from "./parseType";
 
 function testCase(left, right, result) {
@@ -27,5 +32,10 @@ testCase(
 testCase(
   "('a -> 'b) -> 'a list -> 'b list",
   "(int -> int) -> int list -> int list",
+  true
+);
+testCase(
+  "int -> (int -> char) -> string",
+  "int -> ('a -> char) -> string",
   true
 );

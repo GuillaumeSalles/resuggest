@@ -69,6 +69,22 @@ it("should parse 'a -> 'a", () => {
   });
 });
 
+it("should parse int -> ('a -> char) -> string", () => {
+  expect(parseType("int -> ('a -> char) -> string")).toEqual({
+    kind: typeKinds.func,
+    input: { kind: typeKinds.simple, type: "int" },
+    output: {
+      kind: typeKinds.func,
+      input: {
+        kind: typeKinds.func,
+        input: { kind: typeKinds.generic, type: "'a" },
+        output: { kind: typeKinds.simple, type: "char" }
+      },
+      output: { kind: typeKinds.simple, type: "string" }
+    }
+  });
+});
+
 it("should parse ('a -> 'b) -> 'a list -> 'b list", () => {
   expect(parseType("('a -> 'b) -> 'a list -> 'b list")).toEqual({
     kind: typeKinds.func,

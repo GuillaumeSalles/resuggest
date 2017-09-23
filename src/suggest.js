@@ -1,5 +1,5 @@
 import parseType from "./parseType";
-import { isEqual, flatten } from "lodash";
+import { flatten } from "lodash";
 import typeKinds from "./typeKinds";
 import { caml_equal } from "bs-platform/lib/js/caml_obj";
 import $$Array from "bs-platform/lib/js/array.js";
@@ -28,7 +28,7 @@ const astTypeToFunctionPairs = Object.values(db).map(([type, funcs]) => [
   $$Array.of_list(funcs)
 ]);
 
-const makeAstFunctionType = (inputs, output) => {
+export const makeAstFunctionType = (inputs, output) => {
   if (inputs.length === 0) {
     return parseType(output.type);
   }
@@ -40,16 +40,29 @@ const makeAstFunctionType = (inputs, output) => {
 };
 
 export function isTypeAssignable(left, right, genericsMap = {}) {
+  if (
+    left.kind === typeKinds.generic &&
+    right.kind === typeKinds.generic &&
+    left.type === right.type
+  ) {
+    return true;
+  }
+
   if (left.kind === typeKinds.generic) {
-    if (right.kind === typeKinds.generic && left.type === right.type) {
-      return true;
-    }
     if (genericsMap[left.type] === undefined) {
       genericsMap[left.type] = right;
       return true;
     } else {
-      var result = isTypeAssignable(genericsMap[left.type], right, genericsMap);
-      return result;
+      return isTypeAssignable(genericsMap[left.type], right, genericsMap);
+    }
+  }
+
+  if (right.kind === typeKinds.generic) {
+    if (genericsMap[right.type] === undefined) {
+      genericsMap[right.type] = left;
+      return true;
+    } else {
+      return isTypeAssignable(left.type, genericsMap[right.type], genericsMap);
     }
   }
 

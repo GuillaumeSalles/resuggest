@@ -22,9 +22,6 @@ function tokenStream(str) {
         lastEnd = i + 1;
         break;
       case "(":
-        if (i !== 0) {
-          words.push(str.substring(lastEnd, i));
-        }
         words.push("(");
         lastEnd = i + 1;
         break;
@@ -33,6 +30,8 @@ function tokenStream(str) {
         words.push(str[i]);
         i++;
         lastEnd = i + 1;
+        break;
+      default:
         break;
     }
   }

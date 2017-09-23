@@ -50,7 +50,7 @@ const functions = [
 
   "String.get",
   "String.make",
-  //"String.init",
+  "String.init",
   "String.sub",
   "String.mapi",
   "String.map",
@@ -151,8 +151,6 @@ for (var functionName of functions) {
 const tmpReasonFileContent = Array.from(functionsByType)
   .map(([type, fns], i) => makeReasonArrayOfFunctions("f" + i, type, fns))
   .join("\n");
-
-console.log(tmpReasonFileContent);
 
 fs.writeFileSync(
   "./src/generated/db.js",

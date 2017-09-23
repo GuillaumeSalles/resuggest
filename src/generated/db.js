@@ -410,18 +410,31 @@ var f5 = /* tuple */[
 
 var f6_001 = /* :: */[
   /* tuple */[
+    $$String.init,
+    "String.init"
+  ],
+  /* [] */0
+];
+
+var f6 = /* tuple */[
+  "int -> (int -> char) -> string",
+  f6_001
+];
+
+var f7_001 = /* :: */[
+  /* tuple */[
     $$String.sub,
     "String.sub"
   ],
   /* [] */0
 ];
 
-var f6 = /* tuple */[
+var f7 = /* tuple */[
   "string -> int -> int -> string",
-  f6_001
+  f7_001
 ];
 
-var f7_001 = /* :: */[
+var f8_001 = /* :: */[
   /* tuple */[
     $$String.mapi,
     "String.mapi"
@@ -429,12 +442,12 @@ var f7_001 = /* :: */[
   /* [] */0
 ];
 
-var f7 = /* tuple */[
+var f8 = /* tuple */[
   "(int -> char -> char) -> string -> string",
-  f7_001
+  f8_001
 ];
 
-var f8_001 = /* :: */[
+var f9_001 = /* :: */[
   /* tuple */[
     $$String.map,
     "String.map"
@@ -442,12 +455,12 @@ var f8_001 = /* :: */[
   /* [] */0
 ];
 
-var f8 = /* tuple */[
+var f9 = /* tuple */[
   "(char -> char) -> string -> string",
-  f8_001
+  f9_001
 ];
 
-var f9_001 = /* :: */[
+var f10_001 = /* :: */[
   /* tuple */[
     $$String.trim,
     "String.trim"
@@ -485,12 +498,12 @@ var f9_001 = /* :: */[
   ]
 ];
 
-var f9 = /* tuple */[
+var f10 = /* tuple */[
   "string -> string",
-  f9_001
+  f10_001
 ];
 
-var f10_001 = /* :: */[
+var f11_001 = /* :: */[
   /* tuple */[
     $$String.index,
     "String.index"
@@ -504,12 +517,12 @@ var f10_001 = /* :: */[
   ]
 ];
 
-var f10 = /* tuple */[
+var f11 = /* tuple */[
   "string -> char -> int",
-  f10_001
+  f11_001
 ];
 
-var f11_001 = /* :: */[
+var f12_001 = /* :: */[
   /* tuple */[
     $$String.index_from,
     "String.index_from"
@@ -523,12 +536,12 @@ var f11_001 = /* :: */[
   ]
 ];
 
-var f11 = /* tuple */[
+var f12 = /* tuple */[
   "string -> int -> char -> int",
-  f11_001
+  f12_001
 ];
 
-var f12_001 = /* :: */[
+var f13_001 = /* :: */[
   /* tuple */[
     $$String.contains,
     "String.contains"
@@ -536,12 +549,12 @@ var f12_001 = /* :: */[
   /* [] */0
 ];
 
-var f12 = /* tuple */[
+var f13 = /* tuple */[
   "string -> char -> bool",
-  f12_001
+  f13_001
 ];
 
-var f13_001 = /* :: */[
+var f14_001 = /* :: */[
   /* tuple */[
     $$String.contains_from,
     "String.contains_from"
@@ -555,12 +568,12 @@ var f13_001 = /* :: */[
   ]
 ];
 
-var f13 = /* tuple */[
+var f14 = /* tuple */[
   "string -> int -> char -> bool",
-  f13_001
+  f14_001
 ];
 
-var f14_001 = /* :: */[
+var f15_001 = /* :: */[
   /* tuple */[
     Pervasives.$caret,
     "(^)"
@@ -568,12 +581,12 @@ var f14_001 = /* :: */[
   /* [] */0
 ];
 
-var f14 = /* tuple */[
+var f15 = /* tuple */[
   "string -> string -> string",
-  f14_001
+  f15_001
 ];
 
-var f15_001 = /* :: */[
+var f16_001 = /* :: */[
   /* tuple */[
     Pervasives.string_of_bool,
     "string_of_bool"
@@ -581,12 +594,12 @@ var f15_001 = /* :: */[
   /* [] */0
 ];
 
-var f15 = /* tuple */[
+var f16 = /* tuple */[
   "bool -> string",
-  f15_001
+  f16_001
 ];
 
-var f16_001 = /* :: */[
+var f17_001 = /* :: */[
   /* tuple */[
     Pervasives.bool_of_string,
     "bool_of_string"
@@ -594,12 +607,12 @@ var f16_001 = /* :: */[
   /* [] */0
 ];
 
-var f16 = /* tuple */[
+var f17 = /* tuple */[
   "string -> bool",
-  f16_001
+  f17_001
 ];
 
-var f17_001 = /* :: */[
+var f18_001 = /* :: */[
   /* tuple */[
     Pervasives.string_of_int,
     "string_of_int"
@@ -607,12 +620,12 @@ var f17_001 = /* :: */[
   /* [] */0
 ];
 
-var f17 = /* tuple */[
+var f18 = /* tuple */[
   "int -> string",
-  f17_001
+  f18_001
 ];
 
-var f18_001 = /* :: */[
+var f19_001 = /* :: */[
   /* tuple */[
     Caml_format.caml_int_of_string,
     "int_of_string"
@@ -628,12 +641,12 @@ var f18_001 = /* :: */[
   ]
 ];
 
-var f18 = /* tuple */[
+var f19 = /* tuple */[
   "string -> int",
-  f18_001
+  f19_001
 ];
 
-var f19_001 = /* :: */[
+var f20_001 = /* :: */[
   /* tuple */[
     Pervasives.string_of_float,
     "string_of_float"
@@ -641,12 +654,12 @@ var f19_001 = /* :: */[
   /* [] */0
 ];
 
-var f19 = /* tuple */[
+var f20 = /* tuple */[
   "float -> string",
-  f19_001
+  f20_001
 ];
 
-var f20_001 = /* :: */[
+var f21_001 = /* :: */[
   /* tuple */[
     Caml_format.caml_float_of_string,
     "float_of_string"
@@ -654,12 +667,12 @@ var f20_001 = /* :: */[
   /* [] */0
 ];
 
-var f20 = /* tuple */[
+var f21 = /* tuple */[
   "string -> float",
-  f20_001
+  f21_001
 ];
 
-var f21_001 = /* :: */[
+var f22_001 = /* :: */[
   /* tuple */[
     Caml_obj.caml_equal,
     "(==)"
@@ -667,12 +680,12 @@ var f21_001 = /* :: */[
   /* [] */0
 ];
 
-var f21 = /* tuple */[
+var f22 = /* tuple */[
   "'a -> 'a -> bool",
-  f21_001
+  f22_001
 ];
 
-var f22_001 = /* :: */[
+var f23_001 = /* :: */[
   /* tuple */[
     Pervasives.$at,
     "(@)"
@@ -692,12 +705,12 @@ var f22_001 = /* :: */[
   ]
 ];
 
-var f22 = /* tuple */[
+var f23 = /* tuple */[
   "'a list -> 'a list -> 'a list",
-  f22_001
+  f23_001
 ];
 
-var f23_001 = /* :: */[
+var f24_001 = /* :: */[
   /* tuple */[
     List.length,
     "List.length"
@@ -705,12 +718,12 @@ var f23_001 = /* :: */[
   /* [] */0
 ];
 
-var f23 = /* tuple */[
+var f24 = /* tuple */[
   "'a list -> int",
-  f23_001
+  f24_001
 ];
 
-var f24_001 = /* :: */[
+var f25_001 = /* :: */[
   /* tuple */[
     List.hd,
     "List.hd"
@@ -718,12 +731,12 @@ var f24_001 = /* :: */[
   /* [] */0
 ];
 
-var f24 = /* tuple */[
+var f25 = /* tuple */[
   "'a list -> 'a",
-  f24_001
+  f25_001
 ];
 
-var f25_001 = /* :: */[
+var f26_001 = /* :: */[
   /* tuple */[
     List.tl,
     "List.tl"
@@ -737,12 +750,12 @@ var f25_001 = /* :: */[
   ]
 ];
 
-var f25 = /* tuple */[
+var f26 = /* tuple */[
   "'a list -> 'a list",
-  f25_001
+  f26_001
 ];
 
-var f26_001 = /* :: */[
+var f27_001 = /* :: */[
   /* tuple */[
     List.nth,
     "List.nth"
@@ -750,12 +763,12 @@ var f26_001 = /* :: */[
   /* [] */0
 ];
 
-var f26 = /* tuple */[
+var f27 = /* tuple */[
   "'a list -> int -> 'a",
-  f26_001
+  f27_001
 ];
 
-var f27_001 = /* :: */[
+var f28_001 = /* :: */[
   /* tuple */[
     List.concat,
     "List.concat"
@@ -769,12 +782,12 @@ var f27_001 = /* :: */[
   ]
 ];
 
-var f27 = /* tuple */[
+var f28 = /* tuple */[
   "'a list list -> 'a list",
-  f27_001
+  f28_001
 ];
 
-var f28_001 = /* :: */[
+var f29_001 = /* :: */[
   /* tuple */[
     List.map,
     "List.map"
@@ -788,12 +801,12 @@ var f28_001 = /* :: */[
   ]
 ];
 
-var f28 = /* tuple */[
+var f29 = /* tuple */[
   "('a -> 'b) -> 'a list -> 'b list",
-  f28_001
+  f29_001
 ];
 
-var f29_001 = /* :: */[
+var f30_001 = /* :: */[
   /* tuple */[
     List.mapi,
     "List.mapi"
@@ -801,12 +814,12 @@ var f29_001 = /* :: */[
   /* [] */0
 ];
 
-var f29 = /* tuple */[
+var f30 = /* tuple */[
   "(int -> 'a -> 'b) -> 'a list -> 'b list",
-  f29_001
+  f30_001
 ];
 
-var f30_001 = /* :: */[
+var f31_001 = /* :: */[
   /* tuple */[
     List.fold_left,
     "List.fold_left"
@@ -814,12 +827,12 @@ var f30_001 = /* :: */[
   /* [] */0
 ];
 
-var f30 = /* tuple */[
+var f31 = /* tuple */[
   "('a -> 'b -> 'a) -> 'a -> 'b list -> 'a",
-  f30_001
+  f31_001
 ];
 
-var f31_001 = /* :: */[
+var f32_001 = /* :: */[
   /* tuple */[
     List.fold_right,
     "List.fold_right"
@@ -827,12 +840,12 @@ var f31_001 = /* :: */[
   /* [] */0
 ];
 
-var f31 = /* tuple */[
+var f32 = /* tuple */[
   "('a -> 'b -> 'b) -> 'a list -> 'b -> 'b",
-  f31_001
+  f32_001
 ];
 
-var f32_001 = /* :: */[
+var f33_001 = /* :: */[
   /* tuple */[
     List.map2,
     "List.map2"
@@ -846,12 +859,12 @@ var f32_001 = /* :: */[
   ]
 ];
 
-var f32 = /* tuple */[
+var f33 = /* tuple */[
   "('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list",
-  f32_001
+  f33_001
 ];
 
-var f33_001 = /* :: */[
+var f34_001 = /* :: */[
   /* tuple */[
     List.fold_left2,
     "List.fold_left2"
@@ -859,12 +872,12 @@ var f33_001 = /* :: */[
   /* [] */0
 ];
 
-var f33 = /* tuple */[
+var f34 = /* tuple */[
   "('a -> 'b -> 'c -> 'a) -> 'a -> 'b list -> 'c list -> 'a",
-  f33_001
+  f34_001
 ];
 
-var f34_001 = /* :: */[
+var f35_001 = /* :: */[
   /* tuple */[
     List.fold_right2,
     "List.fold_right2"
@@ -872,12 +885,12 @@ var f34_001 = /* :: */[
   /* [] */0
 ];
 
-var f34 = /* tuple */[
+var f35 = /* tuple */[
   "('a -> 'b -> 'c -> 'c) -> 'a list -> 'b list -> 'c -> 'c",
-  f34_001
+  f35_001
 ];
 
-var f35_001 = /* :: */[
+var f36_001 = /* :: */[
   /* tuple */[
     List.exists,
     "List.exists"
@@ -885,12 +898,12 @@ var f35_001 = /* :: */[
   /* [] */0
 ];
 
-var f35 = /* tuple */[
+var f36 = /* tuple */[
   "('a -> bool) -> 'a list -> bool",
-  f35_001
+  f36_001
 ];
 
-var f36_001 = /* :: */[
+var f37_001 = /* :: */[
   /* tuple */[
     List.exists2,
     "List.exists2"
@@ -898,12 +911,12 @@ var f36_001 = /* :: */[
   /* [] */0
 ];
 
-var f36 = /* tuple */[
+var f37 = /* tuple */[
   "('a -> 'b -> bool) -> 'a list -> 'b list -> bool",
-  f36_001
+  f37_001
 ];
 
-var f37_001 = /* :: */[
+var f38_001 = /* :: */[
   /* tuple */[
     List.mem,
     "List.mem"
@@ -917,12 +930,12 @@ var f37_001 = /* :: */[
   ]
 ];
 
-var f37 = /* tuple */[
+var f38 = /* tuple */[
   "'a -> 'a list -> bool",
-  f37_001
+  f38_001
 ];
 
-var f38_001 = /* :: */[
+var f39_001 = /* :: */[
   /* tuple */[
     List.find,
     "List.find"
@@ -930,12 +943,12 @@ var f38_001 = /* :: */[
   /* [] */0
 ];
 
-var f38 = /* tuple */[
+var f39 = /* tuple */[
   "('a -> bool) -> 'a list -> 'a",
-  f38_001
+  f39_001
 ];
 
-var f39_001 = /* :: */[
+var f40_001 = /* :: */[
   /* tuple */[
     List.filter,
     "List.filter"
@@ -949,12 +962,12 @@ var f39_001 = /* :: */[
   ]
 ];
 
-var f39 = /* tuple */[
+var f40 = /* tuple */[
   "('a -> bool) -> 'a list -> 'a list",
-  f39_001
+  f40_001
 ];
 
-var f40_001 = /* :: */[
+var f41_001 = /* :: */[
   /* tuple */[
     List.sort,
     "List.sort"
@@ -980,12 +993,12 @@ var f40_001 = /* :: */[
   ]
 ];
 
-var f40 = /* tuple */[
+var f41 = /* tuple */[
   "('a -> 'a -> int) -> 'a list -> 'a list",
-  f40_001
+  f41_001
 ];
 
-var f41_001 = /* :: */[
+var f42_001 = /* :: */[
   /* tuple */[
     List.merge,
     "List.merge"
@@ -993,9 +1006,9 @@ var f41_001 = /* :: */[
   /* [] */0
 ];
 
-var f41 = /* tuple */[
+var f42 = /* tuple */[
   "('a -> 'a -> int) -> 'a list -> 'a list -> 'a list",
-  f41_001
+  f42_001
 ];
 
 exports.f0  = f0;
@@ -1040,4 +1053,5 @@ exports.f38 = f38;
 exports.f39 = f39;
 exports.f40 = f40;
 exports.f41 = f41;
+exports.f42 = f42;
 /* No side effect */

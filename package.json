@@ -4,9 +4,8 @@
   "license": "MIT",
   "homepage": "https://GuillaumeSalles.github.io/resuggest",
   "dependencies": {
-    "bs-platform": "^1.9.0",
+    "bs-platform": "1.9.0",
     "gh-pages": "1.0.0",
-    "my-first-app": "file:reason",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-scripts": "1.0.13"

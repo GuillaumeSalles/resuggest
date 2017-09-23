@@ -4,7 +4,7 @@ import InputsForm from "./InputsForm";
 import debounce from "./debounce";
 import reasonExpToJs from "./reasonExpToJs";
 import ReasonExpressionInput from "./ReasonExpressionInput";
-import suggest, { orderedSuggest } from "./suggest";
+import suggest from "./suggest";
 
 const safeSuggest = (inputs, output) => {
   try {
@@ -21,16 +21,6 @@ const waitUntilScriptsLoaded = done => {
       done();
     }
   }, 10);
-};
-
-const validateReasonExpression = expression => {
-  const error =
-    expression.code.length > 0 ? reasonExpToJs(expression.code).error : null;
-  const result = {
-    code: expression.code,
-    error: error
-  };
-  return result;
 };
 
 const functionNameToDocumentionLink = name => {
