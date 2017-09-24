@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import InputsForm from "./InputsForm";
 import debounce from "./debounce";
-import reasonExpToJs from "./reasonExpToJs";
 import ReasonExpressionInput from "./ReasonExpressionInput";
 import suggest from "./suggest";
 
@@ -94,35 +93,11 @@ class App extends Component {
 
   suggest = debounce((newInputs, newOutput) => {
     const t0 = performance.now();
-    const inputs = newInputs.map(x => reasonExpToJs(x.code));
-    const output = reasonExpToJs(newOutput.code);
-
-    if (inputs.some(i => i.error !== null) || output.error !== null) {
-      this.setState({
-        inputs,
-        output,
-        suggestions: [],
-        duration: performance.now() - t0
-      });
-      return;
-    }
-
-    var validInputs = inputs.filter(i => i.code.length > 0);
-
-    if (validInputs.length === 0 || output.code.length === 0) {
-      this.setState({
-        inputs,
-        output,
-        suggestions: [],
-        duration: performance.now() - t0
-      });
-    }
-    const suggestions = safeSuggest(validInputs, output);
-
+    const result = safeSuggest(newInputs.map(n => n.code), newOutput.code);
     this.setState({
-      inputs,
-      output,
-      suggestions,
+      inputs: result.inputs,
+      output: result.output,
+      suggestions: result.suggestions,
       duration: performance.now() - t0
     });
   }, 0);

@@ -3,6 +3,7 @@ import { flatten } from "lodash";
 import typeKinds from "./typeKinds";
 import { caml_equal } from "bs-platform/lib/js/caml_obj";
 import $$Array from "bs-platform/lib/js/array.js";
+import reasonExpToJs from "./reasonExpToJs";
 
 const db = require("./generated/db.js");
 
@@ -113,9 +114,37 @@ export function orderedSuggest(inputs, output) {
 }
 
 export default function suggest(inputs, output) {
-  return flatten(
-    permutator(inputs).map(permutedInputs =>
-      orderedSuggest(permutedInputs, output)
+  const compiledInputs = inputs.map(reasonExpToJs);
+  const compiledOutput = reasonExpToJs(output);
+
+  if (
+    compiledInputs.some(i => i.error !== null) ||
+    compiledOutput.error !== null
+  ) {
+    return {
+      inputs: compiledInputs,
+      output: compiledOutput,
+      suggestions: []
+    };
+  }
+
+  var validInputs = compiledInputs.filter(i => i.code.length > 0);
+
+  if (validInputs.length === 0 || compiledOutput.code.length === 0) {
+    return {
+      inputs: compiledInputs,
+      output: compiledOutput,
+      suggestions: []
+    };
+  }
+
+  return {
+    inputs: compiledInputs,
+    output: compiledOutput,
+    suggestions: flatten(
+      permutator(validInputs).map(permutedInputs =>
+        orderedSuggest(permutedInputs, compiledOutput)
+      )
     )
-  );
+  };
 }
