@@ -46,7 +46,7 @@ const renderSuggestion = suggestion => {
         suggestion.inputs
           .map(i => i.code)
           .join(", ")
-          .concat(") => ")
+          .concat(") == ")
           .concat(suggestion.output.code)}
     </span>
   );
@@ -162,8 +162,8 @@ class App extends Component {
       return "Nothing to suggest...";
     }
 
-    return suggestions.map(suggestion => (
-      <div>{renderSuggestion(suggestion)}</div>
+    return suggestions.map((suggestion, i) => (
+      <div key={i}>{renderSuggestion(suggestion)}</div>
     ));
   }
 }
