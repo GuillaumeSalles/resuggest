@@ -31,17 +31,31 @@ function functionNameToDocumentionLink(name) {
   }
 }
 
-function renderSuggestion(suggestion) {
+function functionNameToDisplayUsage(name) {
+  if (name[0] === "(") {
+    return name.substr(1, name.length - 2);
+  }
+
+  return name;
+}
+
+function renderDocumentationLink(functionName) {
+  return (
+    <a
+      href={
+        "https://reasonml.github.io/api/" +
+        functionNameToDocumentionLink(functionName)
+      }
+    >
+      {functionNameToDisplayUsage(functionName)}
+    </a>
+  );
+}
+
+function renderBasicFunctionUsage(suggestion) {
   return (
     <span>
-      <a
-        href={
-          "https://reasonml.github.io/api/" +
-          functionNameToDocumentionLink(suggestion.functionName)
-        }
-      >
-        {suggestion.functionName}
-      </a>
+      {renderDocumentationLink(suggestion.functionName)}
       {"(" +
         suggestion.inputs
           .map(i => i.code)
@@ -50,6 +64,54 @@ function renderSuggestion(suggestion) {
           .concat(suggestion.output.code)}
     </span>
   );
+}
+
+function renderOperatorWith1Arg(suggestion) {
+  return (
+    <span>
+      {renderDocumentationLink(suggestion.functionName)}{" "}
+      {suggestion.inputs[0].code} == {suggestion.output.code}
+    </span>
+  );
+}
+
+function renderOperatorWith2Args(suggestion) {
+  return (
+    <span>
+      {suggestion.inputs[0].code}{" "}
+      {renderDocumentationLink(suggestion.functionName)}{" "}
+      {suggestion.inputs[1].code} == {suggestion.output.code}
+    </span>
+  );
+}
+
+function renderSuggestion(suggestion) {
+  switch (suggestion.functionName) {
+    case "(~-)":
+    case "(~+)":
+    case "(~-.)":
+    case "(~+.)":
+      return renderOperatorWith1Arg(suggestion);
+    case "(+)":
+    case "(-)":
+    case "(*)":
+    case "(/)":
+    case "(mod)":
+    case "(land)":
+    case "(lor)":
+    case "(lxor)":
+    case "(lsl)":
+    case "(lsr)":
+    case "(asr)":
+    case "(+.)":
+    case "(-.)":
+    case "(*.)":
+    case "(/.)":
+    case "(**)":
+      return renderOperatorWith2Args(suggestion);
+    default:
+      return renderBasicFunctionUsage(suggestion);
+  }
 }
 
 class App extends Component {
