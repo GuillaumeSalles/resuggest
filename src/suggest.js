@@ -6,7 +6,7 @@ import reasonExpToJs from "./reasonExpToJs";
 
 const db = require("./generated/db.js");
 
-const flatten = arrayOfArrays => {
+function flatten(arrayOfArrays) {
   var result = [];
   for (var array of arrayOfArrays) {
     for (var item of array) {
@@ -14,9 +14,9 @@ const flatten = arrayOfArrays => {
     }
   }
   return result;
-};
+}
 
-const permutator = inputArr => {
+function permutator(inputArr) {
   let result = [];
   const permute = (arr, m = []) => {
     if (arr.length === 0) {
@@ -31,14 +31,14 @@ const permutator = inputArr => {
   };
   permute(inputArr);
   return result;
-};
+}
 
 const astTypeToFunctionPairs = Object.values(db).map(([type, funcs]) => [
   parseType(type),
   $$Array.of_list(funcs)
 ]);
 
-export const makeAstFunctionType = (inputs, output) => {
+export function makeAstFunctionType(inputs, output) {
   if (inputs.length === 0) {
     return parseType(output.type);
   }
@@ -47,7 +47,7 @@ export const makeAstFunctionType = (inputs, output) => {
     input: parseType(inputs[0].type),
     output: makeAstFunctionType(inputs.slice(1), output)
   };
-};
+}
 
 export function isTypeAssignable(left, right, genericsMap = {}) {
   if (

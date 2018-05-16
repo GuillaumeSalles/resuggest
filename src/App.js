@@ -5,33 +5,33 @@ import debounce from "./debounce";
 import ReasonExpressionInput from "./ReasonExpressionInput";
 import suggest from "./suggest";
 
-const safeSuggest = (inputs, output) => {
+function safeSuggest(inputs, output) {
   try {
     return suggest(inputs, output);
   } catch (er) {
     return [];
   }
-};
+}
 
-const waitUntilScriptsLoaded = done => {
+function waitUntilScriptsLoaded(done) {
   const tout = setInterval(() => {
     if (window.printML && window.ocaml && window.require) {
       clearInterval(tout);
       done();
     }
   }, 10);
-};
+}
 
-const functionNameToDocumentionLink = name => {
+function functionNameToDocumentionLink(name) {
   var words = name.split(".");
   if (words.length === 1) {
     return "Pervasives.html#VAL" + words[0];
   } else {
     return words[0] + ".html#VAL" + words[1];
   }
-};
+}
 
-const renderSuggestion = suggestion => {
+function renderSuggestion(suggestion) {
   return (
     <span>
       <a
@@ -50,7 +50,7 @@ const renderSuggestion = suggestion => {
           .concat(suggestion.output.code)}
     </span>
   );
-};
+}
 
 class App extends Component {
   componentDidMount() {

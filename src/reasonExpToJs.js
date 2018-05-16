@@ -1,5 +1,6 @@
-const wrapInExports = code =>
-  `(function(exports) {${code}})(window.exports = {})`;
+function wrapInExports(code) {
+  return `(function(exports) {${code}})(window.exports = {})`;
+}
 
 function compileReason(reason) {
   try {
@@ -12,7 +13,7 @@ function compileReason(reason) {
   }
 }
 
-const guessType = reasonExpression => {
+function guessType(reasonExpression) {
   const compilationResult = compileReason(
     `let exp = (${reasonExpression}) == 1;`
   );
@@ -23,9 +24,9 @@ const guessType = reasonExpression => {
     const type = compilationResult.text.substring(69).trim();
     return type;
   }
-};
+}
 
-const reasonExpToJs = reasonExp => {
+function reasonExpToJs(reasonExp) {
   if (reasonExp.length === 0) {
     return {
       code: reasonExp,
@@ -53,6 +54,6 @@ const reasonExpToJs = reasonExp => {
       error: compilationResult.text
     };
   }
-};
+}
 
 export default reasonExpToJs;
