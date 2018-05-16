@@ -2,9 +2,14 @@ const wrapInExports = code =>
   `(function(exports) {${code}})(window.exports = {})`;
 
 function compileReason(reason) {
-  const converted = window.refmt(reason, "RE", "implementation", "ML");
-  const ocaml = converted[1];
-  return JSON.parse(window.ocaml.compile(ocaml));
+  try {
+    const ocaml = window.printML(window.parseRE(reason));
+    return window.ocaml.compile(ocaml);
+  } catch (er) {
+    return {
+      text: er.message
+    };
+  }
 }
 
 const guessType = reasonExpression => {
