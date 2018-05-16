@@ -67,7 +67,7 @@ const functions = [
   "String.contains",
   "String.contains_from",
   "String.rcontains_from",
-  "(^)",
+  "(++)",
   "string_of_bool",
   "bool_of_string",
   "string_of_int",
@@ -110,14 +110,13 @@ const functions = [
   "List.merge"
 ];
 
-require("../public/bs");
-const refmt = require("../public/refmt").refmt;
+require("../public/bsReasonReact");
+const { printML, parseRE } = require("../public/refmt");
 var fs = require("fs");
 
 function compileReason(reason) {
-  const converted = refmt(reason, "RE", "implementation", "ML");
-  const ocamlCode = converted[1];
-  return JSON.parse(ocaml.compile(ocamlCode));
+  const ocamlCode = printML(parseRE(reason));
+  return ocaml.compile(ocamlCode);
 }
 
 const guessType = reasonExpression => {

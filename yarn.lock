@@ -1180,9 +1180,9 @@ browserslist@^2.1.2, browserslist@^2.1.5:
     caniuse-lite "^1.0.30000715"
     electron-to-chromium "^1.3.18"
 
-bs-platform@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-1.9.0.tgz#b8454e6c4760f63907aff891400e855c6b5522b7"
+bs-platform@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.0.0.tgz#38f200730db52fdea37819376b6ac3dfb20244c0"
 
 bser@1.0.2:
   version "1.0.2"
@@ -5230,10 +5230,6 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
-
-reason@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/reason/-/reason-3.1.0.tgz#05d99ced34725f4bc736f3a264c606c84d44edc0"
 
 recursive-readdir@2.2.1:
   version "2.2.1"

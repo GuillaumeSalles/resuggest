@@ -1,10 +1,10 @@
 {
   "name": "resuggest",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "homepage": "https://GuillaumeSalles.github.io/resuggest",
   "dependencies": {
-    "bs-platform": "1.9.0",
+    "bs-platform": "3.0.0",
     "gh-pages": "1.0.0",
     "react": "16.3.2",
     "react-dom": "16.3.2",

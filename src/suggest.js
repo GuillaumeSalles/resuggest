@@ -103,7 +103,7 @@ export function orderedSuggest(inputs, output) {
   return functionsWithMatchingSignature
     .filter(
       ([func, _name]) =>
-        caml_equal(func.apply(null, reasonInputs), output.jsValue) === 1
+        caml_equal(func.apply(null, reasonInputs), output.jsValue) === true
     )
     .map(([_func, name]) => name)
     .map(functionName => ({
