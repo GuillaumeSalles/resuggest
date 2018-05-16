@@ -1,11 +1,20 @@
 import parseType from "./parseType";
-import { flatten } from "lodash";
 import typeKinds from "./typeKinds";
 import { caml_equal } from "bs-platform/lib/js/caml_obj";
 import $$Array from "bs-platform/lib/js/array.js";
 import reasonExpToJs from "./reasonExpToJs";
 
 const db = require("./generated/db.js");
+
+const flatten = arrayOfArrays => {
+  var result = [];
+  for (var array of arrayOfArrays) {
+    for (var item of array) {
+      result.push(item);
+    }
+  }
+  return result;
+};
 
 const permutator = inputArr => {
   let result = [];
