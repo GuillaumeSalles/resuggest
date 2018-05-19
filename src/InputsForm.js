@@ -5,7 +5,7 @@ class InputsForm extends Component {
   render() {
     return (
       <div>
-        <h4>Inputs</h4>
+        <h4>Arguments</h4>
         {this.props.inputs.map((input, index) => (
           <ReasonExpressionInput
             value={input}

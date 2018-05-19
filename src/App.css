@@ -10,38 +10,80 @@ body {
 }
 
 h4 {
-  margin-bottom: .5em;
+  font-size: 20px;
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  color: #db4d3f;
+  font-weight: 300;
+  margin-bottom: 0;
+  font-size: 24px;
 }
 
 pre {
-  background: white;
-  border: 1px solid #eee;
+  margin: 0 0 25px;
+  padding: 10px 20px;
+  background: #333;
+  border: 2px solid #db4d3f;
+  transition: all 0.2s ease;
   display: block;
-  padding: 10px;
-  border-radius: 1px;
-  overflow: auto;
+  border-radius: 5px;
+  line-height: 1.8em;
+  font-family: monospace;
+  font-size: 19px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.005em;
 }
 
 input {
-  background: white;
-  border: 1px solid #eee;
+  width: 300px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background: #333;
+  border: 2px solid #db4d3f;
+  transition: all 0.2s ease;
   display: block;
-  padding: 10px;
-  border-radius: 1px;
+  border-radius: 5px;
+  line-height: 1.8em;
   font-family: monospace;
-  font-size: 13px;
-  color: hsla(0, 0%, 0%, 0.8);
+  font-size: 19px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.005em;
 }
 
-.App {
+main {
+  margin: 15px;
+  display: grid;
+  grid-gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: minmax(500px, auto);
+}
+
+@media screen and (max-width: 850px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+section {
+  display: block;
+}
+
+.app {
   display: flex;
   flex-direction: column;
+}
+
+.app-description {
+  margin: 0 15px;
+  font-style: italic;
 }
 
 .logo {
   display: flex;
   flex-direction: row;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 50px;
   font-weight: 700;
   align-items: flex-end;
@@ -62,12 +104,24 @@ input {
   right: 3px;
 }
 
-.app-form {
-  margin: 15px;
-}
-
 .github {
   position: absolute;
   top: 15px;
   right: 15px;
+}
+
+.suggestion-header {
+  margin: 0px 0 10px 0;
+}
+
+.suggestion-name {
+  color: #db4d3f;
+  font-size: 20px;
+}
+
+.documentation-link {
+  text-decoration: none;
+  background-color: transparent;
+  font-style: italic;
+  color: hsla(0, 0%, 0%, 0.8);
 }

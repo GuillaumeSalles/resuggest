@@ -42,12 +42,14 @@ function functionNameToDisplayUsage(name) {
 function renderDocumentationLink(functionName) {
   return (
     <a
+      className="documentation-link"
       href={
         "https://reasonml.github.io/api/" +
         functionNameToDocumentionLink(functionName)
       }
+      target="_blank"
     >
-      {functionNameToDisplayUsage(functionName)}
+      see the docs →
     </a>
   );
 }
@@ -55,7 +57,7 @@ function renderDocumentationLink(functionName) {
 function renderBasicFunctionUsage(suggestion) {
   return (
     <span>
-      {renderDocumentationLink(suggestion.functionName)}
+      {functionNameToDisplayUsage(suggestion.functionName)}
       {"(" +
         suggestion.inputs
           .map(i => i.code)
@@ -69,7 +71,7 @@ function renderBasicFunctionUsage(suggestion) {
 function renderOperatorWith1Arg(suggestion) {
   return (
     <span>
-      {renderDocumentationLink(suggestion.functionName)}{" "}
+      {functionNameToDisplayUsage(suggestion.functionName)}{" "}
       {suggestion.inputs[0].code} == {suggestion.output.code}
     </span>
   );
@@ -79,13 +81,13 @@ function renderOperatorWith2Args(suggestion) {
   return (
     <span>
       {suggestion.inputs[0].code}{" "}
-      {renderDocumentationLink(suggestion.functionName)}{" "}
+      {functionNameToDisplayUsage(suggestion.functionName)}{" "}
       {suggestion.inputs[1].code} == {suggestion.output.code}
     </span>
   );
 }
 
-function renderSuggestion(suggestion) {
+function renderUsage(suggestion) {
   switch (suggestion.functionName) {
     case "(~-)":
     case "(~+)":
@@ -112,6 +114,23 @@ function renderSuggestion(suggestion) {
     default:
       return renderBasicFunctionUsage(suggestion);
   }
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <div>
+      <div className="suggestion-header">
+        <span className="suggestion-name">
+          {functionNameToDisplayUsage(suggestion.functionName)}
+        </span>
+        <span> ∙ </span>
+        {renderDocumentationLink(suggestion.functionName)}
+      </div>
+      <pre>
+        <code>{renderUsage(suggestion)}</code>
+      </pre>
+    </div>
+  );
 }
 
 class App extends Component {
@@ -170,7 +189,7 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
+      <div className="app">
         <div className="github">
           <a href="https://github.com/GuillaumeSalles/resuggest">
             <GithubIcon />
@@ -182,35 +201,35 @@ class App extends Component {
           </div>
           <div>SUGGEST</div>
         </div>
-        <p style={{ margin: "15px" }}>
-          Discover ReasonML functions based on examples. You supply an example
-          input and output, and it makes suggestions.
+        <p className="app-description">
+          Discover ReasonML functions based on examples. You supply some
+          arguments and the desired output, and it makes suggestions.
         </p>
-        <div className="app-form">
-          <InputsForm
-            inputs={this.state.inputs}
-            onChange={this.onInputsChange}
-          />
-
-          <h4>Desired Output</h4>
-          <ReasonExpressionInput
-            code={this.state.output.code}
-            error={this.state.output.error}
-            onChange={this.onOutputChange}
-          />
-
-          <h4>
-            Suggestions{" "}
-            {this.state.duration && (
-              <small style={{ fontSize: "13px", fontWeight: "100" }}>
-                (computed in {this.state.duration.toFixed(2)}ms)
-              </small>
-            )}
-          </h4>
-          <pre>
-            <code>{this.renderSuggestions(this.state.suggestions)}</code>
-          </pre>
-        </div>
+        <main>
+          <section>
+            <InputsForm
+              inputs={this.state.inputs}
+              onChange={this.onInputsChange}
+            />
+            <h4>Desired Output</h4>
+            <ReasonExpressionInput
+              code={this.state.output.code}
+              error={this.state.output.error}
+              onChange={this.onOutputChange}
+            />
+          </section>
+          <section>
+            <h4>
+              Suggestions{" "}
+              {this.state.duration && (
+                <small style={{ fontSize: "13px", fontWeight: "100" }}>
+                  (computed in {this.state.duration.toFixed(2)}ms)
+                </small>
+              )}
+            </h4>
+            {this.renderSuggestions(this.state.suggestions)}
+          </section>
+        </main>
       </div>
     );
   }
