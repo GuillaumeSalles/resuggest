@@ -5,6 +5,7 @@ const simpleTypes = ["bool", "int", "float", "string", "char"];
 const tokenKinds = {
   simple: "simple",
   list: "list",
+  array: "array",
   arrow: "arrow",
   generic: "generic",
   openParenthesis: "openParenthesis",
@@ -53,6 +54,8 @@ function tokenStream(str) {
       return { kind: tokenKinds.simple, value: word };
     } else if (word === "list") {
       return { kind: tokenKinds.list };
+    } else if (word === "array") {
+      return { kind: tokenKinds.array };
     } else if (word === "->") {
       return { kind: tokenKinds.arrow };
     } else if (word[0] === "'") {
@@ -98,6 +101,12 @@ function makeType(tokenStream, currentType) {
   if (token.kind === tokenKinds.list) {
     return makeType(tokenStream, {
       kind: typeKinds.list,
+      itemType: currentType
+    });
+  }
+  if (token.kind === tokenKinds.array) {
+    return makeType(tokenStream, {
+      kind: typeKinds.array,
       itemType: currentType
     });
   }

@@ -2,8 +2,10 @@
 'use strict';
 
 var List = require("bs-platform/lib/js/list");
+var $$Array = require("bs-platform/lib/js/array");
 var $$String = require("bs-platform/lib/js/string");
 var Caml_obj = require("bs-platform/lib/js/caml_obj");
+var Caml_array = require("bs-platform/lib/js/caml_array");
 var Caml_float = require("bs-platform/lib/js/caml_float");
 var Caml_int32 = require("bs-platform/lib/js/caml_int32");
 var Pervasives = require("bs-platform/lib/js/pervasives");
@@ -1015,6 +1017,216 @@ var f42 = /* tuple */[
   f42_001
 ];
 
+var f43_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return prim.length;
+      }),
+    "Array.length"
+  ],
+  /* [] */0
+];
+
+var f43 = /* tuple */[
+  "'a array -> int",
+  f43_001
+];
+
+var f44_001 = /* :: */[
+  /* tuple */[
+    Caml_array.caml_array_get,
+    "Array.get"
+  ],
+  /* [] */0
+];
+
+var f44 = /* tuple */[
+  "'a array -> int -> 'a",
+  f44_001
+];
+
+var f45_001 = /* :: */[
+  /* tuple */[
+    Caml_array.caml_make_vect,
+    "Array.make"
+  ],
+  /* [] */0
+];
+
+var f45 = /* tuple */[
+  "int -> 'a -> 'a array",
+  f45_001
+];
+
+var f46_001 = /* :: */[
+  /* tuple */[
+    $$Array.init,
+    "Array.init"
+  ],
+  /* [] */0
+];
+
+var f46 = /* tuple */[
+  "int -> (int -> 'a) -> 'a array",
+  f46_001
+];
+
+var f47_001 = /* :: */[
+  /* tuple */[
+    $$Array.make_matrix,
+    "Array.make_matrix"
+  ],
+  /* [] */0
+];
+
+var f47 = /* tuple */[
+  "int -> int -> 'a -> 'a array array",
+  f47_001
+];
+
+var f48_001 = /* :: */[
+  /* tuple */[
+    $$Array.append,
+    "Array.append"
+  ],
+  /* [] */0
+];
+
+var f48 = /* tuple */[
+  "'a array -> 'a array -> 'a array",
+  f48_001
+];
+
+var f49_001 = /* :: */[
+  /* tuple */[
+    $$Array.concat,
+    "Array.concat"
+  ],
+  /* [] */0
+];
+
+var f49 = /* tuple */[
+  "'a array list -> 'a array",
+  f49_001
+];
+
+var f50_001 = /* :: */[
+  /* tuple */[
+    $$Array.sub,
+    "Array.sub"
+  ],
+  /* [] */0
+];
+
+var f50 = /* tuple */[
+  "'a array -> int -> int -> 'a array",
+  f50_001
+];
+
+var f51_001 = /* :: */[
+  /* tuple */[
+    $$Array.copy,
+    "Array.copy"
+  ],
+  /* [] */0
+];
+
+var f51 = /* tuple */[
+  "'a array -> 'a array",
+  f51_001
+];
+
+var f52_001 = /* :: */[
+  /* tuple */[
+    $$Array.to_list,
+    "Array.to_list"
+  ],
+  /* [] */0
+];
+
+var f52 = /* tuple */[
+  "'a array -> 'a list",
+  f52_001
+];
+
+var f53_001 = /* :: */[
+  /* tuple */[
+    $$Array.of_list,
+    "Array.of_list"
+  ],
+  /* [] */0
+];
+
+var f53 = /* tuple */[
+  "'a list -> 'a array",
+  f53_001
+];
+
+var f54_001 = /* :: */[
+  /* tuple */[
+    $$Array.map,
+    "Array.map"
+  ],
+  /* [] */0
+];
+
+var f54 = /* tuple */[
+  "('a -> 'b) -> 'a array -> 'b array",
+  f54_001
+];
+
+var f55_001 = /* :: */[
+  /* tuple */[
+    $$Array.mapi,
+    "Array.mapi"
+  ],
+  /* [] */0
+];
+
+var f55 = /* tuple */[
+  "(int -> 'a -> 'b) -> 'a array -> 'b array",
+  f55_001
+];
+
+var f56_001 = /* :: */[
+  /* tuple */[
+    $$Array.fold_left,
+    "Array.fold_left"
+  ],
+  /* [] */0
+];
+
+var f56 = /* tuple */[
+  "('a -> 'b -> 'a) -> 'a -> 'b array -> 'a",
+  f56_001
+];
+
+var f57_001 = /* :: */[
+  /* tuple */[
+    $$Array.fold_right,
+    "Array.fold_right"
+  ],
+  /* [] */0
+];
+
+var f57 = /* tuple */[
+  "('a -> 'b -> 'b) -> 'a array -> 'b -> 'b",
+  f57_001
+];
+
+var f58_001 = /* :: */[
+  /* tuple */[
+    Caml_array.caml_make_float_vect,
+    "Array.make_float"
+  ],
+  /* [] */0
+];
+
+var f58 = /* tuple */[
+  "int -> float array",
+  f58_001
+];
+
 exports.f0 = f0;
 exports.f1 = f1;
 exports.f2 = f2;
@@ -1058,4 +1270,20 @@ exports.f39 = f39;
 exports.f40 = f40;
 exports.f41 = f41;
 exports.f42 = f42;
+exports.f43 = f43;
+exports.f44 = f44;
+exports.f45 = f45;
+exports.f46 = f46;
+exports.f47 = f47;
+exports.f48 = f48;
+exports.f49 = f49;
+exports.f50 = f50;
+exports.f51 = f51;
+exports.f52 = f52;
+exports.f53 = f53;
+exports.f54 = f54;
+exports.f55 = f55;
+exports.f56 = f56;
+exports.f57 = f57;
+exports.f58 = f58;
 /* No side effect */

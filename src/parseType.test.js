@@ -112,3 +112,17 @@ it("should parse ('a -> 'b) -> 'a list -> 'b list", () => {
     }
   });
 });
+
+it("should parse 'a array -> int", () => {
+  expect(parseType("'a array -> int")).toEqual({
+    kind: typeKinds.func,
+    input: {
+      kind: typeKinds.array,
+      itemType: {
+        kind: typeKinds.generic,
+        type: "'a"
+      }
+    },
+    output: { kind: typeKinds.simple, type: "int" }
+  });
+});

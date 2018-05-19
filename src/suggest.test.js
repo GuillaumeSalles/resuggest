@@ -7,9 +7,9 @@ import typeKinds from "./typeKinds";
 import parseType from "./parseType";
 
 function testCase(left, right, result) {
-  test(`${right} should ${result
-    ? ""
-    : "NOT"} be assignable to ${left}`, () => {
+  test(`${right} should ${
+    result ? "" : "NOT"
+  } be assignable to ${left}`, () => {
     expect(isTypeAssignable(parseType(left), parseType(right))).toEqual(result);
   });
 }
@@ -39,3 +39,4 @@ testCase(
   "int -> ('a -> char) -> string",
   true
 );
+testCase("'a array -> int", "int array -> int", true);

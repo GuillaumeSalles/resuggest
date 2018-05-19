@@ -107,7 +107,24 @@ const functions = [
   "List.stable_sort",
   "List.fast_sort",
   "List.sort_uniq",
-  "List.merge"
+  "List.merge",
+
+  "Array.length",
+  "Array.get",
+  "Array.make",
+  "Array.init",
+  "Array.make_matrix",
+  "Array.append",
+  "Array.concat",
+  "Array.sub",
+  "Array.copy",
+  "Array.to_list",
+  "Array.of_list",
+  "Array.map",
+  "Array.mapi",
+  "Array.fold_left",
+  "Array.fold_right",
+  "Array.make_float"
 ];
 
 require("../public/bsReasonReact");

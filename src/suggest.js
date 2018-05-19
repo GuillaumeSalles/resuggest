@@ -84,7 +84,7 @@ export function isTypeAssignable(left, right, genericsMap = {}) {
     return left.type === right.type;
   }
 
-  if (left.kind === typeKinds.list) {
+  if (left.kind === typeKinds.list || left.kind === typeKinds.array) {
     return isTypeAssignable(left.itemType, right.itemType, genericsMap);
   }
 
