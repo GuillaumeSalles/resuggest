@@ -48,6 +48,12 @@ const functions = [
   "copysign",
   "mod_float",
 
+  "Char.code",
+  "Char.chr",
+  "Char.escaped",
+  "Char.lowercase",
+  "Char.uppercase",
+
   "String.get",
   "String.make",
   "String.init",
