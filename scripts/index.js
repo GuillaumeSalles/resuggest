@@ -1,36 +1,42 @@
 const functions = [
+  // Pervasives
+
+  // Comparisons
+  "(==)",
+  "(!=)",
+  "(<)",
+  "(>)",
+  "(<=)",
+  "(>=)",
+  "compare",
+  "min",
+  "max",
+  "(===)",
+  "(!==)",
+
+  // Boolean
+  "(!)",
+  "(&&)",
+  "(||)",
+
+  // Composition Operators
+  "(|>)",
+  "(@@)",
+
+  // Integer arithmetic
   "(~-)",
   "(~+)",
   "succ",
   "pred",
-  "abs",
-  "lnot",
-
-  "(~-.)",
-  "(~+.)",
-  "sqrt",
-  "exp",
-  "log",
-  "log10",
-  "expm1",
-  "cos",
-  "sin",
-  "tan",
-  "acos",
-  "asin",
-  "atan",
-  "cosh",
-  "sinh",
-  "tanh",
-  "ceil",
-  "floor",
-  "abs_float",
-
   "(+)",
   "(-)",
   "(*)",
   "(/)",
   "(mod)",
+  "abs",
+
+  // Bitwise operations
+  "lnot",
   "(land)",
   "(lor)",
   "(lxor)",
@@ -38,15 +44,65 @@ const functions = [
   "(lsr)",
   "(asr)",
 
+  // Floating-point arithmetic
+  "(~-.)",
+  "(~+.)",
   "(+.)",
   "(-.)",
   "(*.)",
   "(/.)",
   "(**)",
+  "sqrt",
+  "exp",
+  "log",
+  "log10",
+  "expm1",
+  "log1p",
+  "cos",
+  "sin",
+  "tan",
+  "acos",
+  "asin",
+  "atan",
   "atan2",
   "hypot",
+  "cosh",
+  "sinh",
+  "tanh",
+  "ceil",
+  "floor",
+  "abs_float",
   "copysign",
   "mod_float",
+  // "frexp"
+  // "ldexp"
+  // "modf"
+  "float",
+  "float_of_int",
+  "truncate",
+  "int_of_float",
+
+  // String operations
+  "(++)",
+
+  // Character operations
+  "int_of_char",
+  "char_of_int",
+
+  // String conversion functions
+  "string_of_bool",
+  "bool_of_string",
+  "string_of_int",
+  "int_of_string",
+  "string_of_float",
+  "float_of_string",
+
+  // Pair operations
+  // "fst",
+  // "snd",
+
+  // List operations
+  "(@)",
 
   "Char.code",
   "Char.chr",
@@ -73,17 +129,8 @@ const functions = [
   "String.contains",
   "String.contains_from",
   "String.rcontains_from",
-  "(++)",
-  "string_of_bool",
-  "bool_of_string",
-  "string_of_int",
-  "int_of_string",
   "String.length",
-  "string_of_float",
-  "float_of_string",
 
-  "(==)",
-  "(@)",
   "List.append",
   "List.rev_append",
   "List.length",

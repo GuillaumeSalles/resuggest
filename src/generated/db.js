@@ -4,6 +4,7 @@
 var Char = require("bs-platform/lib/js/char");
 var List = require("bs-platform/lib/js/list");
 var $$Array = require("bs-platform/lib/js/array");
+var Curry = require("bs-platform/lib/js/curry");
 var $$String = require("bs-platform/lib/js/string");
 var Caml_obj = require("bs-platform/lib/js/caml_obj");
 var Caml_array = require("bs-platform/lib/js/caml_array");
@@ -14,6 +15,173 @@ var Caml_format = require("bs-platform/lib/js/caml_format");
 var Caml_string = require("bs-platform/lib/js/caml_string");
 
 var f0_001 = /* :: */[
+  /* tuple */[
+    Caml_obj.caml_equal,
+    "(==)"
+  ],
+  /* :: */[
+    /* tuple */[
+      Caml_obj.caml_notequal,
+      "(!=)"
+    ],
+    /* :: */[
+      /* tuple */[
+        Caml_obj.caml_lessthan,
+        "(<)"
+      ],
+      /* :: */[
+        /* tuple */[
+          Caml_obj.caml_greaterthan,
+          "(>)"
+        ],
+        /* :: */[
+          /* tuple */[
+            Caml_obj.caml_lessequal,
+            "(<=)"
+          ],
+          /* :: */[
+            /* tuple */[
+              Caml_obj.caml_greaterequal,
+              "(>=)"
+            ],
+            /* :: */[
+              /* tuple */[
+                (function (prim, prim$1) {
+                    return prim === prim$1;
+                  }),
+                "(===)"
+              ],
+              /* :: */[
+                /* tuple */[
+                  (function (prim, prim$1) {
+                      return prim !== prim$1;
+                    }),
+                  "(!==)"
+                ],
+                /* [] */0
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+];
+
+var f0 = /* tuple */[
+  "'a -> 'a -> bool",
+  f0_001
+];
+
+var f1_001 = /* :: */[
+  /* tuple */[
+    Caml_obj.caml_compare,
+    "compare"
+  ],
+  /* [] */0
+];
+
+var f1 = /* tuple */[
+  "'a -> 'a -> int",
+  f1_001
+];
+
+var f2_001 = /* :: */[
+  /* tuple */[
+    Caml_obj.caml_min,
+    "min"
+  ],
+  /* :: */[
+    /* tuple */[
+      Caml_obj.caml_max,
+      "max"
+    ],
+    /* [] */0
+  ]
+];
+
+var f2 = /* tuple */[
+  "'a -> 'a -> 'a",
+  f2_001
+];
+
+var f3_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return !prim;
+      }),
+    "(!)"
+  ],
+  /* [] */0
+];
+
+var f3 = /* tuple */[
+  "bool -> bool",
+  f3_001
+];
+
+var f4_001 = /* :: */[
+  /* tuple */[
+    (function (prim, prim$1) {
+        if (prim) {
+          return prim$1;
+        } else {
+          return false;
+        }
+      }),
+    "(&&)"
+  ],
+  /* :: */[
+    /* tuple */[
+      (function (prim, prim$1) {
+          if (prim) {
+            return true;
+          } else {
+            return prim$1;
+          }
+        }),
+      "(||)"
+    ],
+    /* [] */0
+  ]
+];
+
+var f4 = /* tuple */[
+  "bool -> bool -> bool",
+  f4_001
+];
+
+var f5_001 = /* :: */[
+  /* tuple */[
+    (function (prim, prim$1) {
+        return Curry._1(prim$1, prim);
+      }),
+    "(|>)"
+  ],
+  /* [] */0
+];
+
+var f5 = /* tuple */[
+  "'a -> ('a -> 'b) -> 'b",
+  f5_001
+];
+
+var f6_001 = /* :: */[
+  /* tuple */[
+    (function (prim, prim$1) {
+        return Curry._1(prim, prim$1);
+      }),
+    "(@@)"
+  ],
+  /* [] */0
+];
+
+var f6 = /* tuple */[
+  "('a -> 'b) -> 'a -> 'b",
+  f6_001
+];
+
+var f7_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return -prim | 0;
@@ -59,169 +227,12 @@ var f0_001 = /* :: */[
   ]
 ];
 
-var f0 = /* tuple */[
+var f7 = /* tuple */[
   "int -> int",
-  f0_001
+  f7_001
 ];
 
-var f1_001 = /* :: */[
-  /* tuple */[
-    (function (prim) {
-        return -prim;
-      }),
-    "(~-.)"
-  ],
-  /* :: */[
-    /* tuple */[
-      (function (prim) {
-          return prim;
-        }),
-      "(~+.)"
-    ],
-    /* :: */[
-      /* tuple */[
-        (function (prim) {
-            return Math.sqrt(prim);
-          }),
-        "sqrt"
-      ],
-      /* :: */[
-        /* tuple */[
-          (function (prim) {
-              return Math.exp(prim);
-            }),
-          "exp"
-        ],
-        /* :: */[
-          /* tuple */[
-            (function (prim) {
-                return Math.log(prim);
-              }),
-            "log"
-          ],
-          /* :: */[
-            /* tuple */[
-              (function (prim) {
-                  return Math.log10(prim);
-                }),
-              "log10"
-            ],
-            /* :: */[
-              /* tuple */[
-                Caml_float.caml_expm1_float,
-                "expm1"
-              ],
-              /* :: */[
-                /* tuple */[
-                  (function (prim) {
-                      return Math.cos(prim);
-                    }),
-                  "cos"
-                ],
-                /* :: */[
-                  /* tuple */[
-                    (function (prim) {
-                        return Math.sin(prim);
-                      }),
-                    "sin"
-                  ],
-                  /* :: */[
-                    /* tuple */[
-                      (function (prim) {
-                          return Math.tan(prim);
-                        }),
-                      "tan"
-                    ],
-                    /* :: */[
-                      /* tuple */[
-                        (function (prim) {
-                            return Math.acos(prim);
-                          }),
-                        "acos"
-                      ],
-                      /* :: */[
-                        /* tuple */[
-                          (function (prim) {
-                              return Math.asin(prim);
-                            }),
-                          "asin"
-                        ],
-                        /* :: */[
-                          /* tuple */[
-                            (function (prim) {
-                                return Math.atan(prim);
-                              }),
-                            "atan"
-                          ],
-                          /* :: */[
-                            /* tuple */[
-                              (function (prim) {
-                                  return Math.cosh(prim);
-                                }),
-                              "cosh"
-                            ],
-                            /* :: */[
-                              /* tuple */[
-                                (function (prim) {
-                                    return Math.sinh(prim);
-                                  }),
-                                "sinh"
-                              ],
-                              /* :: */[
-                                /* tuple */[
-                                  (function (prim) {
-                                      return Math.tanh(prim);
-                                    }),
-                                  "tanh"
-                                ],
-                                /* :: */[
-                                  /* tuple */[
-                                    (function (prim) {
-                                        return Math.ceil(prim);
-                                      }),
-                                    "ceil"
-                                  ],
-                                  /* :: */[
-                                    /* tuple */[
-                                      (function (prim) {
-                                          return Math.floor(prim);
-                                        }),
-                                      "floor"
-                                    ],
-                                    /* :: */[
-                                      /* tuple */[
-                                        (function (prim) {
-                                            return Math.abs(prim);
-                                          }),
-                                        "abs_float"
-                                      ],
-                                      /* [] */0
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-];
-
-var f1 = /* tuple */[
-  "float -> float",
-  f1_001
-];
-
-var f2_001 = /* :: */[
+var f8_001 = /* :: */[
   /* tuple */[
     (function (prim, prim$1) {
         return prim + prim$1 | 0;
@@ -305,12 +316,177 @@ var f2_001 = /* :: */[
   ]
 ];
 
-var f2 = /* tuple */[
+var f8 = /* tuple */[
   "int -> int -> int",
-  f2_001
+  f8_001
 ];
 
-var f3_001 = /* :: */[
+var f9_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return -prim;
+      }),
+    "(~-.)"
+  ],
+  /* :: */[
+    /* tuple */[
+      (function (prim) {
+          return prim;
+        }),
+      "(~+.)"
+    ],
+    /* :: */[
+      /* tuple */[
+        (function (prim) {
+            return Math.sqrt(prim);
+          }),
+        "sqrt"
+      ],
+      /* :: */[
+        /* tuple */[
+          (function (prim) {
+              return Math.exp(prim);
+            }),
+          "exp"
+        ],
+        /* :: */[
+          /* tuple */[
+            (function (prim) {
+                return Math.log(prim);
+              }),
+            "log"
+          ],
+          /* :: */[
+            /* tuple */[
+              (function (prim) {
+                  return Math.log10(prim);
+                }),
+              "log10"
+            ],
+            /* :: */[
+              /* tuple */[
+                Caml_float.caml_expm1_float,
+                "expm1"
+              ],
+              /* :: */[
+                /* tuple */[
+                  (function (prim) {
+                      return Math.log1p(prim);
+                    }),
+                  "log1p"
+                ],
+                /* :: */[
+                  /* tuple */[
+                    (function (prim) {
+                        return Math.cos(prim);
+                      }),
+                    "cos"
+                  ],
+                  /* :: */[
+                    /* tuple */[
+                      (function (prim) {
+                          return Math.sin(prim);
+                        }),
+                      "sin"
+                    ],
+                    /* :: */[
+                      /* tuple */[
+                        (function (prim) {
+                            return Math.tan(prim);
+                          }),
+                        "tan"
+                      ],
+                      /* :: */[
+                        /* tuple */[
+                          (function (prim) {
+                              return Math.acos(prim);
+                            }),
+                          "acos"
+                        ],
+                        /* :: */[
+                          /* tuple */[
+                            (function (prim) {
+                                return Math.asin(prim);
+                              }),
+                            "asin"
+                          ],
+                          /* :: */[
+                            /* tuple */[
+                              (function (prim) {
+                                  return Math.atan(prim);
+                                }),
+                              "atan"
+                            ],
+                            /* :: */[
+                              /* tuple */[
+                                (function (prim) {
+                                    return Math.cosh(prim);
+                                  }),
+                                "cosh"
+                              ],
+                              /* :: */[
+                                /* tuple */[
+                                  (function (prim) {
+                                      return Math.sinh(prim);
+                                    }),
+                                  "sinh"
+                                ],
+                                /* :: */[
+                                  /* tuple */[
+                                    (function (prim) {
+                                        return Math.tanh(prim);
+                                      }),
+                                    "tanh"
+                                  ],
+                                  /* :: */[
+                                    /* tuple */[
+                                      (function (prim) {
+                                          return Math.ceil(prim);
+                                        }),
+                                      "ceil"
+                                    ],
+                                    /* :: */[
+                                      /* tuple */[
+                                        (function (prim) {
+                                            return Math.floor(prim);
+                                          }),
+                                        "floor"
+                                      ],
+                                      /* :: */[
+                                        /* tuple */[
+                                          (function (prim) {
+                                              return Math.abs(prim);
+                                            }),
+                                          "abs_float"
+                                        ],
+                                        /* [] */0
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+];
+
+var f9 = /* tuple */[
+  "float -> float",
+  f9_001
+];
+
+var f10_001 = /* :: */[
   /* tuple */[
     (function (prim, prim$1) {
         return prim + prim$1;
@@ -380,40 +556,228 @@ var f3_001 = /* :: */[
   ]
 ];
 
-var f3 = /* tuple */[
+var f10 = /* tuple */[
   "float -> float -> float",
-  f3_001
+  f10_001
 ];
 
-var f4_001 = /* :: */[
+var f11_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return prim;
       }),
-    "Char.code"
+    "float"
   ],
-  /* [] */0
+  /* :: */[
+    /* tuple */[
+      (function (prim) {
+          return prim;
+        }),
+      "float_of_int"
+    ],
+    /* [] */0
+  ]
 ];
 
-var f4 = /* tuple */[
-  "char -> int",
-  f4_001
+var f11 = /* tuple */[
+  "int -> float",
+  f11_001
 ];
 
-var f5_001 = /* :: */[
+var f12_001 = /* :: */[
   /* tuple */[
-    Char.chr,
-    "Char.chr"
+    (function (prim) {
+        return prim | 0;
+      }),
+    "truncate"
+  ],
+  /* :: */[
+    /* tuple */[
+      (function (prim) {
+          return prim | 0;
+        }),
+      "int_of_float"
+    ],
+    /* [] */0
+  ]
+];
+
+var f12 = /* tuple */[
+  "float -> int",
+  f12_001
+];
+
+var f13_001 = /* :: */[
+  /* tuple */[
+    (function (prim, prim$1) {
+        return prim + prim$1;
+      }),
+    "(++)"
   ],
   /* [] */0
 ];
 
-var f5 = /* tuple */[
-  "int -> char",
-  f5_001
+var f13 = /* tuple */[
+  "string -> string -> string",
+  f13_001
 ];
 
-var f6_001 = /* :: */[
+var f14_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return prim;
+      }),
+    "int_of_char"
+  ],
+  /* :: */[
+    /* tuple */[
+      (function (prim) {
+          return prim;
+        }),
+      "Char.code"
+    ],
+    /* [] */0
+  ]
+];
+
+var f14 = /* tuple */[
+  "char -> int",
+  f14_001
+];
+
+var f15_001 = /* :: */[
+  /* tuple */[
+    Pervasives.char_of_int,
+    "char_of_int"
+  ],
+  /* :: */[
+    /* tuple */[
+      Char.chr,
+      "Char.chr"
+    ],
+    /* [] */0
+  ]
+];
+
+var f15 = /* tuple */[
+  "int -> char",
+  f15_001
+];
+
+var f16_001 = /* :: */[
+  /* tuple */[
+    Pervasives.string_of_bool,
+    "string_of_bool"
+  ],
+  /* [] */0
+];
+
+var f16 = /* tuple */[
+  "bool -> string",
+  f16_001
+];
+
+var f17_001 = /* :: */[
+  /* tuple */[
+    Pervasives.bool_of_string,
+    "bool_of_string"
+  ],
+  /* [] */0
+];
+
+var f17 = /* tuple */[
+  "string -> bool",
+  f17_001
+];
+
+var f18_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return String(prim);
+      }),
+    "string_of_int"
+  ],
+  /* [] */0
+];
+
+var f18 = /* tuple */[
+  "int -> string",
+  f18_001
+];
+
+var f19_001 = /* :: */[
+  /* tuple */[
+    Caml_format.caml_int_of_string,
+    "int_of_string"
+  ],
+  /* :: */[
+    /* tuple */[
+      (function (prim) {
+          return prim.length;
+        }),
+      "String.length"
+    ],
+    /* [] */0
+  ]
+];
+
+var f19 = /* tuple */[
+  "string -> int",
+  f19_001
+];
+
+var f20_001 = /* :: */[
+  /* tuple */[
+    Pervasives.string_of_float,
+    "string_of_float"
+  ],
+  /* [] */0
+];
+
+var f20 = /* tuple */[
+  "float -> string",
+  f20_001
+];
+
+var f21_001 = /* :: */[
+  /* tuple */[
+    Caml_format.caml_float_of_string,
+    "float_of_string"
+  ],
+  /* [] */0
+];
+
+var f21 = /* tuple */[
+  "string -> float",
+  f21_001
+];
+
+var f22_001 = /* :: */[
+  /* tuple */[
+    Pervasives.$at,
+    "(@)"
+  ],
+  /* :: */[
+    /* tuple */[
+      List.append,
+      "List.append"
+    ],
+    /* :: */[
+      /* tuple */[
+        List.rev_append,
+        "List.rev_append"
+      ],
+      /* [] */0
+    ]
+  ]
+];
+
+var f22 = /* tuple */[
+  "'a list -> 'a list -> 'a list",
+  f22_001
+];
+
+var f23_001 = /* :: */[
   /* tuple */[
     Char.escaped,
     "Char.escaped"
@@ -421,12 +785,12 @@ var f6_001 = /* :: */[
   /* [] */0
 ];
 
-var f6 = /* tuple */[
+var f23 = /* tuple */[
   "char -> string",
-  f6_001
+  f23_001
 ];
 
-var f7_001 = /* :: */[
+var f24_001 = /* :: */[
   /* tuple */[
     Char.lowercase,
     "Char.lowercase"
@@ -440,12 +804,12 @@ var f7_001 = /* :: */[
   ]
 ];
 
-var f7 = /* tuple */[
+var f24 = /* tuple */[
   "char -> char",
-  f7_001
+  f24_001
 ];
 
-var f8_001 = /* :: */[
+var f25_001 = /* :: */[
   /* tuple */[
     Caml_string.get,
     "String.get"
@@ -453,12 +817,12 @@ var f8_001 = /* :: */[
   /* [] */0
 ];
 
-var f8 = /* tuple */[
+var f25 = /* tuple */[
   "string -> int -> char",
-  f8_001
+  f25_001
 ];
 
-var f9_001 = /* :: */[
+var f26_001 = /* :: */[
   /* tuple */[
     $$String.make,
     "String.make"
@@ -466,12 +830,12 @@ var f9_001 = /* :: */[
   /* [] */0
 ];
 
-var f9 = /* tuple */[
+var f26 = /* tuple */[
   "int -> char -> string",
-  f9_001
+  f26_001
 ];
 
-var f10_001 = /* :: */[
+var f27_001 = /* :: */[
   /* tuple */[
     $$String.init,
     "String.init"
@@ -479,12 +843,12 @@ var f10_001 = /* :: */[
   /* [] */0
 ];
 
-var f10 = /* tuple */[
+var f27 = /* tuple */[
   "int -> (int -> char) -> string",
-  f10_001
+  f27_001
 ];
 
-var f11_001 = /* :: */[
+var f28_001 = /* :: */[
   /* tuple */[
     $$String.sub,
     "String.sub"
@@ -492,12 +856,12 @@ var f11_001 = /* :: */[
   /* [] */0
 ];
 
-var f11 = /* tuple */[
+var f28 = /* tuple */[
   "string -> int -> int -> string",
-  f11_001
+  f28_001
 ];
 
-var f12_001 = /* :: */[
+var f29_001 = /* :: */[
   /* tuple */[
     $$String.mapi,
     "String.mapi"
@@ -505,12 +869,12 @@ var f12_001 = /* :: */[
   /* [] */0
 ];
 
-var f12 = /* tuple */[
+var f29 = /* tuple */[
   "(int -> char -> char) -> string -> string",
-  f12_001
+  f29_001
 ];
 
-var f13_001 = /* :: */[
+var f30_001 = /* :: */[
   /* tuple */[
     $$String.map,
     "String.map"
@@ -518,12 +882,12 @@ var f13_001 = /* :: */[
   /* [] */0
 ];
 
-var f13 = /* tuple */[
+var f30 = /* tuple */[
   "(char -> char) -> string -> string",
-  f13_001
+  f30_001
 ];
 
-var f14_001 = /* :: */[
+var f31_001 = /* :: */[
   /* tuple */[
     $$String.trim,
     "String.trim"
@@ -561,12 +925,12 @@ var f14_001 = /* :: */[
   ]
 ];
 
-var f14 = /* tuple */[
+var f31 = /* tuple */[
   "string -> string",
-  f14_001
+  f31_001
 ];
 
-var f15_001 = /* :: */[
+var f32_001 = /* :: */[
   /* tuple */[
     $$String.index,
     "String.index"
@@ -580,12 +944,12 @@ var f15_001 = /* :: */[
   ]
 ];
 
-var f15 = /* tuple */[
+var f32 = /* tuple */[
   "string -> char -> int",
-  f15_001
+  f32_001
 ];
 
-var f16_001 = /* :: */[
+var f33_001 = /* :: */[
   /* tuple */[
     $$String.index_from,
     "String.index_from"
@@ -599,12 +963,12 @@ var f16_001 = /* :: */[
   ]
 ];
 
-var f16 = /* tuple */[
+var f33 = /* tuple */[
   "string -> int -> char -> int",
-  f16_001
+  f33_001
 ];
 
-var f17_001 = /* :: */[
+var f34_001 = /* :: */[
   /* tuple */[
     $$String.contains,
     "String.contains"
@@ -612,12 +976,12 @@ var f17_001 = /* :: */[
   /* [] */0
 ];
 
-var f17 = /* tuple */[
+var f34 = /* tuple */[
   "string -> char -> bool",
-  f17_001
+  f34_001
 ];
 
-var f18_001 = /* :: */[
+var f35_001 = /* :: */[
   /* tuple */[
     $$String.contains_from,
     "String.contains_from"
@@ -631,153 +995,12 @@ var f18_001 = /* :: */[
   ]
 ];
 
-var f18 = /* tuple */[
+var f35 = /* tuple */[
   "string -> int -> char -> bool",
-  f18_001
+  f35_001
 ];
 
-var f19_001 = /* :: */[
-  /* tuple */[
-    (function (prim, prim$1) {
-        return prim + prim$1;
-      }),
-    "(++)"
-  ],
-  /* [] */0
-];
-
-var f19 = /* tuple */[
-  "string -> string -> string",
-  f19_001
-];
-
-var f20_001 = /* :: */[
-  /* tuple */[
-    Pervasives.string_of_bool,
-    "string_of_bool"
-  ],
-  /* [] */0
-];
-
-var f20 = /* tuple */[
-  "bool -> string",
-  f20_001
-];
-
-var f21_001 = /* :: */[
-  /* tuple */[
-    Pervasives.bool_of_string,
-    "bool_of_string"
-  ],
-  /* [] */0
-];
-
-var f21 = /* tuple */[
-  "string -> bool",
-  f21_001
-];
-
-var f22_001 = /* :: */[
-  /* tuple */[
-    (function (prim) {
-        return String(prim);
-      }),
-    "string_of_int"
-  ],
-  /* [] */0
-];
-
-var f22 = /* tuple */[
-  "int -> string",
-  f22_001
-];
-
-var f23_001 = /* :: */[
-  /* tuple */[
-    Caml_format.caml_int_of_string,
-    "int_of_string"
-  ],
-  /* :: */[
-    /* tuple */[
-      (function (prim) {
-          return prim.length;
-        }),
-      "String.length"
-    ],
-    /* [] */0
-  ]
-];
-
-var f23 = /* tuple */[
-  "string -> int",
-  f23_001
-];
-
-var f24_001 = /* :: */[
-  /* tuple */[
-    Pervasives.string_of_float,
-    "string_of_float"
-  ],
-  /* [] */0
-];
-
-var f24 = /* tuple */[
-  "float -> string",
-  f24_001
-];
-
-var f25_001 = /* :: */[
-  /* tuple */[
-    Caml_format.caml_float_of_string,
-    "float_of_string"
-  ],
-  /* [] */0
-];
-
-var f25 = /* tuple */[
-  "string -> float",
-  f25_001
-];
-
-var f26_001 = /* :: */[
-  /* tuple */[
-    Caml_obj.caml_equal,
-    "(==)"
-  ],
-  /* [] */0
-];
-
-var f26 = /* tuple */[
-  "'a -> 'a -> bool",
-  f26_001
-];
-
-var f27_001 = /* :: */[
-  /* tuple */[
-    Pervasives.$at,
-    "(@)"
-  ],
-  /* :: */[
-    /* tuple */[
-      List.append,
-      "List.append"
-    ],
-    /* :: */[
-      /* tuple */[
-        List.rev_append,
-        "List.rev_append"
-      ],
-      /* [] */0
-    ]
-  ]
-];
-
-var f27 = /* tuple */[
-  "'a list -> 'a list -> 'a list",
-  f27_001
-];
-
-var f28_001 = /* :: */[
+var f36_001 = /* :: */[
   /* tuple */[
     List.length,
     "List.length"
@@ -785,12 +1008,12 @@ var f28_001 = /* :: */[
   /* [] */0
 ];
 
-var f28 = /* tuple */[
+var f36 = /* tuple */[
   "'a list -> int",
-  f28_001
+  f36_001
 ];
 
-var f29_001 = /* :: */[
+var f37_001 = /* :: */[
   /* tuple */[
     List.hd,
     "List.hd"
@@ -798,12 +1021,12 @@ var f29_001 = /* :: */[
   /* [] */0
 ];
 
-var f29 = /* tuple */[
+var f37 = /* tuple */[
   "'a list -> 'a",
-  f29_001
+  f37_001
 ];
 
-var f30_001 = /* :: */[
+var f38_001 = /* :: */[
   /* tuple */[
     List.tl,
     "List.tl"
@@ -817,12 +1040,12 @@ var f30_001 = /* :: */[
   ]
 ];
 
-var f30 = /* tuple */[
+var f38 = /* tuple */[
   "'a list -> 'a list",
-  f30_001
+  f38_001
 ];
 
-var f31_001 = /* :: */[
+var f39_001 = /* :: */[
   /* tuple */[
     List.nth,
     "List.nth"
@@ -830,12 +1053,12 @@ var f31_001 = /* :: */[
   /* [] */0
 ];
 
-var f31 = /* tuple */[
+var f39 = /* tuple */[
   "'a list -> int -> 'a",
-  f31_001
+  f39_001
 ];
 
-var f32_001 = /* :: */[
+var f40_001 = /* :: */[
   /* tuple */[
     List.concat,
     "List.concat"
@@ -849,12 +1072,12 @@ var f32_001 = /* :: */[
   ]
 ];
 
-var f32 = /* tuple */[
+var f40 = /* tuple */[
   "'a list list -> 'a list",
-  f32_001
+  f40_001
 ];
 
-var f33_001 = /* :: */[
+var f41_001 = /* :: */[
   /* tuple */[
     List.map,
     "List.map"
@@ -868,12 +1091,12 @@ var f33_001 = /* :: */[
   ]
 ];
 
-var f33 = /* tuple */[
+var f41 = /* tuple */[
   "('a -> 'b) -> 'a list -> 'b list",
-  f33_001
+  f41_001
 ];
 
-var f34_001 = /* :: */[
+var f42_001 = /* :: */[
   /* tuple */[
     List.mapi,
     "List.mapi"
@@ -881,12 +1104,12 @@ var f34_001 = /* :: */[
   /* [] */0
 ];
 
-var f34 = /* tuple */[
+var f42 = /* tuple */[
   "(int -> 'a -> 'b) -> 'a list -> 'b list",
-  f34_001
+  f42_001
 ];
 
-var f35_001 = /* :: */[
+var f43_001 = /* :: */[
   /* tuple */[
     List.fold_left,
     "List.fold_left"
@@ -894,12 +1117,12 @@ var f35_001 = /* :: */[
   /* [] */0
 ];
 
-var f35 = /* tuple */[
+var f43 = /* tuple */[
   "('a -> 'b -> 'a) -> 'a -> 'b list -> 'a",
-  f35_001
+  f43_001
 ];
 
-var f36_001 = /* :: */[
+var f44_001 = /* :: */[
   /* tuple */[
     List.fold_right,
     "List.fold_right"
@@ -907,12 +1130,12 @@ var f36_001 = /* :: */[
   /* [] */0
 ];
 
-var f36 = /* tuple */[
+var f44 = /* tuple */[
   "('a -> 'b -> 'b) -> 'a list -> 'b -> 'b",
-  f36_001
+  f44_001
 ];
 
-var f37_001 = /* :: */[
+var f45_001 = /* :: */[
   /* tuple */[
     List.map2,
     "List.map2"
@@ -926,12 +1149,12 @@ var f37_001 = /* :: */[
   ]
 ];
 
-var f37 = /* tuple */[
+var f45 = /* tuple */[
   "('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list",
-  f37_001
+  f45_001
 ];
 
-var f38_001 = /* :: */[
+var f46_001 = /* :: */[
   /* tuple */[
     List.fold_left2,
     "List.fold_left2"
@@ -939,12 +1162,12 @@ var f38_001 = /* :: */[
   /* [] */0
 ];
 
-var f38 = /* tuple */[
+var f46 = /* tuple */[
   "('a -> 'b -> 'c -> 'a) -> 'a -> 'b list -> 'c list -> 'a",
-  f38_001
+  f46_001
 ];
 
-var f39_001 = /* :: */[
+var f47_001 = /* :: */[
   /* tuple */[
     List.fold_right2,
     "List.fold_right2"
@@ -952,12 +1175,12 @@ var f39_001 = /* :: */[
   /* [] */0
 ];
 
-var f39 = /* tuple */[
+var f47 = /* tuple */[
   "('a -> 'b -> 'c -> 'c) -> 'a list -> 'b list -> 'c -> 'c",
-  f39_001
+  f47_001
 ];
 
-var f40_001 = /* :: */[
+var f48_001 = /* :: */[
   /* tuple */[
     List.exists,
     "List.exists"
@@ -965,12 +1188,12 @@ var f40_001 = /* :: */[
   /* [] */0
 ];
 
-var f40 = /* tuple */[
+var f48 = /* tuple */[
   "('a -> bool) -> 'a list -> bool",
-  f40_001
+  f48_001
 ];
 
-var f41_001 = /* :: */[
+var f49_001 = /* :: */[
   /* tuple */[
     List.exists2,
     "List.exists2"
@@ -978,12 +1201,12 @@ var f41_001 = /* :: */[
   /* [] */0
 ];
 
-var f41 = /* tuple */[
+var f49 = /* tuple */[
   "('a -> 'b -> bool) -> 'a list -> 'b list -> bool",
-  f41_001
+  f49_001
 ];
 
-var f42_001 = /* :: */[
+var f50_001 = /* :: */[
   /* tuple */[
     List.mem,
     "List.mem"
@@ -997,12 +1220,12 @@ var f42_001 = /* :: */[
   ]
 ];
 
-var f42 = /* tuple */[
+var f50 = /* tuple */[
   "'a -> 'a list -> bool",
-  f42_001
+  f50_001
 ];
 
-var f43_001 = /* :: */[
+var f51_001 = /* :: */[
   /* tuple */[
     List.find,
     "List.find"
@@ -1010,12 +1233,12 @@ var f43_001 = /* :: */[
   /* [] */0
 ];
 
-var f43 = /* tuple */[
+var f51 = /* tuple */[
   "('a -> bool) -> 'a list -> 'a",
-  f43_001
+  f51_001
 ];
 
-var f44_001 = /* :: */[
+var f52_001 = /* :: */[
   /* tuple */[
     List.filter,
     "List.filter"
@@ -1029,12 +1252,12 @@ var f44_001 = /* :: */[
   ]
 ];
 
-var f44 = /* tuple */[
+var f52 = /* tuple */[
   "('a -> bool) -> 'a list -> 'a list",
-  f44_001
+  f52_001
 ];
 
-var f45_001 = /* :: */[
+var f53_001 = /* :: */[
   /* tuple */[
     List.sort,
     "List.sort"
@@ -1060,12 +1283,12 @@ var f45_001 = /* :: */[
   ]
 ];
 
-var f45 = /* tuple */[
+var f53 = /* tuple */[
   "('a -> 'a -> int) -> 'a list -> 'a list",
-  f45_001
+  f53_001
 ];
 
-var f46_001 = /* :: */[
+var f54_001 = /* :: */[
   /* tuple */[
     List.merge,
     "List.merge"
@@ -1073,12 +1296,12 @@ var f46_001 = /* :: */[
   /* [] */0
 ];
 
-var f46 = /* tuple */[
+var f54 = /* tuple */[
   "('a -> 'a -> int) -> 'a list -> 'a list -> 'a list",
-  f46_001
+  f54_001
 ];
 
-var f47_001 = /* :: */[
+var f55_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return prim.length;
@@ -1088,12 +1311,12 @@ var f47_001 = /* :: */[
   /* [] */0
 ];
 
-var f47 = /* tuple */[
+var f55 = /* tuple */[
   "'a array -> int",
-  f47_001
+  f55_001
 ];
 
-var f48_001 = /* :: */[
+var f56_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_array_get,
     "Array.get"
@@ -1101,12 +1324,12 @@ var f48_001 = /* :: */[
   /* [] */0
 ];
 
-var f48 = /* tuple */[
+var f56 = /* tuple */[
   "'a array -> int -> 'a",
-  f48_001
+  f56_001
 ];
 
-var f49_001 = /* :: */[
+var f57_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_make_vect,
     "Array.make"
@@ -1114,12 +1337,12 @@ var f49_001 = /* :: */[
   /* [] */0
 ];
 
-var f49 = /* tuple */[
+var f57 = /* tuple */[
   "int -> 'a -> 'a array",
-  f49_001
+  f57_001
 ];
 
-var f50_001 = /* :: */[
+var f58_001 = /* :: */[
   /* tuple */[
     $$Array.init,
     "Array.init"
@@ -1127,12 +1350,12 @@ var f50_001 = /* :: */[
   /* [] */0
 ];
 
-var f50 = /* tuple */[
+var f58 = /* tuple */[
   "int -> (int -> 'a) -> 'a array",
-  f50_001
+  f58_001
 ];
 
-var f51_001 = /* :: */[
+var f59_001 = /* :: */[
   /* tuple */[
     $$Array.make_matrix,
     "Array.make_matrix"
@@ -1140,12 +1363,12 @@ var f51_001 = /* :: */[
   /* [] */0
 ];
 
-var f51 = /* tuple */[
+var f59 = /* tuple */[
   "int -> int -> 'a -> 'a array array",
-  f51_001
+  f59_001
 ];
 
-var f52_001 = /* :: */[
+var f60_001 = /* :: */[
   /* tuple */[
     $$Array.append,
     "Array.append"
@@ -1153,12 +1376,12 @@ var f52_001 = /* :: */[
   /* [] */0
 ];
 
-var f52 = /* tuple */[
+var f60 = /* tuple */[
   "'a array -> 'a array -> 'a array",
-  f52_001
+  f60_001
 ];
 
-var f53_001 = /* :: */[
+var f61_001 = /* :: */[
   /* tuple */[
     $$Array.concat,
     "Array.concat"
@@ -1166,12 +1389,12 @@ var f53_001 = /* :: */[
   /* [] */0
 ];
 
-var f53 = /* tuple */[
+var f61 = /* tuple */[
   "'a array list -> 'a array",
-  f53_001
+  f61_001
 ];
 
-var f54_001 = /* :: */[
+var f62_001 = /* :: */[
   /* tuple */[
     $$Array.sub,
     "Array.sub"
@@ -1179,12 +1402,12 @@ var f54_001 = /* :: */[
   /* [] */0
 ];
 
-var f54 = /* tuple */[
+var f62 = /* tuple */[
   "'a array -> int -> int -> 'a array",
-  f54_001
+  f62_001
 ];
 
-var f55_001 = /* :: */[
+var f63_001 = /* :: */[
   /* tuple */[
     $$Array.copy,
     "Array.copy"
@@ -1192,12 +1415,12 @@ var f55_001 = /* :: */[
   /* [] */0
 ];
 
-var f55 = /* tuple */[
+var f63 = /* tuple */[
   "'a array -> 'a array",
-  f55_001
+  f63_001
 ];
 
-var f56_001 = /* :: */[
+var f64_001 = /* :: */[
   /* tuple */[
     $$Array.to_list,
     "Array.to_list"
@@ -1205,12 +1428,12 @@ var f56_001 = /* :: */[
   /* [] */0
 ];
 
-var f56 = /* tuple */[
+var f64 = /* tuple */[
   "'a array -> 'a list",
-  f56_001
+  f64_001
 ];
 
-var f57_001 = /* :: */[
+var f65_001 = /* :: */[
   /* tuple */[
     $$Array.of_list,
     "Array.of_list"
@@ -1218,12 +1441,12 @@ var f57_001 = /* :: */[
   /* [] */0
 ];
 
-var f57 = /* tuple */[
+var f65 = /* tuple */[
   "'a list -> 'a array",
-  f57_001
+  f65_001
 ];
 
-var f58_001 = /* :: */[
+var f66_001 = /* :: */[
   /* tuple */[
     $$Array.map,
     "Array.map"
@@ -1231,12 +1454,12 @@ var f58_001 = /* :: */[
   /* [] */0
 ];
 
-var f58 = /* tuple */[
+var f66 = /* tuple */[
   "('a -> 'b) -> 'a array -> 'b array",
-  f58_001
+  f66_001
 ];
 
-var f59_001 = /* :: */[
+var f67_001 = /* :: */[
   /* tuple */[
     $$Array.mapi,
     "Array.mapi"
@@ -1244,12 +1467,12 @@ var f59_001 = /* :: */[
   /* [] */0
 ];
 
-var f59 = /* tuple */[
+var f67 = /* tuple */[
   "(int -> 'a -> 'b) -> 'a array -> 'b array",
-  f59_001
+  f67_001
 ];
 
-var f60_001 = /* :: */[
+var f68_001 = /* :: */[
   /* tuple */[
     $$Array.fold_left,
     "Array.fold_left"
@@ -1257,12 +1480,12 @@ var f60_001 = /* :: */[
   /* [] */0
 ];
 
-var f60 = /* tuple */[
+var f68 = /* tuple */[
   "('a -> 'b -> 'a) -> 'a -> 'b array -> 'a",
-  f60_001
+  f68_001
 ];
 
-var f61_001 = /* :: */[
+var f69_001 = /* :: */[
   /* tuple */[
     $$Array.fold_right,
     "Array.fold_right"
@@ -1270,12 +1493,12 @@ var f61_001 = /* :: */[
   /* [] */0
 ];
 
-var f61 = /* tuple */[
+var f69 = /* tuple */[
   "('a -> 'b -> 'b) -> 'a array -> 'b -> 'b",
-  f61_001
+  f69_001
 ];
 
-var f62_001 = /* :: */[
+var f70_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_make_float_vect,
     "Array.make_float"
@@ -1283,9 +1506,9 @@ var f62_001 = /* :: */[
   /* [] */0
 ];
 
-var f62 = /* tuple */[
+var f70 = /* tuple */[
   "int -> float array",
-  f62_001
+  f70_001
 ];
 
 exports.f0 = f0;
@@ -1351,4 +1574,12 @@ exports.f59 = f59;
 exports.f60 = f60;
 exports.f61 = f61;
 exports.f62 = f62;
+exports.f63 = f63;
+exports.f64 = f64;
+exports.f65 = f65;
+exports.f66 = f66;
+exports.f67 = f67;
+exports.f68 = f68;
+exports.f69 = f69;
+exports.f70 = f70;
 /* No side effect */

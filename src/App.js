@@ -9,7 +9,21 @@ function safeSuggest(inputs, output) {
   try {
     return suggest(inputs, output);
   } catch (er) {
-    return [];
+    return {
+      output: {
+        code: output,
+        jsValue: null,
+        type: null,
+        error: null
+      },
+      inputs: inputs.map(input => ({
+        code: input,
+        jsValue: null,
+        type: null,
+        error: null
+      })),
+      suggestions: []
+    };
   }
 }
 
@@ -98,6 +112,20 @@ function renderUsage(suggestion) {
     case "(-)":
     case "(*)":
     case "(/)":
+    case "(==)":
+    case "(===)":
+    case "(!=)":
+    case "(!==)":
+    case "(<=)":
+    case "(>=)":
+    case "(<)":
+    case "(>)":
+    case "(!)":
+    case "(&&)":
+    case "(||)":
+    case "(@)":
+    case "(|>)":
+    case "(@@)":
     case "(mod)":
     case "(land)":
     case "(lor)":

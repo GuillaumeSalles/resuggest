@@ -110,10 +110,15 @@ export function orderedSuggest(inputs, output) {
   );
 
   return functionsWithMatchingSignature
-    .filter(
-      ([func, _name]) =>
-        caml_equal(func.apply(null, reasonInputs), output.jsValue) === true
-    )
+    .filter(([func, _name]) => {
+      try {
+        return (
+          caml_equal(func.apply(null, reasonInputs), output.jsValue) === true
+        );
+      } catch (ex) {
+        return false;
+      }
+    })
     .map(([_func, name]) => name)
     .map(functionName => ({
       functionName,
