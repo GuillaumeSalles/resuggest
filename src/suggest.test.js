@@ -40,3 +40,8 @@ testCase(
   true
 );
 testCase("'a array -> int", "int array -> int", true);
+testCase("int * string", "int * string", true);
+testCase("int * int", "int * string", false);
+testCase("int * string * char", "int * string * char", true);
+testCase("'a * 'b * 'a", "int * string * int", true);
+testCase("'a * 'b -> 'a", "int * string -> int", true);

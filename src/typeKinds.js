@@ -2,5 +2,6 @@ export default {
   simple: "simple",
   list: "list",
   func: "func",
-  generic: "generic"
+  generic: "generic",
+  tuple: "tuple"
 };

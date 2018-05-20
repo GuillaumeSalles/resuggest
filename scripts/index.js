@@ -74,9 +74,9 @@ const functions = [
   "abs_float",
   "copysign",
   "mod_float",
-  // "frexp"
-  // "ldexp"
-  // "modf"
+  "frexp",
+  "ldexp",
+  "modf",
   "float",
   "float_of_int",
   "truncate",
@@ -98,8 +98,8 @@ const functions = [
   "float_of_string",
 
   // Pair operations
-  // "fst",
-  // "snd",
+  "fst",
+  "snd",
 
   // List operations
   "(@)",

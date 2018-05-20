@@ -563,6 +563,45 @@ var f10 = /* tuple */[
 
 var f11_001 = /* :: */[
   /* tuple */[
+    Caml_float.caml_frexp_float,
+    "frexp"
+  ],
+  /* [] */0
+];
+
+var f11 = /* tuple */[
+  "float -> float * int",
+  f11_001
+];
+
+var f12_001 = /* :: */[
+  /* tuple */[
+    Caml_float.caml_ldexp_float,
+    "ldexp"
+  ],
+  /* [] */0
+];
+
+var f12 = /* tuple */[
+  "float -> int -> float",
+  f12_001
+];
+
+var f13_001 = /* :: */[
+  /* tuple */[
+    Caml_float.caml_modf_float,
+    "modf"
+  ],
+  /* [] */0
+];
+
+var f13 = /* tuple */[
+  "float -> float * float",
+  f13_001
+];
+
+var f14_001 = /* :: */[
+  /* tuple */[
     (function (prim) {
         return prim;
       }),
@@ -579,12 +618,12 @@ var f11_001 = /* :: */[
   ]
 ];
 
-var f11 = /* tuple */[
+var f14 = /* tuple */[
   "int -> float",
-  f11_001
+  f14_001
 ];
 
-var f12_001 = /* :: */[
+var f15_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return prim | 0;
@@ -602,12 +641,12 @@ var f12_001 = /* :: */[
   ]
 ];
 
-var f12 = /* tuple */[
+var f15 = /* tuple */[
   "float -> int",
-  f12_001
+  f15_001
 ];
 
-var f13_001 = /* :: */[
+var f16_001 = /* :: */[
   /* tuple */[
     (function (prim, prim$1) {
         return prim + prim$1;
@@ -617,12 +656,12 @@ var f13_001 = /* :: */[
   /* [] */0
 ];
 
-var f13 = /* tuple */[
+var f16 = /* tuple */[
   "string -> string -> string",
-  f13_001
+  f16_001
 ];
 
-var f14_001 = /* :: */[
+var f17_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return prim;
@@ -640,12 +679,12 @@ var f14_001 = /* :: */[
   ]
 ];
 
-var f14 = /* tuple */[
+var f17 = /* tuple */[
   "char -> int",
-  f14_001
+  f17_001
 ];
 
-var f15_001 = /* :: */[
+var f18_001 = /* :: */[
   /* tuple */[
     Pervasives.char_of_int,
     "char_of_int"
@@ -659,12 +698,12 @@ var f15_001 = /* :: */[
   ]
 ];
 
-var f15 = /* tuple */[
+var f18 = /* tuple */[
   "int -> char",
-  f15_001
+  f18_001
 ];
 
-var f16_001 = /* :: */[
+var f19_001 = /* :: */[
   /* tuple */[
     Pervasives.string_of_bool,
     "string_of_bool"
@@ -672,12 +711,12 @@ var f16_001 = /* :: */[
   /* [] */0
 ];
 
-var f16 = /* tuple */[
+var f19 = /* tuple */[
   "bool -> string",
-  f16_001
+  f19_001
 ];
 
-var f17_001 = /* :: */[
+var f20_001 = /* :: */[
   /* tuple */[
     Pervasives.bool_of_string,
     "bool_of_string"
@@ -685,12 +724,12 @@ var f17_001 = /* :: */[
   /* [] */0
 ];
 
-var f17 = /* tuple */[
+var f20 = /* tuple */[
   "string -> bool",
-  f17_001
+  f20_001
 ];
 
-var f18_001 = /* :: */[
+var f21_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return String(prim);
@@ -700,12 +739,12 @@ var f18_001 = /* :: */[
   /* [] */0
 ];
 
-var f18 = /* tuple */[
+var f21 = /* tuple */[
   "int -> string",
-  f18_001
+  f21_001
 ];
 
-var f19_001 = /* :: */[
+var f22_001 = /* :: */[
   /* tuple */[
     Caml_format.caml_int_of_string,
     "int_of_string"
@@ -721,12 +760,12 @@ var f19_001 = /* :: */[
   ]
 ];
 
-var f19 = /* tuple */[
+var f22 = /* tuple */[
   "string -> int",
-  f19_001
+  f22_001
 ];
 
-var f20_001 = /* :: */[
+var f23_001 = /* :: */[
   /* tuple */[
     Pervasives.string_of_float,
     "string_of_float"
@@ -734,12 +773,12 @@ var f20_001 = /* :: */[
   /* [] */0
 ];
 
-var f20 = /* tuple */[
+var f23 = /* tuple */[
   "float -> string",
-  f20_001
+  f23_001
 ];
 
-var f21_001 = /* :: */[
+var f24_001 = /* :: */[
   /* tuple */[
     Caml_format.caml_float_of_string,
     "float_of_string"
@@ -747,12 +786,42 @@ var f21_001 = /* :: */[
   /* [] */0
 ];
 
-var f21 = /* tuple */[
+var f24 = /* tuple */[
   "string -> float",
-  f21_001
+  f24_001
 ];
 
-var f22_001 = /* :: */[
+var f25_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return prim[0];
+      }),
+    "fst"
+  ],
+  /* [] */0
+];
+
+var f25 = /* tuple */[
+  "'a * 'b -> 'a",
+  f25_001
+];
+
+var f26_001 = /* :: */[
+  /* tuple */[
+    (function (prim) {
+        return prim[1];
+      }),
+    "snd"
+  ],
+  /* [] */0
+];
+
+var f26 = /* tuple */[
+  "'a * 'b -> 'b",
+  f26_001
+];
+
+var f27_001 = /* :: */[
   /* tuple */[
     Pervasives.$at,
     "(@)"
@@ -772,12 +841,12 @@ var f22_001 = /* :: */[
   ]
 ];
 
-var f22 = /* tuple */[
+var f27 = /* tuple */[
   "'a list -> 'a list -> 'a list",
-  f22_001
+  f27_001
 ];
 
-var f23_001 = /* :: */[
+var f28_001 = /* :: */[
   /* tuple */[
     Char.escaped,
     "Char.escaped"
@@ -785,12 +854,12 @@ var f23_001 = /* :: */[
   /* [] */0
 ];
 
-var f23 = /* tuple */[
+var f28 = /* tuple */[
   "char -> string",
-  f23_001
+  f28_001
 ];
 
-var f24_001 = /* :: */[
+var f29_001 = /* :: */[
   /* tuple */[
     Char.lowercase,
     "Char.lowercase"
@@ -804,12 +873,12 @@ var f24_001 = /* :: */[
   ]
 ];
 
-var f24 = /* tuple */[
+var f29 = /* tuple */[
   "char -> char",
-  f24_001
+  f29_001
 ];
 
-var f25_001 = /* :: */[
+var f30_001 = /* :: */[
   /* tuple */[
     Caml_string.get,
     "String.get"
@@ -817,12 +886,12 @@ var f25_001 = /* :: */[
   /* [] */0
 ];
 
-var f25 = /* tuple */[
+var f30 = /* tuple */[
   "string -> int -> char",
-  f25_001
+  f30_001
 ];
 
-var f26_001 = /* :: */[
+var f31_001 = /* :: */[
   /* tuple */[
     $$String.make,
     "String.make"
@@ -830,12 +899,12 @@ var f26_001 = /* :: */[
   /* [] */0
 ];
 
-var f26 = /* tuple */[
+var f31 = /* tuple */[
   "int -> char -> string",
-  f26_001
+  f31_001
 ];
 
-var f27_001 = /* :: */[
+var f32_001 = /* :: */[
   /* tuple */[
     $$String.init,
     "String.init"
@@ -843,12 +912,12 @@ var f27_001 = /* :: */[
   /* [] */0
 ];
 
-var f27 = /* tuple */[
+var f32 = /* tuple */[
   "int -> (int -> char) -> string",
-  f27_001
+  f32_001
 ];
 
-var f28_001 = /* :: */[
+var f33_001 = /* :: */[
   /* tuple */[
     $$String.sub,
     "String.sub"
@@ -856,12 +925,12 @@ var f28_001 = /* :: */[
   /* [] */0
 ];
 
-var f28 = /* tuple */[
+var f33 = /* tuple */[
   "string -> int -> int -> string",
-  f28_001
+  f33_001
 ];
 
-var f29_001 = /* :: */[
+var f34_001 = /* :: */[
   /* tuple */[
     $$String.mapi,
     "String.mapi"
@@ -869,12 +938,12 @@ var f29_001 = /* :: */[
   /* [] */0
 ];
 
-var f29 = /* tuple */[
+var f34 = /* tuple */[
   "(int -> char -> char) -> string -> string",
-  f29_001
+  f34_001
 ];
 
-var f30_001 = /* :: */[
+var f35_001 = /* :: */[
   /* tuple */[
     $$String.map,
     "String.map"
@@ -882,12 +951,12 @@ var f30_001 = /* :: */[
   /* [] */0
 ];
 
-var f30 = /* tuple */[
+var f35 = /* tuple */[
   "(char -> char) -> string -> string",
-  f30_001
+  f35_001
 ];
 
-var f31_001 = /* :: */[
+var f36_001 = /* :: */[
   /* tuple */[
     $$String.trim,
     "String.trim"
@@ -925,12 +994,12 @@ var f31_001 = /* :: */[
   ]
 ];
 
-var f31 = /* tuple */[
+var f36 = /* tuple */[
   "string -> string",
-  f31_001
+  f36_001
 ];
 
-var f32_001 = /* :: */[
+var f37_001 = /* :: */[
   /* tuple */[
     $$String.index,
     "String.index"
@@ -944,12 +1013,12 @@ var f32_001 = /* :: */[
   ]
 ];
 
-var f32 = /* tuple */[
+var f37 = /* tuple */[
   "string -> char -> int",
-  f32_001
+  f37_001
 ];
 
-var f33_001 = /* :: */[
+var f38_001 = /* :: */[
   /* tuple */[
     $$String.index_from,
     "String.index_from"
@@ -963,12 +1032,12 @@ var f33_001 = /* :: */[
   ]
 ];
 
-var f33 = /* tuple */[
+var f38 = /* tuple */[
   "string -> int -> char -> int",
-  f33_001
+  f38_001
 ];
 
-var f34_001 = /* :: */[
+var f39_001 = /* :: */[
   /* tuple */[
     $$String.contains,
     "String.contains"
@@ -976,12 +1045,12 @@ var f34_001 = /* :: */[
   /* [] */0
 ];
 
-var f34 = /* tuple */[
+var f39 = /* tuple */[
   "string -> char -> bool",
-  f34_001
+  f39_001
 ];
 
-var f35_001 = /* :: */[
+var f40_001 = /* :: */[
   /* tuple */[
     $$String.contains_from,
     "String.contains_from"
@@ -995,12 +1064,12 @@ var f35_001 = /* :: */[
   ]
 ];
 
-var f35 = /* tuple */[
+var f40 = /* tuple */[
   "string -> int -> char -> bool",
-  f35_001
+  f40_001
 ];
 
-var f36_001 = /* :: */[
+var f41_001 = /* :: */[
   /* tuple */[
     List.length,
     "List.length"
@@ -1008,12 +1077,12 @@ var f36_001 = /* :: */[
   /* [] */0
 ];
 
-var f36 = /* tuple */[
+var f41 = /* tuple */[
   "'a list -> int",
-  f36_001
+  f41_001
 ];
 
-var f37_001 = /* :: */[
+var f42_001 = /* :: */[
   /* tuple */[
     List.hd,
     "List.hd"
@@ -1021,12 +1090,12 @@ var f37_001 = /* :: */[
   /* [] */0
 ];
 
-var f37 = /* tuple */[
+var f42 = /* tuple */[
   "'a list -> 'a",
-  f37_001
+  f42_001
 ];
 
-var f38_001 = /* :: */[
+var f43_001 = /* :: */[
   /* tuple */[
     List.tl,
     "List.tl"
@@ -1040,12 +1109,12 @@ var f38_001 = /* :: */[
   ]
 ];
 
-var f38 = /* tuple */[
+var f43 = /* tuple */[
   "'a list -> 'a list",
-  f38_001
+  f43_001
 ];
 
-var f39_001 = /* :: */[
+var f44_001 = /* :: */[
   /* tuple */[
     List.nth,
     "List.nth"
@@ -1053,12 +1122,12 @@ var f39_001 = /* :: */[
   /* [] */0
 ];
 
-var f39 = /* tuple */[
+var f44 = /* tuple */[
   "'a list -> int -> 'a",
-  f39_001
+  f44_001
 ];
 
-var f40_001 = /* :: */[
+var f45_001 = /* :: */[
   /* tuple */[
     List.concat,
     "List.concat"
@@ -1072,12 +1141,12 @@ var f40_001 = /* :: */[
   ]
 ];
 
-var f40 = /* tuple */[
+var f45 = /* tuple */[
   "'a list list -> 'a list",
-  f40_001
+  f45_001
 ];
 
-var f41_001 = /* :: */[
+var f46_001 = /* :: */[
   /* tuple */[
     List.map,
     "List.map"
@@ -1091,12 +1160,12 @@ var f41_001 = /* :: */[
   ]
 ];
 
-var f41 = /* tuple */[
+var f46 = /* tuple */[
   "('a -> 'b) -> 'a list -> 'b list",
-  f41_001
+  f46_001
 ];
 
-var f42_001 = /* :: */[
+var f47_001 = /* :: */[
   /* tuple */[
     List.mapi,
     "List.mapi"
@@ -1104,12 +1173,12 @@ var f42_001 = /* :: */[
   /* [] */0
 ];
 
-var f42 = /* tuple */[
+var f47 = /* tuple */[
   "(int -> 'a -> 'b) -> 'a list -> 'b list",
-  f42_001
+  f47_001
 ];
 
-var f43_001 = /* :: */[
+var f48_001 = /* :: */[
   /* tuple */[
     List.fold_left,
     "List.fold_left"
@@ -1117,12 +1186,12 @@ var f43_001 = /* :: */[
   /* [] */0
 ];
 
-var f43 = /* tuple */[
+var f48 = /* tuple */[
   "('a -> 'b -> 'a) -> 'a -> 'b list -> 'a",
-  f43_001
+  f48_001
 ];
 
-var f44_001 = /* :: */[
+var f49_001 = /* :: */[
   /* tuple */[
     List.fold_right,
     "List.fold_right"
@@ -1130,12 +1199,12 @@ var f44_001 = /* :: */[
   /* [] */0
 ];
 
-var f44 = /* tuple */[
+var f49 = /* tuple */[
   "('a -> 'b -> 'b) -> 'a list -> 'b -> 'b",
-  f44_001
+  f49_001
 ];
 
-var f45_001 = /* :: */[
+var f50_001 = /* :: */[
   /* tuple */[
     List.map2,
     "List.map2"
@@ -1149,12 +1218,12 @@ var f45_001 = /* :: */[
   ]
 ];
 
-var f45 = /* tuple */[
+var f50 = /* tuple */[
   "('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list",
-  f45_001
+  f50_001
 ];
 
-var f46_001 = /* :: */[
+var f51_001 = /* :: */[
   /* tuple */[
     List.fold_left2,
     "List.fold_left2"
@@ -1162,12 +1231,12 @@ var f46_001 = /* :: */[
   /* [] */0
 ];
 
-var f46 = /* tuple */[
+var f51 = /* tuple */[
   "('a -> 'b -> 'c -> 'a) -> 'a -> 'b list -> 'c list -> 'a",
-  f46_001
+  f51_001
 ];
 
-var f47_001 = /* :: */[
+var f52_001 = /* :: */[
   /* tuple */[
     List.fold_right2,
     "List.fold_right2"
@@ -1175,12 +1244,12 @@ var f47_001 = /* :: */[
   /* [] */0
 ];
 
-var f47 = /* tuple */[
+var f52 = /* tuple */[
   "('a -> 'b -> 'c -> 'c) -> 'a list -> 'b list -> 'c -> 'c",
-  f47_001
+  f52_001
 ];
 
-var f48_001 = /* :: */[
+var f53_001 = /* :: */[
   /* tuple */[
     List.exists,
     "List.exists"
@@ -1188,12 +1257,12 @@ var f48_001 = /* :: */[
   /* [] */0
 ];
 
-var f48 = /* tuple */[
+var f53 = /* tuple */[
   "('a -> bool) -> 'a list -> bool",
-  f48_001
+  f53_001
 ];
 
-var f49_001 = /* :: */[
+var f54_001 = /* :: */[
   /* tuple */[
     List.exists2,
     "List.exists2"
@@ -1201,12 +1270,12 @@ var f49_001 = /* :: */[
   /* [] */0
 ];
 
-var f49 = /* tuple */[
+var f54 = /* tuple */[
   "('a -> 'b -> bool) -> 'a list -> 'b list -> bool",
-  f49_001
+  f54_001
 ];
 
-var f50_001 = /* :: */[
+var f55_001 = /* :: */[
   /* tuple */[
     List.mem,
     "List.mem"
@@ -1220,12 +1289,12 @@ var f50_001 = /* :: */[
   ]
 ];
 
-var f50 = /* tuple */[
+var f55 = /* tuple */[
   "'a -> 'a list -> bool",
-  f50_001
+  f55_001
 ];
 
-var f51_001 = /* :: */[
+var f56_001 = /* :: */[
   /* tuple */[
     List.find,
     "List.find"
@@ -1233,12 +1302,12 @@ var f51_001 = /* :: */[
   /* [] */0
 ];
 
-var f51 = /* tuple */[
+var f56 = /* tuple */[
   "('a -> bool) -> 'a list -> 'a",
-  f51_001
+  f56_001
 ];
 
-var f52_001 = /* :: */[
+var f57_001 = /* :: */[
   /* tuple */[
     List.filter,
     "List.filter"
@@ -1252,12 +1321,12 @@ var f52_001 = /* :: */[
   ]
 ];
 
-var f52 = /* tuple */[
+var f57 = /* tuple */[
   "('a -> bool) -> 'a list -> 'a list",
-  f52_001
+  f57_001
 ];
 
-var f53_001 = /* :: */[
+var f58_001 = /* :: */[
   /* tuple */[
     List.sort,
     "List.sort"
@@ -1283,12 +1352,12 @@ var f53_001 = /* :: */[
   ]
 ];
 
-var f53 = /* tuple */[
+var f58 = /* tuple */[
   "('a -> 'a -> int) -> 'a list -> 'a list",
-  f53_001
+  f58_001
 ];
 
-var f54_001 = /* :: */[
+var f59_001 = /* :: */[
   /* tuple */[
     List.merge,
     "List.merge"
@@ -1296,12 +1365,12 @@ var f54_001 = /* :: */[
   /* [] */0
 ];
 
-var f54 = /* tuple */[
+var f59 = /* tuple */[
   "('a -> 'a -> int) -> 'a list -> 'a list -> 'a list",
-  f54_001
+  f59_001
 ];
 
-var f55_001 = /* :: */[
+var f60_001 = /* :: */[
   /* tuple */[
     (function (prim) {
         return prim.length;
@@ -1311,12 +1380,12 @@ var f55_001 = /* :: */[
   /* [] */0
 ];
 
-var f55 = /* tuple */[
+var f60 = /* tuple */[
   "'a array -> int",
-  f55_001
+  f60_001
 ];
 
-var f56_001 = /* :: */[
+var f61_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_array_get,
     "Array.get"
@@ -1324,12 +1393,12 @@ var f56_001 = /* :: */[
   /* [] */0
 ];
 
-var f56 = /* tuple */[
+var f61 = /* tuple */[
   "'a array -> int -> 'a",
-  f56_001
+  f61_001
 ];
 
-var f57_001 = /* :: */[
+var f62_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_make_vect,
     "Array.make"
@@ -1337,12 +1406,12 @@ var f57_001 = /* :: */[
   /* [] */0
 ];
 
-var f57 = /* tuple */[
+var f62 = /* tuple */[
   "int -> 'a -> 'a array",
-  f57_001
+  f62_001
 ];
 
-var f58_001 = /* :: */[
+var f63_001 = /* :: */[
   /* tuple */[
     $$Array.init,
     "Array.init"
@@ -1350,12 +1419,12 @@ var f58_001 = /* :: */[
   /* [] */0
 ];
 
-var f58 = /* tuple */[
+var f63 = /* tuple */[
   "int -> (int -> 'a) -> 'a array",
-  f58_001
+  f63_001
 ];
 
-var f59_001 = /* :: */[
+var f64_001 = /* :: */[
   /* tuple */[
     $$Array.make_matrix,
     "Array.make_matrix"
@@ -1363,12 +1432,12 @@ var f59_001 = /* :: */[
   /* [] */0
 ];
 
-var f59 = /* tuple */[
+var f64 = /* tuple */[
   "int -> int -> 'a -> 'a array array",
-  f59_001
+  f64_001
 ];
 
-var f60_001 = /* :: */[
+var f65_001 = /* :: */[
   /* tuple */[
     $$Array.append,
     "Array.append"
@@ -1376,12 +1445,12 @@ var f60_001 = /* :: */[
   /* [] */0
 ];
 
-var f60 = /* tuple */[
+var f65 = /* tuple */[
   "'a array -> 'a array -> 'a array",
-  f60_001
+  f65_001
 ];
 
-var f61_001 = /* :: */[
+var f66_001 = /* :: */[
   /* tuple */[
     $$Array.concat,
     "Array.concat"
@@ -1389,12 +1458,12 @@ var f61_001 = /* :: */[
   /* [] */0
 ];
 
-var f61 = /* tuple */[
+var f66 = /* tuple */[
   "'a array list -> 'a array",
-  f61_001
+  f66_001
 ];
 
-var f62_001 = /* :: */[
+var f67_001 = /* :: */[
   /* tuple */[
     $$Array.sub,
     "Array.sub"
@@ -1402,12 +1471,12 @@ var f62_001 = /* :: */[
   /* [] */0
 ];
 
-var f62 = /* tuple */[
+var f67 = /* tuple */[
   "'a array -> int -> int -> 'a array",
-  f62_001
+  f67_001
 ];
 
-var f63_001 = /* :: */[
+var f68_001 = /* :: */[
   /* tuple */[
     $$Array.copy,
     "Array.copy"
@@ -1415,12 +1484,12 @@ var f63_001 = /* :: */[
   /* [] */0
 ];
 
-var f63 = /* tuple */[
+var f68 = /* tuple */[
   "'a array -> 'a array",
-  f63_001
+  f68_001
 ];
 
-var f64_001 = /* :: */[
+var f69_001 = /* :: */[
   /* tuple */[
     $$Array.to_list,
     "Array.to_list"
@@ -1428,12 +1497,12 @@ var f64_001 = /* :: */[
   /* [] */0
 ];
 
-var f64 = /* tuple */[
+var f69 = /* tuple */[
   "'a array -> 'a list",
-  f64_001
+  f69_001
 ];
 
-var f65_001 = /* :: */[
+var f70_001 = /* :: */[
   /* tuple */[
     $$Array.of_list,
     "Array.of_list"
@@ -1441,12 +1510,12 @@ var f65_001 = /* :: */[
   /* [] */0
 ];
 
-var f65 = /* tuple */[
+var f70 = /* tuple */[
   "'a list -> 'a array",
-  f65_001
+  f70_001
 ];
 
-var f66_001 = /* :: */[
+var f71_001 = /* :: */[
   /* tuple */[
     $$Array.map,
     "Array.map"
@@ -1454,12 +1523,12 @@ var f66_001 = /* :: */[
   /* [] */0
 ];
 
-var f66 = /* tuple */[
+var f71 = /* tuple */[
   "('a -> 'b) -> 'a array -> 'b array",
-  f66_001
+  f71_001
 ];
 
-var f67_001 = /* :: */[
+var f72_001 = /* :: */[
   /* tuple */[
     $$Array.mapi,
     "Array.mapi"
@@ -1467,12 +1536,12 @@ var f67_001 = /* :: */[
   /* [] */0
 ];
 
-var f67 = /* tuple */[
+var f72 = /* tuple */[
   "(int -> 'a -> 'b) -> 'a array -> 'b array",
-  f67_001
+  f72_001
 ];
 
-var f68_001 = /* :: */[
+var f73_001 = /* :: */[
   /* tuple */[
     $$Array.fold_left,
     "Array.fold_left"
@@ -1480,12 +1549,12 @@ var f68_001 = /* :: */[
   /* [] */0
 ];
 
-var f68 = /* tuple */[
+var f73 = /* tuple */[
   "('a -> 'b -> 'a) -> 'a -> 'b array -> 'a",
-  f68_001
+  f73_001
 ];
 
-var f69_001 = /* :: */[
+var f74_001 = /* :: */[
   /* tuple */[
     $$Array.fold_right,
     "Array.fold_right"
@@ -1493,12 +1562,12 @@ var f69_001 = /* :: */[
   /* [] */0
 ];
 
-var f69 = /* tuple */[
+var f74 = /* tuple */[
   "('a -> 'b -> 'b) -> 'a array -> 'b -> 'b",
-  f69_001
+  f74_001
 ];
 
-var f70_001 = /* :: */[
+var f75_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_make_float_vect,
     "Array.make_float"
@@ -1506,9 +1575,9 @@ var f70_001 = /* :: */[
   /* [] */0
 ];
 
-var f70 = /* tuple */[
+var f75 = /* tuple */[
   "int -> float array",
-  f70_001
+  f75_001
 ];
 
 exports.f0 = f0;
@@ -1582,4 +1651,9 @@ exports.f67 = f67;
 exports.f68 = f68;
 exports.f69 = f69;
 exports.f70 = f70;
+exports.f71 = f71;
+exports.f72 = f72;
+exports.f73 = f73;
+exports.f74 = f74;
+exports.f75 = f75;
 /* No side effect */

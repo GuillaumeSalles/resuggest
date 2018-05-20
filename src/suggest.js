@@ -95,6 +95,13 @@ export function isTypeAssignable(left, right, genericsMap = {}) {
     );
   }
 
+  if (left.kind === typeKinds.tuple) {
+    return (
+      isTypeAssignable(left.firstType, right.firstType, genericsMap) &&
+      isTypeAssignable(left.secondType, right.secondType, genericsMap)
+    );
+  }
+
   throw new Error("Unsupported type kind", left.kind);
 }
 

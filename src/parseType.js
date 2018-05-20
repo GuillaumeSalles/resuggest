@@ -2,17 +2,18 @@ import typeKinds from "./typeKinds";
 
 const simpleTypes = ["bool", "int", "float", "string", "char"];
 
-const tokenKinds = {
+export const tokenKinds = {
   simple: "simple",
   list: "list",
   array: "array",
   arrow: "arrow",
   generic: "generic",
+  star: "star",
   openParenthesis: "openParenthesis",
   closeParenthesis: "closeParenthesis"
 };
 
-function tokenStream(str) {
+export function tokenStream(str) {
   const words = [];
   let lastEnd = 0;
 
@@ -64,6 +65,8 @@ function tokenStream(str) {
       return { kind: tokenKinds.openParenthesis };
     } else if (word === ")") {
       return { kind: tokenKinds.closeParenthesis };
+    } else if (word === "*") {
+      return { kind: tokenKinds.star };
     }
 
     throw new Error("Unkown word: '" + word + "' words: " + words);
@@ -83,51 +86,133 @@ function tokenStream(str) {
   };
 }
 
-function makeType(tokenStream, currentType) {
-  const token = tokenStream.next();
+function getLastOrDefault(arr) {
+  if (arr.length === 0) {
+    return null;
+  }
+  return arr[arr.length - 1];
+}
 
-  if (token === null) {
-    return currentType;
-  }
-  if (token.kind === tokenKinds.simple) {
-    return makeType(tokenStream, { kind: typeKinds.simple, type: token.value });
-  }
-  if (token.kind === tokenKinds.generic) {
-    return makeType(tokenStream, {
-      kind: typeKinds.generic,
-      type: token.value
-    });
-  }
-  if (token.kind === tokenKinds.list) {
-    return makeType(tokenStream, {
-      kind: typeKinds.list,
-      itemType: currentType
-    });
-  }
-  if (token.kind === tokenKinds.array) {
-    return makeType(tokenStream, {
-      kind: typeKinds.array,
-      itemType: currentType
-    });
-  }
-  if (token.kind === tokenKinds.arrow) {
-    return {
-      kind: typeKinds.func,
-      input: currentType,
-      output: makeType(tokenStream, null)
-    };
-  }
-  if (token.kind === tokenKinds.openParenthesis) {
-    return makeType(tokenStream, makeType(tokenStream, null));
-  }
-  if (token.kind === tokenKinds.closeParenthesis) {
-    return currentType;
+const priorityMap = {
+  [tokenKinds.openParenthesis]: 0,
+  [tokenKinds.arrow]: 1,
+  [tokenKinds.star]: 2,
+  [tokenKinds.list]: 3,
+  [tokenKinds.array]: 3
+};
+
+function hasLowerPrecedenceThanTopOperator(operatorsStack, token) {
+  let topOperator = getLastOrDefault(operatorsStack);
+  if (topOperator === null) {
+    return false;
   }
 
-  throw new Error("Unknown token: " + JSON.stringify(token));
+  return priorityMap[topOperator.kind] > priorityMap[token.kind];
+}
+
+export function createPostfixExpression(tokenStream) {
+  let operatorStack = [];
+  let postfix = [];
+
+  let token = null;
+
+  while ((token = tokenStream.next()) != null) {
+    switch (token.kind) {
+      case tokenKinds.simple:
+      case tokenKinds.generic:
+        postfix.push(token);
+        break;
+      case tokenKinds.star:
+      case tokenKinds.arrow:
+      case tokenKinds.list:
+      case tokenKinds.array:
+        if (hasLowerPrecedenceThanTopOperator(operatorStack, token)) {
+          postfix.push(operatorStack.pop());
+        }
+        operatorStack.push(token);
+        break;
+      case tokenKinds.openParenthesis:
+        operatorStack.push(token);
+        break;
+      case tokenKinds.closeParenthesis:
+        let operator = null;
+        while (
+          (operator = operatorStack.pop()).kind !== tokenKinds.openParenthesis
+        ) {
+          postfix.push(operator);
+        }
+        break;
+      default:
+        throw new Error("Unknown token: " + JSON.stringify(token));
+    }
+
+    // console.log(
+    //   "Token: ",
+    //   token,
+    //   "\nOps: ",
+    //   operatorStack,
+    //   "\nPostfix: ",
+    //   postfix
+    // );
+  }
+
+  while ((token = operatorStack.pop()) != null) {
+    postfix.push(token);
+  }
+
+  return postfix;
+}
+
+function makeType(tokenStream) {
+  let postfix = createPostfixExpression(tokenStream);
+
+  let types = [];
+
+  for (let token of postfix) {
+    switch (token.kind) {
+      case tokenKinds.simple:
+        types.push({ kind: typeKinds.simple, type: token.value });
+        break;
+      case tokenKinds.generic:
+        types.push({ kind: typeKinds.generic, type: token.value });
+        break;
+      case tokenKinds.star:
+        types.push({
+          kind: typeKinds.tuple,
+          secondType: types.pop(),
+          firstType: types.pop()
+        });
+        break;
+      case tokenKinds.arrow:
+        types.push({
+          kind: typeKinds.func,
+          output: types.pop(),
+          input: types.pop()
+        });
+        break;
+      case tokenKinds.list:
+        types.push({
+          kind: typeKinds.list,
+          itemType: types.pop()
+        });
+        break;
+      case tokenKinds.array:
+        types.push({
+          kind: typeKinds.array,
+          itemType: types.pop()
+        });
+        break;
+      default:
+        throw new Error("Unknown token: " + JSON.stringify(token));
+    }
+  }
+
+  return types[0];
 }
 
 // Parse type extracted from compilation error
+// The Shunting Yard Algorithm: http://www.oxfordmathcenter.com/drupal7/node/628
+// 3.9.3. Postfix Evaluation: http://interactivepython.org/runestone/static/pythonds/BasicDS/InfixPrefixandPostfixExpressions.html
 export default function parseType(str) {
   return makeType(tokenStream(str));
 }
