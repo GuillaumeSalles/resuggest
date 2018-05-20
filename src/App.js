@@ -167,11 +167,11 @@ class App extends Component {
       this.setState(
         {
           inputs: [
-            { code: "[|1|]", error: null },
+            { code: '"Hello World"', error: null },
             { code: "", error: null },
             { code: "", error: null }
           ],
-          output: { code: "1", error: null },
+          output: { code: '"HELLO WORLD"', error: null },
           suggestions: null,
           duration: null
         },
