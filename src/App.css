@@ -138,7 +138,7 @@ section {
   text-transform: capitalize;
   font-weight: 500;
   user-select: none;
-  opacity: 0.45;
+  opacity: 0.75;
   color: hsla(0, 0%, 0%, 0.8);
 }
 

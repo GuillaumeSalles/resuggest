@@ -158,7 +158,7 @@ function renderSuggestion(suggestion) {
         </pre>
         <div className="suggestion-links">
           {renderDocumentationLink(suggestion.functionName)}
-          <span style={{ opacity: 0.45 }}> ∙ </span>
+          <span style={{ opacity: 0.75 }}> ∙ </span>
           {renderPlaygroundLink(suggestion)}
         </div>
       </div>
@@ -244,7 +244,10 @@ class App extends Component {
     return (
       <div className="app">
         <div className="github">
-          <a href="https://github.com/GuillaumeSalles/resuggest">
+          <a
+            href="https://github.com/GuillaumeSalles/resuggest"
+            aria-label="View source on Github"
+          >
             <GithubIcon />
           </a>
         </div>
@@ -266,6 +269,7 @@ class App extends Component {
             />
             <h4>Desired Output</h4>
             <ReasonExpressionInput
+              label={"Desired output"}
               code={this.state.output.code}
               error={this.state.output.error}
               onChange={this.onOutputChange}

@@ -15,6 +15,7 @@ class ReasonExpressionInput extends Component {
         }}
       >
         <input
+          title={this.props.label}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"

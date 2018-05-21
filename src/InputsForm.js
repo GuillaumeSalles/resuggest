@@ -12,6 +12,7 @@ class InputsForm extends Component {
             key={"input" + index}
             code={input.code}
             error={input.error}
+            label={"Argument " + (index + 1)}
             onChange={newCode => {
               const newInputs = this.props.inputs.map(
                 (input, i) =>
