@@ -4,6 +4,7 @@ import InputsForm from "./InputsForm";
 import debounce from "./debounce";
 import ReasonExpressionInput from "./ReasonExpressionInput";
 import suggest from "./suggest";
+import * as lzString from "lz-string";
 
 function safeSuggest(inputs, output) {
   try {
@@ -56,49 +57,40 @@ function functionNameToDisplayUsage(name) {
 function renderDocumentationLink(functionName) {
   return (
     <a
-      className="documentation-link"
+      className="external-link"
       href={
         "https://reasonml.github.io/api/" +
         functionNameToDocumentionLink(functionName)
       }
       target="_blank"
     >
-      see the docs →
+      see the docs
     </a>
   );
 }
 
 function renderBasicFunctionUsage(suggestion) {
   return (
-    <span>
-      {functionNameToDisplayUsage(suggestion.functionName)}
-      {"(" +
-        suggestion.inputs
-          .map(i => i.code)
-          .join(", ")
-          .concat(") == ")
-          .concat(suggestion.output.code)}
-    </span>
+    functionNameToDisplayUsage(suggestion.functionName) +
+    "(" +
+    suggestion.inputs
+      .map(i => i.code)
+      .join(", ")
+      .concat(") == ")
+      .concat(suggestion.output.code)
   );
 }
 
 function renderOperatorWith1Arg(suggestion) {
-  return (
-    <span>
-      {functionNameToDisplayUsage(suggestion.functionName)}{" "}
-      {suggestion.inputs[0].code} == {suggestion.output.code}
-    </span>
-  );
+  return `${functionNameToDisplayUsage(suggestion.functionName)} ${
+    suggestion.inputs[0].code
+  } == ${suggestion.output.code}`;
 }
 
 function renderOperatorWith2Args(suggestion) {
-  return (
-    <span>
-      {suggestion.inputs[0].code}{" "}
-      {functionNameToDisplayUsage(suggestion.functionName)}{" "}
-      {suggestion.inputs[1].code} == {suggestion.output.code}
-    </span>
-  );
+  return `${suggestion.inputs[0].code} ${functionNameToDisplayUsage(
+    suggestion.functionName
+  )} ${suggestion.inputs[1].code} == ${suggestion.output.code}`;
 }
 
 function renderUsage(suggestion) {
@@ -153,11 +145,34 @@ function renderSuggestion(suggestion) {
         </span>
         <span> ∙ </span>
         {renderDocumentationLink(suggestion.functionName)}
+        <span> ∙ </span>
+        {renderPlaygroundLink(suggestion)}
       </div>
       <pre>
-        <code>{renderUsage(suggestion)}</code>
+        <code>
+          <span>{renderUsage(suggestion)}</span>
+        </code>
       </pre>
     </div>
+  );
+}
+
+function makePlaygroundLink(suggestion) {
+  return (
+    "https://reasonml.github.io/en/try.html?rrjsx=true&reason=" +
+    lzString.compressToEncodedURIComponent(`Js.log(${renderUsage(suggestion)})`)
+  );
+}
+
+function renderPlaygroundLink(suggestion) {
+  return (
+    <a
+      className="external-link"
+      href={makePlaygroundLink(suggestion)}
+      target="_blank"
+    >
+      try it in playground
+    </a>
   );
 }
 
