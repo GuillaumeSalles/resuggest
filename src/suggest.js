@@ -6,6 +6,18 @@ import reasonExpToJs from "./reasonExpToJs";
 
 const db = require("./generated/db.js");
 
+var compilationCache = new Map();
+
+function memoizedReasonExpToJs(exp) {
+  if (compilationCache.has(exp)) {
+    return compilationCache.get(exp);
+  }
+
+  let result = reasonExpToJs(exp);
+  compilationCache.set(exp, result);
+  return result;
+}
+
 function flatten(arrayOfArrays) {
   var result = [];
   for (var array of arrayOfArrays) {
@@ -135,8 +147,8 @@ export function orderedSuggest(inputs, output) {
 }
 
 export default function suggest(inputs, output) {
-  const compiledInputs = inputs.map(reasonExpToJs);
-  const compiledOutput = reasonExpToJs(output);
+  const compiledInputs = inputs.map(memoizedReasonExpToJs);
+  const compiledOutput = memoizedReasonExpToJs(output);
 
   if (
     compiledInputs.some(i => i.error !== null) ||
