@@ -1,6 +1,6 @@
-![resuggest screenshot](https://github.com/GuillaumeSalles/resuggest/blob/master/docs/example.png?raw=true)
-
 # [resuggest](https://GuillaumeSalles.github.io/resuggest)
+
+![resuggest screenshot](https://github.com/GuillaumeSalles/resuggest/blob/master/docs/example.png?raw=true)
 
 Discover [Reason](https://reasonml.github.io/) functions based on examples. You supply some arguments and the desired output, then it makes suggestions.
 
