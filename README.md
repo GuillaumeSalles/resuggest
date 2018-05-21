@@ -1,8 +1,15 @@
 # [resuggest](https://GuillaumeSalles.github.io/resuggest)
 
-Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
+Discover [Reason](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
 ![resuggest screenshot](https://github.com/GuillaumeSalles/resuggest/blob/master/docs/example.png?raw=true)
+
+## Features
+
+- Support 150+ functions without side effects
+- Display documentation for each functions
+- Permute arguments to increase the number of matches
+- Try function in the Reason [playground](https://github.com/GuillaumeSalles/resuggest)
 
 ## Thanks
 
