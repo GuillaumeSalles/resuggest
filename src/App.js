@@ -65,6 +65,7 @@ function renderDocumentationLink(functionName) {
         functionNameToDocumentionLink(functionName)
       }
       target="_blank"
+      rel="noopener"
     >
       see the docs
     </a>
@@ -178,6 +179,7 @@ function renderPlaygroundLink(suggestion) {
       className="external-link"
       href={makePlaygroundLink(suggestion)}
       target="_blank"
+      rel="noopener"
     >
       try it in playground
     </a>
@@ -253,8 +255,8 @@ class App extends Component {
           <div>SUGGEST</div>
         </div>
         <p className="app-description">
-          Discover ReasonML functions based on examples. You supply some
-          arguments and the desired output, then it makes suggestions.
+          Discover Reason functions based on examples. You supply some arguments
+          and the desired output, then it makes suggestions.
         </p>
         <main>
           <section>
