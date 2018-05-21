@@ -254,7 +254,7 @@ class App extends Component {
         </div>
         <p className="app-description">
           Discover ReasonML functions based on examples. You supply some
-          arguments and the desired output, and it makes suggestions.
+          arguments and the desired output, then it makes suggestions.
         </p>
         <main>
           <section>
