@@ -2,7 +2,7 @@
 
 Discover [ReasonML](https://reasonml.github.io/) functions based on examples. You supply an example input and output, and it makes suggestions.
 
-![resuggest screenshot](https://i.imgur.com/sCBpEI5.png?1)
+![resuggest screenshot](https://github.com/GuillaumeSalles/resuggest/blob/master/docs/example.png?raw=true)
 
 ## Inspiration
 
