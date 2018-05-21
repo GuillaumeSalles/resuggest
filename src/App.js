@@ -74,23 +74,23 @@ function renderBasicFunctionUsage(suggestion) {
     functionNameToDisplayUsage(suggestion.functionName) +
     "(" +
     suggestion.inputs
-      .map(i => i.code)
+      .map(i => i.code.trim())
       .join(", ")
       .concat(") == ")
-      .concat(suggestion.output.code)
+      .concat(suggestion.output.code.trim())
   );
 }
 
 function renderOperatorWith1Arg(suggestion) {
-  return `${functionNameToDisplayUsage(suggestion.functionName)} ${
-    suggestion.inputs[0].code
-  } == ${suggestion.output.code}`;
+  return `${functionNameToDisplayUsage(
+    suggestion.functionName
+  )} ${suggestion.inputs[0].code.trim()} == ${suggestion.output.code.trim()}`;
 }
 
 function renderOperatorWith2Args(suggestion) {
-  return `${suggestion.inputs[0].code} ${functionNameToDisplayUsage(
+  return `${suggestion.inputs[0].code.trim()} ${functionNameToDisplayUsage(
     suggestion.functionName
-  )} ${suggestion.inputs[1].code} == ${suggestion.output.code}`;
+  )} ${suggestion.inputs[1].code.trim()} == ${suggestion.output.code.trim()}`;
 }
 
 function renderUsage(suggestion) {
