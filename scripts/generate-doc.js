@@ -2,6 +2,7 @@ const axios = require("axios");
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
 const functions = require("./functions");
+const functionNameToReasonApiAnchorId = require("../src/functionNameToReasonApiAnchorId");
 
 function makeFnToDocMap(functionNameAndDocTuples) {
   return `
@@ -51,38 +52,13 @@ function functionNameToModuleName(name) {
   }
 }
 
-function getDocId(functionName) {
-  switch (functionName) {
-    case "(===)":
-      return "(==)";
-    case "(!==)":
-      return "(!=)";
-    case "(==)":
-      return "(=)";
-    case "(!=)":
-      return "(<>)";
-    case "(*)":
-      return "( * )";
-    case "(*.)":
-      return "( *. )";
-    case "(**)":
-      return "( ** )";
-    case "(++)":
-      return "(^)";
-    default:
-      let words = functionName.split(".");
-      return functionName.startsWith("(") || words.length === 1
-        ? functionName
-        : words[1];
-  }
-}
-
 function extractDoc(functionName, moduleNameToJsDomMap) {
   console.log("Extract " + functionName);
   return moduleNameToJsDomMap
     .get(functionNameToModuleName(functionName))
-    .window.document.getElementById("VAL" + getDocId(functionName)).nextSibling
-    .innerHTML;
+    .window.document.getElementById(
+      "VAL" + functionNameToReasonApiAnchorId(functionName)
+    ).nextSibling.innerHTML;
 }
 
 let docsToFetch = ["Pervasives", "String", "Char", "List", "Array"];

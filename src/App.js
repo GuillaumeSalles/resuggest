@@ -6,6 +6,7 @@ import ReasonExpressionInput from "./ReasonExpressionInput";
 import suggest from "./suggest";
 import * as lzString from "lz-string";
 import documentation from "./generated/doc";
+import functionNameToReasonApiAnchorId from "./functionNameToReasonApiAnchorId";
 
 function safeSuggest(inputs, output) {
   try {
@@ -41,9 +42,9 @@ function waitUntilScriptsLoaded(done) {
 function functionNameToDocumentionLink(name) {
   var words = name.split(".");
   if (words.length === 1) {
-    return "Pervasives.html#VAL" + words[0];
+    return "Pervasives.html#VAL" + functionNameToReasonApiAnchorId(name);
   } else {
-    return words[0] + ".html#VAL" + words[1];
+    return words[0] + ".html#VAL" + functionNameToReasonApiAnchorId(name);
   }
 }
 
