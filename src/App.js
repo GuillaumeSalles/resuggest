@@ -5,6 +5,7 @@ import debounce from "./debounce";
 import ReasonExpressionInput from "./ReasonExpressionInput";
 import suggest from "./suggest";
 import * as lzString from "lz-string";
+import documentation from "./generated/doc";
 
 function safeSuggest(inputs, output) {
   try {
@@ -140,19 +141,25 @@ function renderSuggestion(suggestion) {
   return (
     <div>
       <div className="suggestion-header">
-        <span className="suggestion-name">
+        <h3 className="suggestion-name">
           {functionNameToDisplayUsage(suggestion.functionName)}
-        </span>
-        <span> ∙ </span>
-        {renderDocumentationLink(suggestion.functionName)}
-        <span> ∙ </span>
-        {renderPlaygroundLink(suggestion)}
+        </h3>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: documentation.get(suggestion.functionName)
+          }}
+        />
+        <pre className="suggestion-usage">
+          <code>
+            <span>{renderUsage(suggestion)}</span>
+          </code>
+        </pre>
+        <div className="suggestion-links">
+          {renderDocumentationLink(suggestion.functionName)}
+          <span style={{ opacity: 0.45 }}> ∙ </span>
+          {renderPlaygroundLink(suggestion)}
+        </div>
       </div>
-      <pre>
-        <code>
-          <span>{renderUsage(suggestion)}</span>
-        </code>
-      </pre>
     </div>
   );
 }

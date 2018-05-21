@@ -111,12 +111,24 @@ section {
 }
 
 .suggestion-header {
-  margin: 0px 0 10px 0;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 0 20px;
+  background: #fff;
+  border-radius: 5px;
 }
 
 .suggestion-name {
   color: #db4d3f;
   font-size: 20px;
+}
+
+.suggestion-usage {
+  margin: 20px 0;
+}
+
+.suggestion-links {
+  margin: 15px 0;
 }
 
 .external-link {

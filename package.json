@@ -18,6 +18,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "generate-db": "node scripts/generate-db.js"
+    "generate-db": "node scripts/generate-db.js",
+    "generate-doc": "node scripts/generate-doc.js"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "jsdom": "^11.10.0"
   }
 }
