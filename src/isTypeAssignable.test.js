@@ -1,8 +1,4 @@
-import suggest, {
-  orderedSuggest,
-  isTypeAssignable,
-  makeAstFunctionType
-} from "./suggest";
+import isTypeAssignable from "./isTypeAssignable";
 import typeKinds from "./typeKinds";
 import parseType from "./parseType";
 
