@@ -152,9 +152,7 @@ function renderSuggestion(suggestion) {
           }}
         />
         <pre className="suggestion-usage">
-          <code>
-            <span>{renderUsage(suggestion)}</span>
-          </code>
+          <code>{renderUsage(suggestion)}</code>
         </pre>
         <div className="suggestion-links">
           {renderDocumentationLink(suggestion.functionName)}
