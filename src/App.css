@@ -34,6 +34,7 @@ pre {
   font-size: 19px;
   color: rgba(255, 255, 255, 0.8);
   -webkit-font-smoothing: antialiased;
+  overflow-x: auto;
 }
 
 input {
@@ -62,7 +63,8 @@ main {
 
 @media screen and (max-width: 850px) {
   main {
-    grid-template-columns: auto;
+    grid-gap: 0px;
+    grid-template-columns: 100%;
   }
 }
 

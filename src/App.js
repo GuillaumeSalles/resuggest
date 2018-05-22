@@ -141,24 +141,22 @@ function renderUsage(suggestion) {
 
 function renderSuggestion(suggestion) {
   return (
-    <div>
-      <div className="suggestion-header">
-        <h3 className="suggestion-name">
-          {functionNameToDisplayUsage(suggestion.functionName)}
-        </h3>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: documentation.get(suggestion.functionName)
-          }}
-        />
-        <pre className="suggestion-usage">
-          <code>{renderUsage(suggestion)}</code>
-        </pre>
-        <div className="suggestion-links">
-          {renderDocumentationLink(suggestion.functionName)}
-          <span style={{ opacity: 0.75 }}> ∙ </span>
-          {renderPlaygroundLink(suggestion)}
-        </div>
+    <div className="suggestion-header">
+      <h3 className="suggestion-name">
+        {functionNameToDisplayUsage(suggestion.functionName)}
+      </h3>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: documentation.get(suggestion.functionName)
+        }}
+      />
+      <pre className="suggestion-usage">
+        <code>{renderUsage(suggestion)}</code>
+      </pre>
+      <div className="suggestion-links">
+        {renderDocumentationLink(suggestion.functionName)}
+        <span style={{ opacity: 0.75 }}> ∙ </span>
+        {renderPlaygroundLink(suggestion)}
       </div>
     </div>
   );
