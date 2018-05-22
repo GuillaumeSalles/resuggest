@@ -187,21 +187,24 @@ function renderPlaygroundLink(suggestion) {
 }
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      inputs: [
+        { code: '"Hello World"', error: null },
+        { code: "", error: null },
+        { code: "", error: null }
+      ],
+      output: { code: '"HELLO WORLD"', error: null },
+      suggestions: null,
+      duration: null
+    };
+  }
+
   componentDidMount() {
     waitUntilScriptsLoaded(() => {
-      this.setState(
-        {
-          inputs: [
-            { code: '"Hello World"', error: null },
-            { code: "", error: null },
-            { code: "", error: null }
-          ],
-          output: { code: '"HELLO WORLD"', error: null },
-          suggestions: null,
-          duration: null
-        },
-        () => this.suggest(this.state.inputs, this.state.output)
-      );
+      this.suggest(this.state.inputs, this.state.output);
     });
   }
 
@@ -237,10 +240,6 @@ class App extends Component {
   }, 0);
 
   render() {
-    if (!this.state) {
-      return <div />;
-    }
-
     return (
       <div className="app">
         <div className="github">
