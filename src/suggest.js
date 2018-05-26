@@ -5,6 +5,7 @@ import { caml_equal } from "bs-platform/lib/js/caml_obj";
 import $$Array from "bs-platform/lib/js/array.js";
 import reasonExpToJs from "./reasonExpToJs";
 import uniquePermutations from "./uniquePermutations";
+import flatten from "./flatten";
 
 const db = require("./generated/db.js");
 
@@ -17,16 +18,6 @@ function memoizedReasonExpToJs(exp) {
 
   let result = reasonExpToJs(exp);
   compilationCache.set(exp, result);
-  return result;
-}
-
-function flatten(arrayOfArrays) {
-  var result = [];
-  for (var array of arrayOfArrays) {
-    for (var item of array) {
-      result.push(item);
-    }
-  }
   return result;
 }
 
