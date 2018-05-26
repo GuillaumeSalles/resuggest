@@ -47,18 +47,25 @@ function functionNameToModuleName(name) {
   var words = name.split(".");
   if (words.length === 1) {
     return "Pervasives";
-  } else {
+  } else if (words.length === 2) {
     return words[0];
+  } else if (words.length === 3) {
+    // Belt
+    return `${words[0]}.${words[1]}`;
   }
 }
 
 function extractDoc(functionName, moduleNameToJsDomMap) {
   console.log("Extract " + functionName);
-  return moduleNameToJsDomMap
-    .get(functionNameToModuleName(functionName))
-    .window.document.getElementById(
-      "VAL" + functionNameToReasonApiAnchorId(functionName)
-    ).nextSibling.innerHTML;
+  let dom = moduleNameToJsDomMap.get(functionNameToModuleName(functionName));
+
+  if (dom === undefined) {
+    return "";
+  }
+
+  return dom.window.document.getElementById(
+    "VAL" + functionNameToReasonApiAnchorId(functionName)
+  ).nextSibling.innerHTML;
 }
 
 let docsToFetch = ["Pervasives", "String", "Char", "List", "Array"];
