@@ -18,6 +18,30 @@ describe("createPostfixExpression", () => {
     );
   });
 
+  it("should parse int * int * int", () => {
+    expect(createPostfixExpression(tokenStream("int * int * int"))).toEqual([
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.star },
+      { kind: tokenKinds.star }
+    ]);
+  });
+
+  it("ratata should parse int * int * int -> int", () => {
+    expect(
+      createPostfixExpression(tokenStream("int * int * int -> int"))
+    ).toEqual([
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.star },
+      { kind: tokenKinds.star },
+      { kind: tokenKinds.simple, value: "int" },
+      { kind: tokenKinds.arrow }
+    ]);
+  });
+
   it("should parse int -> string * int", () => {
     expect(createPostfixExpression(tokenStream("int -> string * int"))).toEqual(
       [
@@ -63,8 +87,10 @@ describe("parseType", () => {
       kind: typeKinds.func,
       input: {
         kind: typeKinds.tuple,
-        firstType: { kind: typeKinds.simple, type: "int" },
-        secondType: { kind: typeKinds.simple, type: "string" }
+        types: [
+          { kind: typeKinds.simple, type: "int" },
+          { kind: typeKinds.simple, type: "string" }
+        ]
       },
       output: { kind: typeKinds.simple, type: "int" }
     });
@@ -176,20 +202,33 @@ describe("parseType", () => {
   it("should parse int * string", () => {
     expect(parseType("int * string")).toEqual({
       kind: typeKinds.tuple,
-      firstType: { kind: typeKinds.simple, type: "int" },
-      secondType: { kind: typeKinds.simple, type: "string" }
+      types: [
+        { kind: typeKinds.simple, type: "int" },
+        { kind: typeKinds.simple, type: "string" }
+      ]
     });
   });
 
   it("should parse string * int * char", () => {
     expect(parseType("string * int * char")).toEqual({
       kind: typeKinds.tuple,
-      firstType: { kind: typeKinds.simple, type: "string" },
-      secondType: {
-        kind: typeKinds.tuple,
-        firstType: { kind: typeKinds.simple, type: "int" },
-        secondType: { kind: typeKinds.simple, type: "char" }
-      }
+      types: [
+        { kind: typeKinds.simple, type: "string" },
+        { kind: typeKinds.simple, type: "int" },
+        { kind: typeKinds.simple, type: "char" }
+      ]
+    });
+  });
+
+  it("should parse float * string * int * char", () => {
+    expect(parseType("float * string * int * char")).toEqual({
+      kind: typeKinds.tuple,
+      types: [
+        { kind: typeKinds.simple, type: "float" },
+        { kind: typeKinds.simple, type: "string" },
+        { kind: typeKinds.simple, type: "int" },
+        { kind: typeKinds.simple, type: "char" }
+      ]
     });
   });
 });

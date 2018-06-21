@@ -126,7 +126,7 @@ export function createPostfixExpression(tokenStream) {
       case tokenKinds.arrow:
       case tokenKinds.list:
       case tokenKinds.array:
-        if (hasLowerPrecedenceThanTopOperator(operatorStack, token)) {
+        while (hasLowerPrecedenceThanTopOperator(operatorStack, token)) {
           postfix.push(operatorStack.pop());
         }
         operatorStack.push(token);
@@ -177,11 +177,19 @@ function makeType(tokenStream) {
         types.push({ kind: typeKinds.generic, type: token.value });
         break;
       case tokenKinds.star:
-        types.push({
-          kind: typeKinds.tuple,
-          secondType: types.pop(),
-          firstType: types.pop()
-        });
+        const previousType = types.pop();
+        if (previousType.kind === typeKinds.tuple) {
+          previousType.types.unshift(types.pop());
+          types.push(previousType);
+        } else {
+          const tupleTypes = [];
+          tupleTypes.unshift(previousType);
+          tupleTypes.unshift(types.pop());
+          types.push({
+            kind: typeKinds.tuple,
+            types: tupleTypes
+          });
+        }
         break;
       case tokenKinds.arrow:
         types.push({

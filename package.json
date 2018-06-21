@@ -16,7 +16,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --watch",
     "eject": "react-scripts eject",
     "generate-db": "node scripts/generate-db.js",
     "generate-doc": "node scripts/generate-doc.js"

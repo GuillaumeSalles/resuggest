@@ -48,8 +48,10 @@ export default function isTypeAssignable(left, right, genericsMap = {}) {
 
   if (left.kind === typeKinds.tuple) {
     return (
-      isTypeAssignable(left.firstType, right.firstType, genericsMap) &&
-      isTypeAssignable(left.secondType, right.secondType, genericsMap)
+      left.types.length === right.types.length &&
+      left.types.every((leftSubType, index) =>
+        isTypeAssignable(leftSubType, right.types[index], genericsMap)
+      )
     );
   }
 
