@@ -21,6 +21,11 @@ export type CompilationResult =
   | FailedCompilationResult
   | EmptyCompilationResult;
 
+export type Input = {
+  code: string;
+  expectedMutation: string | null;
+};
+
 export type Suggestion = {
   functionName: string;
   example: string;

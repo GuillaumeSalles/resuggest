@@ -3,7 +3,8 @@ import {
   AstTypeKind,
   AstType,
   SuccessfulCompilationResult,
-  Suggestion
+  Suggestion,
+  Input
 } from "./types";
 
 import parseType from "./parseType";
@@ -109,8 +110,8 @@ function suggestFromCompilationsResults(
   );
 }
 
-export default function suggest(inputs: string[], output: string) {
-  const compiledInputs = inputs.map(memoizedReasonExpToJs);
+export default function suggest(inputs: Input[], output: string) {
+  const compiledInputs = inputs.map(input => memoizedReasonExpToJs(input.code));
   const compiledOutput = memoizedReasonExpToJs(output);
   const validOuput = sucessfulCompilationResultOrNull(compiledOutput);
   const validInputs = filterValidCompilationResults(compiledInputs);
