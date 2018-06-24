@@ -29,11 +29,11 @@ export function makeAstFunctionType(
   output: ValidCompilationResult
 ): AstType {
   if (inputs.length === 0) {
-    return parseType(output.type);
+    return output.type;
   }
   return {
     kind: AstTypeKind.Func,
-    input: parseType(inputs[0].type),
+    input: inputs[0].type,
     output: makeAstFunctionType(inputs.slice(1), output)
   };
 }

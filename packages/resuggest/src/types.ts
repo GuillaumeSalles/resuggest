@@ -12,7 +12,7 @@ export type ValidCompilationResult = {
   kind: "valid";
   code: string;
   jsValue: any;
-  type: string;
+  type: AstType;
 };
 
 export type FailedCompilationResult = {

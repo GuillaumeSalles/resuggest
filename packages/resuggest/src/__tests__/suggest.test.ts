@@ -1,5 +1,6 @@
 import suggest from "../suggest";
 import { ValidCompilationResult, Suggestion, CompiledInput } from "../types";
+import parseType from "../parseType";
 
 function immutableInput(
   code: string,
@@ -17,7 +18,7 @@ function cr(code: string, jsValue: any, type: string): ValidCompilationResult {
     kind: "valid",
     code,
     jsValue,
-    type
+    type: parseType(type)
   };
 }
 

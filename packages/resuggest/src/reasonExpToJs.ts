@@ -1,4 +1,5 @@
 import { CompilationResult } from "./types";
+import parseType from "./parseType";
 
 function wrapInExports(code: string): string {
   return `(function(exports) {${code}})(window.exports = {})`;
@@ -44,7 +45,7 @@ function reasonExpToJs(reasonExp: string): CompilationResult {
       kind: "valid",
       code: reasonExp,
       jsValue: (<any>window).exports.exp,
-      type: guessType(reasonExp)
+      type: parseType(guessType(reasonExp))
     };
   } else {
     return {
