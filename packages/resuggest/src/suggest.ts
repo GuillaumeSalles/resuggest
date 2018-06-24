@@ -69,7 +69,7 @@ export function orderedSuggest(
     }));
 }
 
-function sucessfulCompilationResultOrNull(
+function validCompilationResultOrNull(
   compilationResult: CompilationResult
 ): ValidCompilationResult | null {
   if (compilationResult.kind === "valid") {
@@ -88,29 +88,24 @@ function filterValidCompilationResults(
 }
 
 export default function suggest(
-  inputs: CompiledInput[],
+  inputs: Array<{
+    expression: CompilationResult;
+    expectedMutation: CompilationResult | null;
+  }>,
   output: CompilationResult
 ) {
-  const validOuput = sucessfulCompilationResultOrNull(output);
+  const validOuput = validCompilationResultOrNull(output);
   const validInputs = filterValidCompilationResults(
     inputs.map(i => i.expression)
   );
 
   if (validInputs.length === 0 || validOuput === null) {
-    return {
-      inputs,
-      output,
-      suggestions: []
-    };
+    return [];
   }
 
-  return {
-    inputs,
-    output,
-    suggestions: flatten(
-      uniquePermutations(validInputs).map(permutedInputs =>
-        orderedSuggest(permutedInputs, validOuput)
-      )
+  return flatten(
+    uniquePermutations(validInputs).map(permutedInputs =>
+      orderedSuggest(permutedInputs, validOuput)
     )
-  };
+  );
 }
