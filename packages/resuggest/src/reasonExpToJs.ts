@@ -29,7 +29,7 @@ function guessType(reasonExpression: string): string {
 }
 
 function reasonExpToJs(reasonExp: string): CompilationResult {
-  if (reasonExp.length === 0) {
+  if (reasonExp.trim().length === 0) {
     return {
       kind: "empty",
       code: reasonExp

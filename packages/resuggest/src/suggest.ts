@@ -30,11 +30,9 @@ function memoizedReasonExpToJs(exp: string): CompilationResult {
 type AstTypeToFuncs = [AstType, any[]];
 
 const strToFunctionPair = Object.values(db) as [string, any[]][];
-const astTypeToFunctionPairs: AstTypeToFuncs[] = strToFunctionPair.map(
-  ([type, funcs]) => {
-    return [parseType(type), $$Array.of_list(funcs)] as AstTypeToFuncs;
-  }
-);
+const astTypeToFunctionPairs = strToFunctionPair.map(([type, funcs]) => {
+  return [parseType(type), $$Array.of_list(funcs)] as AstTypeToFuncs;
+});
 
 export function makeAstFunctionType(
   inputs: SuccessfulCompilationResult[],
@@ -82,41 +80,31 @@ export function orderedSuggest(
     }));
 }
 
-function isFailedCompulationResult(
+function sucessfulCompilationResultOrNull(
   compilationResult: CompilationResult
-): boolean {
-  return compilationResult.kind === "fail";
+): SuccessfulCompilationResult | null {
+  if (compilationResult.kind === "success") {
+    return compilationResult;
+  } else {
+    return null;
+  }
 }
 
-function isSucessfulCompilationResult(
-  compilationResult: CompilationResult
-): boolean {
-  return compilationResult.kind === "success";
+function filterValidCompilationResults(
+  compilationResults: CompilationResult[]
+): SuccessfulCompilationResult[] {
+  return compilationResults.filter(
+    r => r.kind === "success"
+  ) as SuccessfulCompilationResult[];
 }
 
 export default function suggest(inputs: string[], output: string) {
   const compiledInputs = inputs.map(memoizedReasonExpToJs);
   const compiledOutput = memoizedReasonExpToJs(output);
+  const validOuput = sucessfulCompilationResultOrNull(compiledOutput);
+  const validInputs = filterValidCompilationResults(compiledInputs);
 
-  if (
-    compiledInputs.some(isFailedCompulationResult) ||
-    isFailedCompulationResult(compiledOutput)
-  ) {
-    return {
-      inputs: compiledInputs,
-      output: compiledOutput,
-      suggestions: []
-    };
-  }
-
-  var validInputs = compiledInputs.filter(
-    isSucessfulCompilationResult
-  ) as SuccessfulCompilationResult[];
-
-  if (
-    validInputs.length === 0 ||
-    !isSucessfulCompilationResult(compiledOutput)
-  ) {
+  if (validInputs.length === 0 || validOuput === null) {
     return {
       inputs: compiledInputs,
       output: compiledOutput,
@@ -129,10 +117,7 @@ export default function suggest(inputs: string[], output: string) {
     output: compiledOutput,
     suggestions: flatten(
       uniquePermutations(validInputs).map(permutedInputs =>
-        orderedSuggest(
-          permutedInputs,
-          compiledOutput as SuccessfulCompilationResult
-        )
+        orderedSuggest(permutedInputs, validOuput)
       )
     )
   };
