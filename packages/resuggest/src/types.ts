@@ -42,16 +42,22 @@ export enum AstTypeKind {
   List,
   Func,
   Generic,
-  Tuple
+  Tuple,
+  Unit
 }
 
 export type AstType =
+  | AstUnitType
   | AstFunctionType
   | AstTupleType
   | AstSimpleType
   | AstGenericType
   | AstArrayType
   | AstListType;
+
+export type AstUnitType = {
+  kind: AstTypeKind.Unit;
+};
 
 export type AstFunctionType = {
   kind: AstTypeKind.Func;

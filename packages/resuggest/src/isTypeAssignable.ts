@@ -54,6 +54,10 @@ export default function isTypeAssignable(
     );
   }
 
+  if (left.kind === AstTypeKind.Unit && right.kind === AstTypeKind.Unit) {
+    return true;
+  }
+
   if (left.kind === AstTypeKind.Tuple && right.kind === AstTypeKind.Tuple) {
     return (
       left.types.length === right.types.length &&

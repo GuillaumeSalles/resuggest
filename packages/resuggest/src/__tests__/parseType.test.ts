@@ -237,4 +237,20 @@ describe("parseType", () => {
       ]
     });
   });
+
+  it("should parse 'a array -> unit", () => {
+    expect(parseType("'a array -> unit")).toEqual({
+      kind: AstTypeKind.Func,
+      input: {
+        kind: AstTypeKind.Array,
+        itemType: {
+          kind: AstTypeKind.Generic,
+          type: "'a"
+        }
+      },
+      output: {
+        kind: AstTypeKind.Unit
+      }
+    });
+  });
 });

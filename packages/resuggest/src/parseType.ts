@@ -18,6 +18,7 @@ export const tokenKinds = {
   arrow: "arrow",
   generic: "generic",
   star: "star",
+  unit: "unit",
   openParenthesis: "openParenthesis",
   closeParenthesis: "closeParenthesis"
 };
@@ -76,6 +77,8 @@ export function tokenStream(str: string) {
       return { kind: tokenKinds.closeParenthesis };
     } else if (word === "*") {
       return { kind: tokenKinds.star };
+    } else if (word === "unit") {
+      return { kind: tokenKinds.unit };
     }
 
     throw new Error("Unkown word: '" + word + "' words: " + words);
@@ -132,6 +135,7 @@ export function createPostfixExpression(tokenStream: TokenStream) {
     switch (token.kind) {
       case tokenKinds.simple:
       case tokenKinds.generic:
+      case tokenKinds.unit:
         postfix.push(token);
         break;
       case tokenKinds.star:
@@ -182,6 +186,9 @@ function makeType(tokenStream: TokenStream) {
 
   for (let token of postfix) {
     switch (token.kind) {
+      case tokenKinds.unit:
+        types.push({ kind: AstTypeKind.Unit });
+        break;
       case tokenKinds.simple:
         types.push({ kind: AstTypeKind.Simple, type: token.value });
         break;
