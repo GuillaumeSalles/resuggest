@@ -8,8 +8,8 @@ export type EmptyCompilationResult = {
   code: string;
 };
 
-export type SuccessfulCompilationResult = {
-  kind: "success";
+export type ValidCompilationResult = {
+  kind: "valid";
   code: string;
   jsValue: any;
   type: string;
@@ -22,7 +22,7 @@ export type FailedCompilationResult = {
 };
 
 export type CompilationResult =
-  | SuccessfulCompilationResult
+  | ValidCompilationResult
   | FailedCompilationResult
   | EmptyCompilationResult;
 

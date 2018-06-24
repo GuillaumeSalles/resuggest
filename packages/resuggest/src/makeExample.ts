@@ -1,4 +1,4 @@
-import { SuccessfulCompilationResult } from "./types";
+import { ValidCompilationResult } from "./types";
 
 function functionNameToDisplayUsage(name: string) {
   if (name[0] === "(") {
@@ -10,8 +10,8 @@ function functionNameToDisplayUsage(name: string) {
 
 function renderBasicFunctionUsage(
   functionName: string,
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+  inputs: ValidCompilationResult[],
+  output: ValidCompilationResult
 ) {
   return (
     functionNameToDisplayUsage(functionName) +
@@ -26,8 +26,8 @@ function renderBasicFunctionUsage(
 
 function renderOperatorWith1Arg(
   functionName: string,
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+  inputs: ValidCompilationResult[],
+  output: ValidCompilationResult
 ) {
   return `${functionNameToDisplayUsage(
     functionName
@@ -36,8 +36,8 @@ function renderOperatorWith1Arg(
 
 function renderOperatorWith2Args(
   functionName: string,
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+  inputs: ValidCompilationResult[],
+  output: ValidCompilationResult
 ) {
   return `${inputs[0].code.trim()} ${functionNameToDisplayUsage(
     functionName
@@ -46,8 +46,8 @@ function renderOperatorWith2Args(
 
 export default function makeExample(
   functionName: string,
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+  inputs: ValidCompilationResult[],
+  output: ValidCompilationResult
 ): string {
   switch (functionName) {
     case "(~-)":

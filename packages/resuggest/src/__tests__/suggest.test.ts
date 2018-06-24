@@ -1,9 +1,5 @@
 import suggest from "../suggest";
-import {
-  SuccessfulCompilationResult,
-  Suggestion,
-  CompiledInput
-} from "../types";
+import { ValidCompilationResult, Suggestion, CompiledInput } from "../types";
 
 function immutableInput(
   code: string,
@@ -16,13 +12,9 @@ function immutableInput(
   };
 }
 
-function cr(
-  code: string,
-  jsValue: any,
-  type: string
-): SuccessfulCompilationResult {
+function cr(code: string, jsValue: any, type: string): ValidCompilationResult {
   return {
-    kind: "success",
+    kind: "valid",
     code,
     jsValue,
     type

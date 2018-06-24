@@ -1,4 +1,4 @@
-import { SuccessfulCompilationResult } from "./types";
+import { ValidCompilationResult } from "./types";
 
 function permutator<T>(inputArr: T[]): T[][] {
   let result: T[][] = [];
@@ -17,9 +17,7 @@ function permutator<T>(inputArr: T[]): T[][] {
   return result;
 }
 
-function makeKeyMap(
-  inputs: SuccessfulCompilationResult[]
-): Map<string, number> {
+function makeKeyMap(inputs: ValidCompilationResult[]): Map<string, number> {
   let p2 = [1, 2, 4, 8];
   let map = new Map();
 
@@ -33,7 +31,7 @@ function makeKeyMap(
 }
 
 function computeKey(
-  inputs: SuccessfulCompilationResult[],
+  inputs: ValidCompilationResult[],
   keyMap: Map<string, number>
 ): number {
   var result = 0;
@@ -50,8 +48,8 @@ function computeKey(
 // Weird way to compute unique permutations but
 // that's the first idea that came to my brain ¯\_(ツ)_/¯
 export default function uniquePermutations(
-  inputs: SuccessfulCompilationResult[]
-): SuccessfulCompilationResult[][] {
+  inputs: ValidCompilationResult[]
+): ValidCompilationResult[][] {
   if (inputs.length === 0) {
     return [];
   }

@@ -41,7 +41,7 @@ function reasonExpToJs(reasonExp: string): CompilationResult {
   if (compilationResult.js_code) {
     (<any>window).eval(wrapInExports(compilationResult.js_code));
     return {
-      kind: "success",
+      kind: "valid",
       code: reasonExp,
       jsValue: (<any>window).exports.exp,
       type: guessType(reasonExp)

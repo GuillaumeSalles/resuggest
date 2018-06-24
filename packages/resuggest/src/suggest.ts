@@ -2,7 +2,7 @@ import {
   CompilationResult,
   AstTypeKind,
   AstType,
-  SuccessfulCompilationResult,
+  ValidCompilationResult,
   Suggestion,
   Input,
   CompiledInput
@@ -25,8 +25,8 @@ const astTypeToFunctionPairs = strToFunctionPair.map(([type, funcs]) => {
 });
 
 export function makeAstFunctionType(
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+  inputs: ValidCompilationResult[],
+  output: ValidCompilationResult
 ): AstType {
   if (inputs.length === 0) {
     return parseType(output.type);
@@ -39,8 +39,8 @@ export function makeAstFunctionType(
 }
 
 export function orderedSuggest(
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+  inputs: ValidCompilationResult[],
+  output: ValidCompilationResult
 ): Suggestion[] {
   const expectedFunctionType = makeAstFunctionType(inputs, output);
   const reasonInputs = inputs.map(i => i.jsValue);
@@ -71,8 +71,8 @@ export function orderedSuggest(
 
 function sucessfulCompilationResultOrNull(
   compilationResult: CompilationResult
-): SuccessfulCompilationResult | null {
-  if (compilationResult.kind === "success") {
+): ValidCompilationResult | null {
+  if (compilationResult.kind === "valid") {
     return compilationResult;
   } else {
     return null;
@@ -81,10 +81,10 @@ function sucessfulCompilationResultOrNull(
 
 function filterValidCompilationResults(
   compilationResults: CompilationResult[]
-): SuccessfulCompilationResult[] {
+): ValidCompilationResult[] {
   return compilationResults.filter(
-    r => r.kind === "success"
-  ) as SuccessfulCompilationResult[];
+    r => r.kind === "valid"
+  ) as ValidCompilationResult[];
 }
 
 export default function suggest(
