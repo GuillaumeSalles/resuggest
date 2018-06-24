@@ -3,6 +3,7 @@
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
+    "strictNullChecks": false,
     "sourceMap": true,
     "allowJs": true,
     "outDir": "dist",

@@ -1,9 +1,25 @@
-export type CompilationResult = {
+export type EmptyCompilationResult = {
+  kind: "empty";
+  code: string;
+};
+
+export type SuccessfulCompilationResult = {
+  kind: "success";
   code: string;
   jsValue: any;
   type: string;
-  error: string | null;
 };
+
+export type FailedCompilationResult = {
+  kind: "fail";
+  code: string;
+  error: string;
+};
+
+export type CompilationResult =
+  | SuccessfulCompilationResult
+  | FailedCompilationResult
+  | EmptyCompilationResult;
 
 export enum AstTypeKind {
   simple = "simple",

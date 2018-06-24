@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
-    "start": "tsc",
+    "start": "tsc --watch",
     "test": "jest --watch",
     "generate-db": "node scripts/generate-db.js"
   },
