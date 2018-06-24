@@ -1,8 +1,10 @@
-function wrapInExports(code) {
+import { CompilationResult } from "./types";
+
+function wrapInExports(code: string): string {
   return `(function(exports) {${code}})(window.exports = {})`;
 }
 
-function compileReason(reason) {
+function compileReason(reason: string) {
   try {
     const ocaml = (<any>window).printML((<any>window).parseRE(reason));
     return (<any>window).ocaml.compile(ocaml);
@@ -13,7 +15,7 @@ function compileReason(reason) {
   }
 }
 
-function guessType(reasonExpression) {
+function guessType(reasonExpression: string): string {
   const compilationResult = compileReason(
     `let exp = (${reasonExpression}) == 1;`
   );
@@ -26,7 +28,7 @@ function guessType(reasonExpression) {
   }
 }
 
-function reasonExpToJs(reasonExp) {
+function reasonExpToJs(reasonExp: string): CompilationResult {
   if (reasonExp.length === 0) {
     return {
       code: reasonExp,

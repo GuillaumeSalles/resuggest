@@ -1,6 +1,8 @@
-function permutator(inputArr) {
-  let result = [];
-  const permute = (arr, m = []) => {
+import { CompilationResult } from "./types";
+
+function permutator<T>(inputArr: T[]): T[][] {
+  let result: T[][] = [];
+  const permute = (arr: T[], m: T[] = []) => {
     if (arr.length === 0) {
       result.push(m);
     } else {
@@ -15,7 +17,7 @@ function permutator(inputArr) {
   return result;
 }
 
-function makeKeyMap(inputs) {
+function makeKeyMap(inputs: CompilationResult[]): Map<string, number> {
   let p2 = [1, 2, 4, 8];
   let map = new Map();
 
@@ -28,17 +30,22 @@ function makeKeyMap(inputs) {
   return map;
 }
 
-function computeKey(inputs, keyMap) {
+function computeKey(
+  inputs: CompilationResult[],
+  keyMap: Map<string, number>
+): number {
   var result = 0;
   for (let input of inputs) {
-    result += keyMap[input.code];
+    result += keyMap.get(input.code);
   }
   return result;
 }
 
 // Weird way to compute unique permutations but
 // that's the first idea that came to my brain ¯\_(ツ)_/¯
-export default function uniquePermutations(inputs) {
+export default function uniquePermutations(
+  inputs: CompilationResult[]
+): CompilationResult[][] {
   if (inputs.length === 0) {
     return [];
   }

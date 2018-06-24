@@ -2,7 +2,7 @@ import isTypeAssignable from "../isTypeAssignable";
 import typeKinds from "../typeKinds";
 import parseType from "../parseType";
 
-function testCase(left, right, result) {
+function testCase(left: string, right: string, result: boolean) {
   test(`${right} should ${
     result ? "" : "NOT"
   } be assignable to ${left}`, () => {

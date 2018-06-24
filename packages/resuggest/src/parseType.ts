@@ -1,4 +1,14 @@
 import typeKinds from "./typeKinds";
+import { AstType, AstTypeKind, AstSimpleType } from "./types";
+
+type Token = {
+  kind: string;
+  value: null | string;
+};
+
+type TokenStream = {
+  next: () => Token;
+};
 
 const simpleTypes = ["bool", "int", "float", "string", "char"];
 
@@ -13,8 +23,8 @@ export const tokenKinds = {
   closeParenthesis: "closeParenthesis"
 };
 
-export function tokenStream(str) {
-  const words = [];
+export function tokenStream(str: string) {
+  const words: string[] = [];
   let lastEnd = 0;
 
   for (var i = 0; i < str.length; i++) {
@@ -39,10 +49,10 @@ export function tokenStream(str) {
   }
   words.push(str.substring(lastEnd, str.length));
 
-  let current = null;
+  let current: any = null;
   let pos = 0;
 
-  function isSimpleType(word) {
+  function isSimpleType(word: string): boolean {
     return simpleTypes.includes(word);
   }
 
@@ -86,7 +96,7 @@ export function tokenStream(str) {
   };
 }
 
-function getLastOrDefault(arr) {
+function getLastOrDefault<T>(arr: T[]): T {
   if (arr.length === 0) {
     return null;
   }
@@ -101,7 +111,10 @@ const priorityMap = {
   [tokenKinds.array]: 3
 };
 
-function hasLowerPrecedenceThanTopOperator(operatorsStack, token) {
+function hasLowerPrecedenceThanTopOperator(
+  operatorsStack: Token[],
+  token: Token
+): boolean {
   let topOperator = getLastOrDefault(operatorsStack);
   if (topOperator === null) {
     return false;
@@ -110,7 +123,7 @@ function hasLowerPrecedenceThanTopOperator(operatorsStack, token) {
   return priorityMap[topOperator.kind] > priorityMap[token.kind];
 }
 
-export function createPostfixExpression(tokenStream) {
+export function createPostfixExpression(tokenStream: TokenStream) {
   let operatorStack = [];
   let postfix = [];
 
@@ -163,22 +176,22 @@ export function createPostfixExpression(tokenStream) {
   return postfix;
 }
 
-function makeType(tokenStream) {
+function makeType(tokenStream: TokenStream) {
   let postfix = createPostfixExpression(tokenStream);
 
-  let types = [];
+  let types: AstType[] = [];
 
   for (let token of postfix) {
     switch (token.kind) {
       case tokenKinds.simple:
-        types.push({ kind: typeKinds.simple, type: token.value });
+        types.push({ kind: AstTypeKind.simple, type: token.value });
         break;
       case tokenKinds.generic:
-        types.push({ kind: typeKinds.generic, type: token.value });
+        types.push({ kind: AstTypeKind.generic, type: token.value });
         break;
       case tokenKinds.star:
         const previousType = types.pop();
-        if (previousType.kind === typeKinds.tuple) {
+        if (previousType.kind === AstTypeKind.tuple) {
           previousType.types.unshift(types.pop());
           types.push(previousType);
         } else {
@@ -186,27 +199,27 @@ function makeType(tokenStream) {
           tupleTypes.unshift(previousType);
           tupleTypes.unshift(types.pop());
           types.push({
-            kind: typeKinds.tuple,
+            kind: AstTypeKind.tuple,
             types: tupleTypes
           });
         }
         break;
       case tokenKinds.arrow:
         types.push({
-          kind: typeKinds.func,
+          kind: AstTypeKind.func,
           output: types.pop(),
           input: types.pop()
         });
         break;
       case tokenKinds.list:
         types.push({
-          kind: typeKinds.list,
+          kind: AstTypeKind.list,
           itemType: types.pop()
         });
         break;
       case tokenKinds.array:
         types.push({
-          kind: typeKinds.array,
+          kind: AstTypeKind.array,
           itemType: types.pop()
         });
         break;
@@ -221,6 +234,6 @@ function makeType(tokenStream) {
 // Parse type extracted from compilation error
 // The Shunting Yard Algorithm: http://www.oxfordmathcenter.com/drupal7/node/628
 // 3.9.3. Postfix Evaluation: http://interactivepython.org/runestone/static/pythonds/BasicDS/InfixPrefixandPostfixExpressions.html
-export default function parseType(str) {
+export default function parseType(str: string): AstType {
   return makeType(tokenStream(str));
 }
