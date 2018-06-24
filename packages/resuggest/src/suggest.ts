@@ -44,7 +44,7 @@ export function makeAstFunctionType(
     return parseType(output.type);
   }
   return {
-    kind: AstTypeKind.func,
+    kind: AstTypeKind.Func,
     input: parseType(inputs[0].type),
     output: makeAstFunctionType(inputs.slice(1), output)
   };

@@ -22,12 +22,12 @@ export type CompilationResult =
   | EmptyCompilationResult;
 
 export enum AstTypeKind {
-  simple = "simple",
-  array = "array",
-  list = "list",
-  func = "func",
-  generic = "generic",
-  tuple = "tuple"
+  Simple,
+  Array,
+  List,
+  Func,
+  Generic,
+  Tuple
 }
 
 export type AstType =
@@ -39,32 +39,32 @@ export type AstType =
   | AstListType;
 
 export type AstFunctionType = {
-  kind: AstTypeKind.func;
+  kind: AstTypeKind.Func;
   input: AstType;
   output: AstType;
 };
 
 export type AstTupleType = {
-  kind: AstTypeKind.tuple;
+  kind: AstTypeKind.Tuple;
   types: AstType[];
 };
 
 export type AstSimpleType = {
-  kind: AstTypeKind.simple;
+  kind: AstTypeKind.Simple;
   type: string;
 };
 
 export type AstGenericType = {
-  kind: AstTypeKind.generic;
+  kind: AstTypeKind.Generic;
   type: string;
 };
 
 export type AstListType = {
-  kind: AstTypeKind.list;
+  kind: AstTypeKind.List;
   itemType: AstType;
 };
 
 export type AstArrayType = {
-  kind: AstTypeKind.array;
+  kind: AstTypeKind.Array;
   itemType: AstType;
 };

@@ -1,4 +1,3 @@
-import typeKinds from "./typeKinds";
 import { AstType, AstTypeKind, AstSimpleType } from "./types";
 
 type Token = {
@@ -184,14 +183,14 @@ function makeType(tokenStream: TokenStream) {
   for (let token of postfix) {
     switch (token.kind) {
       case tokenKinds.simple:
-        types.push({ kind: AstTypeKind.simple, type: token.value });
+        types.push({ kind: AstTypeKind.Simple, type: token.value });
         break;
       case tokenKinds.generic:
-        types.push({ kind: AstTypeKind.generic, type: token.value });
+        types.push({ kind: AstTypeKind.Generic, type: token.value });
         break;
       case tokenKinds.star:
         const previousType = types.pop();
-        if (previousType.kind === AstTypeKind.tuple) {
+        if (previousType.kind === AstTypeKind.Tuple) {
           previousType.types.unshift(types.pop());
           types.push(previousType);
         } else {
@@ -199,27 +198,27 @@ function makeType(tokenStream: TokenStream) {
           tupleTypes.unshift(previousType);
           tupleTypes.unshift(types.pop());
           types.push({
-            kind: AstTypeKind.tuple,
+            kind: AstTypeKind.Tuple,
             types: tupleTypes
           });
         }
         break;
       case tokenKinds.arrow:
         types.push({
-          kind: AstTypeKind.func,
+          kind: AstTypeKind.Func,
           output: types.pop(),
           input: types.pop()
         });
         break;
       case tokenKinds.list:
         types.push({
-          kind: AstTypeKind.list,
+          kind: AstTypeKind.List,
           itemType: types.pop()
         });
         break;
       case tokenKinds.array:
         types.push({
-          kind: AstTypeKind.array,
+          kind: AstTypeKind.Array,
           itemType: types.pop()
         });
         break;

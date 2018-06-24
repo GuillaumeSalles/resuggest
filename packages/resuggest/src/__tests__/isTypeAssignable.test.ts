@@ -1,5 +1,4 @@
 import isTypeAssignable from "../isTypeAssignable";
-import typeKinds from "../typeKinds";
 import parseType from "../parseType";
 
 function testCase(left: string, right: string, result: boolean) {

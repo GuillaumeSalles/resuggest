@@ -3,7 +3,7 @@ import parseType, {
   tokenStream,
   tokenKinds
 } from "../parseType";
-import typeKinds from "../typeKinds";
+import { AstTypeKind } from "../types";
 
 describe("createPostfixExpression", () => {
   it("should parse int * string -> int", () => {
@@ -57,127 +57,133 @@ describe("createPostfixExpression", () => {
 
 describe("parseType", () => {
   it("should parse bool", () => {
-    expect(parseType("bool")).toEqual({ kind: typeKinds.simple, type: "bool" });
+    expect(parseType("bool")).toEqual({
+      kind: AstTypeKind.Simple,
+      type: "bool"
+    });
   });
 
   it("should parse int", () => {
-    expect(parseType("int")).toEqual({ kind: typeKinds.simple, type: "int" });
+    expect(parseType("int")).toEqual({ kind: AstTypeKind.Simple, type: "int" });
   });
 
   it("should parse float", () => {
     expect(parseType("float")).toEqual({
-      kind: typeKinds.simple,
+      kind: AstTypeKind.Simple,
       type: "float"
     });
   });
 
   it("should parse char", () => {
-    expect(parseType("char")).toEqual({ kind: typeKinds.simple, type: "char" });
+    expect(parseType("char")).toEqual({
+      kind: AstTypeKind.Simple,
+      type: "char"
+    });
   });
 
   it("should parse string", () => {
     expect(parseType("string")).toEqual({
-      kind: typeKinds.simple,
+      kind: AstTypeKind.Simple,
       type: "string"
     });
   });
 
   it("should parse int * string -> int", () => {
     expect(parseType("int * string -> int")).toEqual({
-      kind: typeKinds.func,
+      kind: AstTypeKind.Func,
       input: {
-        kind: typeKinds.tuple,
+        kind: AstTypeKind.Tuple,
         types: [
-          { kind: typeKinds.simple, type: "int" },
-          { kind: typeKinds.simple, type: "string" }
+          { kind: AstTypeKind.Simple, type: "int" },
+          { kind: AstTypeKind.Simple, type: "string" }
         ]
       },
-      output: { kind: typeKinds.simple, type: "int" }
+      output: { kind: AstTypeKind.Simple, type: "int" }
     });
   });
 
   it("should parse list of string", () => {
     expect(parseType("string list")).toEqual({
-      kind: typeKinds.list,
-      itemType: { kind: typeKinds.simple, type: "string" }
+      kind: AstTypeKind.List,
+      itemType: { kind: AstTypeKind.Simple, type: "string" }
     });
   });
 
   it("should parse list of list of string", () => {
     expect(parseType("string list list")).toEqual({
-      kind: typeKinds.list,
+      kind: AstTypeKind.List,
       itemType: {
-        kind: typeKinds.list,
-        itemType: { kind: typeKinds.simple, type: "string" }
+        kind: AstTypeKind.List,
+        itemType: { kind: AstTypeKind.Simple, type: "string" }
       }
     });
   });
 
   it("should parse int -> string", () => {
     expect(parseType("int -> string")).toEqual({
-      kind: typeKinds.func,
-      input: { kind: typeKinds.simple, type: "int" },
-      output: { kind: typeKinds.simple, type: "string" }
+      kind: AstTypeKind.Func,
+      input: { kind: AstTypeKind.Simple, type: "int" },
+      output: { kind: AstTypeKind.Simple, type: "string" }
     });
   });
 
   it("should parse int -> string -> float", () => {
     expect(parseType("int -> string -> float")).toEqual({
-      kind: typeKinds.func,
-      input: { kind: typeKinds.simple, type: "int" },
+      kind: AstTypeKind.Func,
+      input: { kind: AstTypeKind.Simple, type: "int" },
       output: {
-        kind: typeKinds.func,
-        input: { kind: typeKinds.simple, type: "string" },
-        output: { kind: typeKinds.simple, type: "float" }
+        kind: AstTypeKind.Func,
+        input: { kind: AstTypeKind.Simple, type: "string" },
+        output: { kind: AstTypeKind.Simple, type: "float" }
       }
     });
   });
 
   it("should parse 'a -> 'a", () => {
     expect(parseType("'a -> 'a")).toEqual({
-      kind: typeKinds.func,
-      input: { kind: typeKinds.generic, type: "'a" },
-      output: { kind: typeKinds.generic, type: "'a" }
+      kind: AstTypeKind.Func,
+      input: { kind: AstTypeKind.Generic, type: "'a" },
+      output: { kind: AstTypeKind.Generic, type: "'a" }
     });
   });
 
   it("should parse int -> ('a -> char) -> string", () => {
     expect(parseType("int -> ('a -> char) -> string")).toEqual({
-      kind: typeKinds.func,
-      input: { kind: typeKinds.simple, type: "int" },
+      kind: AstTypeKind.Func,
+      input: { kind: AstTypeKind.Simple, type: "int" },
       output: {
-        kind: typeKinds.func,
+        kind: AstTypeKind.Func,
         input: {
-          kind: typeKinds.func,
-          input: { kind: typeKinds.generic, type: "'a" },
-          output: { kind: typeKinds.simple, type: "char" }
+          kind: AstTypeKind.Func,
+          input: { kind: AstTypeKind.Generic, type: "'a" },
+          output: { kind: AstTypeKind.Simple, type: "char" }
         },
-        output: { kind: typeKinds.simple, type: "string" }
+        output: { kind: AstTypeKind.Simple, type: "string" }
       }
     });
   });
 
   it("should parse ('a -> 'b) -> 'a list -> 'b list", () => {
     expect(parseType("('a -> 'b) -> 'a list -> 'b list")).toEqual({
-      kind: typeKinds.func,
+      kind: AstTypeKind.Func,
       input: {
-        kind: typeKinds.func,
-        input: { kind: typeKinds.generic, type: "'a" },
-        output: { kind: typeKinds.generic, type: "'b" }
+        kind: AstTypeKind.Func,
+        input: { kind: AstTypeKind.Generic, type: "'a" },
+        output: { kind: AstTypeKind.Generic, type: "'b" }
       },
       output: {
-        kind: typeKinds.func,
+        kind: AstTypeKind.Func,
         input: {
-          kind: typeKinds.list,
+          kind: AstTypeKind.List,
           itemType: {
-            kind: typeKinds.generic,
+            kind: AstTypeKind.Generic,
             type: "'a"
           }
         },
         output: {
-          kind: typeKinds.list,
+          kind: AstTypeKind.List,
           itemType: {
-            kind: typeKinds.generic,
+            kind: AstTypeKind.Generic,
             type: "'b"
           }
         }
@@ -187,47 +193,47 @@ describe("parseType", () => {
 
   it("should parse 'a array -> int", () => {
     expect(parseType("'a array -> int")).toEqual({
-      kind: typeKinds.func,
+      kind: AstTypeKind.Func,
       input: {
-        kind: typeKinds.array,
+        kind: AstTypeKind.Array,
         itemType: {
-          kind: typeKinds.generic,
+          kind: AstTypeKind.Generic,
           type: "'a"
         }
       },
-      output: { kind: typeKinds.simple, type: "int" }
+      output: { kind: AstTypeKind.Simple, type: "int" }
     });
   });
 
   it("should parse int * string", () => {
     expect(parseType("int * string")).toEqual({
-      kind: typeKinds.tuple,
+      kind: AstTypeKind.Tuple,
       types: [
-        { kind: typeKinds.simple, type: "int" },
-        { kind: typeKinds.simple, type: "string" }
+        { kind: AstTypeKind.Simple, type: "int" },
+        { kind: AstTypeKind.Simple, type: "string" }
       ]
     });
   });
 
   it("should parse string * int * char", () => {
     expect(parseType("string * int * char")).toEqual({
-      kind: typeKinds.tuple,
+      kind: AstTypeKind.Tuple,
       types: [
-        { kind: typeKinds.simple, type: "string" },
-        { kind: typeKinds.simple, type: "int" },
-        { kind: typeKinds.simple, type: "char" }
+        { kind: AstTypeKind.Simple, type: "string" },
+        { kind: AstTypeKind.Simple, type: "int" },
+        { kind: AstTypeKind.Simple, type: "char" }
       ]
     });
   });
 
   it("should parse float * string * int * char", () => {
     expect(parseType("float * string * int * char")).toEqual({
-      kind: typeKinds.tuple,
+      kind: AstTypeKind.Tuple,
       types: [
-        { kind: typeKinds.simple, type: "float" },
-        { kind: typeKinds.simple, type: "string" },
-        { kind: typeKinds.simple, type: "int" },
-        { kind: typeKinds.simple, type: "char" }
+        { kind: AstTypeKind.Simple, type: "float" },
+        { kind: AstTypeKind.Simple, type: "string" },
+        { kind: AstTypeKind.Simple, type: "int" },
+        { kind: AstTypeKind.Simple, type: "char" }
       ]
     });
   });

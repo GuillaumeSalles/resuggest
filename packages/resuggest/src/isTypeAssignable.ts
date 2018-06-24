@@ -6,14 +6,14 @@ export default function isTypeAssignable(
   genericsMap: { [id: string]: AstType } = {}
 ): boolean {
   if (
-    left.kind === AstTypeKind.generic &&
-    right.kind === AstTypeKind.generic &&
+    left.kind === AstTypeKind.Generic &&
+    right.kind === AstTypeKind.Generic &&
     left.type === right.type
   ) {
     return true;
   }
 
-  if (left.kind === AstTypeKind.generic) {
+  if (left.kind === AstTypeKind.Generic) {
     if (genericsMap[left.type] === undefined) {
       genericsMap[left.type] = right;
       return true;
@@ -22,7 +22,7 @@ export default function isTypeAssignable(
     }
   }
 
-  if (right.kind === AstTypeKind.generic) {
+  if (right.kind === AstTypeKind.Generic) {
     if (genericsMap[right.type] === undefined) {
       genericsMap[right.type] = left;
       return true;
@@ -35,26 +35,26 @@ export default function isTypeAssignable(
     return false;
   }
 
-  if (left.kind === AstTypeKind.simple && right.kind === AstTypeKind.simple) {
+  if (left.kind === AstTypeKind.Simple && right.kind === AstTypeKind.Simple) {
     return left.type === right.type;
   }
 
-  if (left.kind === AstTypeKind.list && right.kind === AstTypeKind.list) {
+  if (left.kind === AstTypeKind.List && right.kind === AstTypeKind.List) {
     return isTypeAssignable(left.itemType, right.itemType, genericsMap);
   }
 
-  if (left.kind === AstTypeKind.array && right.kind === AstTypeKind.array) {
+  if (left.kind === AstTypeKind.Array && right.kind === AstTypeKind.Array) {
     return isTypeAssignable(left.itemType, right.itemType, genericsMap);
   }
 
-  if (left.kind === AstTypeKind.func && right.kind === AstTypeKind.func) {
+  if (left.kind === AstTypeKind.Func && right.kind === AstTypeKind.Func) {
     return (
       isTypeAssignable(left.input, right.input, genericsMap) &&
       isTypeAssignable(left.output, right.output, genericsMap)
     );
   }
 
-  if (left.kind === AstTypeKind.tuple && right.kind === AstTypeKind.tuple) {
+  if (left.kind === AstTypeKind.Tuple && right.kind === AstTypeKind.Tuple) {
     return (
       left.types.length === right.types.length &&
       left.types.every((leftSubType, index) =>
