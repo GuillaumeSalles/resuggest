@@ -27,8 +27,8 @@ export type CompilationResult =
   | EmptyCompilationResult;
 
 export type CompiledInput = {
-  expression: CompilationResult;
-  expectedMutation: CompilationResult | null;
+  expression: ValidCompilationResult;
+  expectedMutation: ValidCompilationResult | null;
 };
 
 export type Suggestion = {

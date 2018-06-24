@@ -1,4 +1,4 @@
-import { ValidCompilationResult } from "./types";
+import { ValidCompilationResult, CompiledInput } from "./types";
 
 function permutator<T>(inputArr: T[]): T[][] {
   let result: T[][] = [];
@@ -17,13 +17,13 @@ function permutator<T>(inputArr: T[]): T[][] {
   return result;
 }
 
-function makeKeyMap(inputs: ValidCompilationResult[]): Map<string, number> {
+function makeKeyMap(inputs: CompiledInput[]): Map<string, number> {
   let p2 = [1, 2, 4, 8];
   let map = new Map();
 
   for (let input of inputs) {
-    if (!map.has(input.code)) {
-      map.set(input.code, p2.pop());
+    if (!map.has(input.expression.code)) {
+      map.set(input.expression.code, p2.pop());
     }
   }
 
@@ -31,14 +31,14 @@ function makeKeyMap(inputs: ValidCompilationResult[]): Map<string, number> {
 }
 
 function computeKey(
-  inputs: ValidCompilationResult[],
+  inputs: CompiledInput[],
   keyMap: Map<string, number>
 ): number {
   var result = 0;
   for (let input of inputs) {
-    const value = keyMap.get(input.code);
+    const value = keyMap.get(input.expression.code);
     if (value === undefined) {
-      throw new Error(`Key map does not contains ${input.code}`);
+      throw new Error(`Key map does not contains ${input.expression.code}`);
     }
     result += value;
   }
@@ -47,9 +47,10 @@ function computeKey(
 
 // Weird way to compute unique permutations but
 // that's the first idea that came to my brain ¯\_(ツ)_/¯
+// Todo: Handle input with mutation
 export default function uniquePermutations(
-  inputs: ValidCompilationResult[]
-): ValidCompilationResult[][] {
+  inputs: CompiledInput[]
+): CompiledInput[][] {
   if (inputs.length === 0) {
     return [];
   }

@@ -10,7 +10,10 @@ import functionNameToReasonApiAnchorId from "./functionNameToReasonApiAnchorId";
 
 function safeSuggest(inputs, output) {
   try {
-    return suggest(inputs.map(input => ({ code: input })), output);
+    return suggest(
+      inputs.map(input => ({ code: input, expectedMutation: null })),
+      output
+    );
   } catch (er) {
     return {
       output: {

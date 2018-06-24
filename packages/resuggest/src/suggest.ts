@@ -25,25 +25,28 @@ const astTypeToFunctionPairs = strToFunctionPair.map(([type, funcs]) => {
 });
 
 export function makeAstFunctionType(
-  inputs: ValidCompilationResult[],
-  output: ValidCompilationResult
+  inputs: AstType[],
+  output: AstType
 ): AstType {
   if (inputs.length === 0) {
-    return output.type;
+    return output;
   }
   return {
     kind: AstTypeKind.Func,
-    input: inputs[0].type,
+    input: inputs[0],
     output: makeAstFunctionType(inputs.slice(1), output)
   };
 }
 
 export function orderedSuggest(
-  inputs: ValidCompilationResult[],
+  inputs: CompiledInput[],
   output: ValidCompilationResult
 ): Suggestion[] {
-  const expectedFunctionType = makeAstFunctionType(inputs, output);
-  const reasonInputs = inputs.map(i => i.jsValue);
+  const expectedFunctionType = makeAstFunctionType(
+    inputs.map(i => i.expression.type),
+    output.type
+  );
+  const reasonInputs = inputs.map(i => i.expression.jsValue);
   const functionsWithMatchingSignature = flatten(
     astTypeToFunctionPairs
       .filter(([ast, funcs]) => {
@@ -65,7 +68,7 @@ export function orderedSuggest(
     .map(([_func, name]) => name)
     .map(functionName => ({
       functionName,
-      example: makeExample(functionName, inputs, output)
+      example: makeExample(functionName, inputs.map(i => i.expression), output)
     }));
 }
 
@@ -79,12 +82,19 @@ function validCompilationResultOrNull(
   }
 }
 
-function filterValidCompilationResults(
-  compilationResults: CompilationResult[]
-): ValidCompilationResult[] {
-  return compilationResults.filter(
-    r => r.kind === "valid"
-  ) as ValidCompilationResult[];
+function filterValidInputs(
+  inputs: Array<{
+    expression: CompilationResult;
+    expectedMutation: CompilationResult | null;
+  }>
+): CompiledInput[] {
+  return inputs.filter(input => {
+    return (
+      input.expression.kind === "valid" &&
+      (input.expectedMutation === null ||
+        input.expectedMutation.kind === "valid")
+    );
+  }) as CompiledInput[];
 }
 
 export default function suggest(
@@ -95,9 +105,7 @@ export default function suggest(
   output: CompilationResult
 ) {
   const validOuput = validCompilationResultOrNull(output);
-  const validInputs = filterValidCompilationResults(
-    inputs.map(i => i.expression)
-  );
+  const validInputs = filterValidInputs(inputs);
 
   if (validInputs.length === 0 || validOuput === null) {
     return [];
