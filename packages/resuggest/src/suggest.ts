@@ -1,17 +1,23 @@
+import {
+  CompilationResult,
+  AstFunctionType,
+  AstTypeKind,
+  AstType,
+  SuccessfulCompilationResult
+} from "./types";
+
 import parseType from "./parseType";
-import typeKinds from "./typeKinds";
 import isTypeAssignable from "./isTypeAssignable";
 import { caml_equal } from "bs-platform/lib/js/caml_obj";
-import $$Array from "bs-platform/lib/js/array.js";
+import * as $$Array from "bs-platform/lib/js/array.js";
 import reasonExpToJs from "./reasonExpToJs";
 import uniquePermutations from "./uniquePermutations";
 import flatten from "./flatten";
-
-const db = require("./generated/db.js");
+import * as db from "./generated/db.js";
 
 var compilationCache = new Map();
 
-function memoizedReasonExpToJs(exp) {
+function memoizedReasonExpToJs(exp: string): CompilationResult {
   if (compilationCache.has(exp)) {
     return compilationCache.get(exp);
   }
@@ -21,23 +27,33 @@ function memoizedReasonExpToJs(exp) {
   return result;
 }
 
-const astTypeToFunctionPairs = Object.values(db).map(([type, funcs]) => [
-  parseType(type),
-  $$Array.of_list(funcs)
-]);
+type AstTypeToFuncs = [AstType, any[]];
 
-export function makeAstFunctionType(inputs, output) {
+const strToFunctionPair = Object.values(db) as [string, any[]][];
+const astTypeToFunctionPairs: AstTypeToFuncs[] = strToFunctionPair.map(
+  ([type, funcs]) => {
+    return [parseType(type), $$Array.of_list(funcs)] as AstTypeToFuncs;
+  }
+);
+
+export function makeAstFunctionType(
+  inputs: SuccessfulCompilationResult[],
+  output: SuccessfulCompilationResult
+): AstType {
   if (inputs.length === 0) {
     return parseType(output.type);
   }
   return {
-    kind: typeKinds.func,
+    kind: AstTypeKind.Func,
     input: parseType(inputs[0].type),
     output: makeAstFunctionType(inputs.slice(1), output)
   };
 }
 
-export function orderedSuggest(inputs, output) {
+export function orderedSuggest(
+  inputs: SuccessfulCompilationResult[],
+  output: SuccessfulCompilationResult
+) {
   const expectedFunctionType = makeAstFunctionType(inputs, output);
   const reasonInputs = inputs.map(i => i.jsValue);
   const functionsWithMatchingSignature = flatten(
@@ -66,13 +82,25 @@ export function orderedSuggest(inputs, output) {
     }));
 }
 
-export default function suggest(inputs, output) {
+function isFailedCompulationResult(
+  compilationResult: CompilationResult
+): boolean {
+  return compilationResult.kind === "fail";
+}
+
+function isSucessfulCompilationResult(
+  compilationResult: CompilationResult
+): boolean {
+  return compilationResult.kind === "success";
+}
+
+export default function suggest(inputs: string[], output: string) {
   const compiledInputs = inputs.map(memoizedReasonExpToJs);
   const compiledOutput = memoizedReasonExpToJs(output);
 
   if (
-    compiledInputs.some(i => i.error !== null) ||
-    compiledOutput.error !== null
+    compiledInputs.some(isFailedCompulationResult) ||
+    isFailedCompulationResult(compiledOutput)
   ) {
     return {
       inputs: compiledInputs,
@@ -81,9 +109,14 @@ export default function suggest(inputs, output) {
     };
   }
 
-  var validInputs = compiledInputs.filter(i => i.code.length > 0);
+  var validInputs = compiledInputs.filter(
+    isSucessfulCompilationResult
+  ) as SuccessfulCompilationResult[];
 
-  if (validInputs.length === 0 || compiledOutput.code.length === 0) {
+  if (
+    validInputs.length === 0 ||
+    !isSucessfulCompilationResult(compiledOutput)
+  ) {
     return {
       inputs: compiledInputs,
       output: compiledOutput,
@@ -96,7 +129,10 @@ export default function suggest(inputs, output) {
     output: compiledOutput,
     suggestions: flatten(
       uniquePermutations(validInputs).map(permutedInputs =>
-        orderedSuggest(permutedInputs, compiledOutput)
+        orderedSuggest(
+          permutedInputs,
+          compiledOutput as SuccessfulCompilationResult
+        )
       )
     )
   };

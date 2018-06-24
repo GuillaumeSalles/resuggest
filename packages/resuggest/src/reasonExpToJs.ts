@@ -1,11 +1,13 @@
-function wrapInExports(code) {
+import { CompilationResult } from "./types";
+
+function wrapInExports(code: string): string {
   return `(function(exports) {${code}})(window.exports = {})`;
 }
 
-function compileReason(reason) {
+function compileReason(reason: string) {
   try {
-    const ocaml = window.printML(window.parseRE(reason));
-    return window.ocaml.compile(ocaml);
+    const ocaml = (<any>window).printML((<any>window).parseRE(reason));
+    return (<any>window).ocaml.compile(ocaml);
   } catch (er) {
     return {
       text: er.message
@@ -13,7 +15,7 @@ function compileReason(reason) {
   }
 }
 
-function guessType(reasonExpression) {
+function guessType(reasonExpression: string): string {
   const compilationResult = compileReason(
     `let exp = (${reasonExpression}) == 1;`
   );
@@ -26,31 +28,28 @@ function guessType(reasonExpression) {
   }
 }
 
-function reasonExpToJs(reasonExp) {
+function reasonExpToJs(reasonExp: string): CompilationResult {
   if (reasonExp.length === 0) {
     return {
-      code: reasonExp,
-      jsValue: null,
-      type: null,
-      error: null
+      kind: "empty",
+      code: reasonExp
     };
   }
 
   const reasonCode = `let exp = ${reasonExp};`;
   const compilationResult = compileReason(reasonCode);
   if (compilationResult.js_code) {
-    window.eval(wrapInExports(compilationResult.js_code));
+    (<any>window).eval(wrapInExports(compilationResult.js_code));
     return {
+      kind: "success",
       code: reasonExp,
-      jsValue: window.exports.exp,
-      type: guessType(reasonExp),
-      error: null
+      jsValue: (<any>window).exports.exp,
+      type: guessType(reasonExp)
     };
   } else {
     return {
+      kind: "fail",
       code: reasonExp,
-      jsValue: null,
-      type: null,
       error: compilationResult.text
     };
   }

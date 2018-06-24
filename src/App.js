@@ -3,7 +3,7 @@ import "./App.css";
 import InputsForm from "./InputsForm";
 import debounce from "./debounce";
 import ReasonExpressionInput from "./ReasonExpressionInput";
-import suggest from "./suggest";
+import suggest from "resuggest";
 import * as lzString from "lz-string";
 import documentation from "./generated/doc";
 import functionNameToReasonApiAnchorId from "./functionNameToReasonApiAnchorId";
