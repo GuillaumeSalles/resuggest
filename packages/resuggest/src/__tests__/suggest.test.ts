@@ -1,4 +1,4 @@
-import { orderedSuggest } from "../suggest";
+import suggest from "../suggest";
 import { SuccessfulCompilationResult, Suggestion } from "../types";
 
 function cr(
@@ -23,6 +23,6 @@ function suggestion(functionName: string, example: string): Suggestion {
 
 test("(+)", () => {
   expect(
-    orderedSuggest([cr("1", 1, "int"), cr("3", 3, "int")], cr("4", 4, "int"))
+    suggest([cr("1", 1, "int"), cr("3", 3, "int")], cr("4", 4, "int"))
   ).toEqual([suggestion("(+)", "1 + 3 == 4")]);
 });

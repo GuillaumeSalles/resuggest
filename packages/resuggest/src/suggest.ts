@@ -11,23 +11,10 @@ import parseType from "./parseType";
 import isTypeAssignable from "./isTypeAssignable";
 import { caml_equal } from "bs-platform/lib/js/caml_obj";
 import * as $$Array from "bs-platform/lib/js/array.js";
-import reasonExpToJs from "./reasonExpToJs";
 import uniquePermutations from "./uniquePermutations";
 import flatten from "./flatten";
 import * as db from "./generated/db.js";
 import makeExample from "./makeExample";
-
-var compilationCache = new Map();
-
-function memoizedReasonExpToJs(exp: string): CompilationResult {
-  if (compilationCache.has(exp)) {
-    return compilationCache.get(exp);
-  }
-
-  let result = reasonExpToJs(exp);
-  compilationCache.set(exp, result);
-  return result;
-}
 
 type AstTypeToFuncs = [AstType, any[]];
 
@@ -99,34 +86,28 @@ function filterValidCompilationResults(
   ) as SuccessfulCompilationResult[];
 }
 
-function suggestFromCompilationsResults(
-  inputs: SuccessfulCompilationResult[],
-  output: SuccessfulCompilationResult
+export default function suggest(
+  inputs: CompilationResult[],
+  output: CompilationResult
 ) {
-  return flatten(
-    uniquePermutations(inputs).map(permutedInputs =>
-      orderedSuggest(permutedInputs, output)
-    )
-  );
-}
-
-export default function suggest(inputs: Input[], output: string) {
-  const compiledInputs = inputs.map(input => memoizedReasonExpToJs(input.code));
-  const compiledOutput = memoizedReasonExpToJs(output);
-  const validOuput = sucessfulCompilationResultOrNull(compiledOutput);
-  const validInputs = filterValidCompilationResults(compiledInputs);
+  const validOuput = sucessfulCompilationResultOrNull(output);
+  const validInputs = filterValidCompilationResults(inputs);
 
   if (validInputs.length === 0 || validOuput === null) {
     return {
-      inputs: compiledInputs,
-      output: compiledOutput,
+      inputs,
+      output,
       suggestions: []
     };
   }
 
   return {
-    inputs: compiledInputs,
-    output: compiledOutput,
-    suggestions: suggestFromCompilationsResults(validInputs, validOuput)
+    inputs,
+    output,
+    suggestions: flatten(
+      uniquePermutations(validInputs).map(permutedInputs =>
+        orderedSuggest(permutedInputs, validOuput)
+      )
+    )
   };
 }
