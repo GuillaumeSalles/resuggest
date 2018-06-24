@@ -15,7 +15,13 @@ function memoizedReasonExpToJs(exp: string): CompilationResult {
 }
 
 export default function(inputs: Input[], output: string) {
-  const compiledInputs = inputs.map(input => memoizedReasonExpToJs(input.code));
+  const compiledInputs = inputs.map(input => ({
+    expression: memoizedReasonExpToJs(input.code),
+    expectedMutation:
+      input.expectedMutation !== null
+        ? memoizedReasonExpToJs(input.expectedMutation)
+        : null
+  }));
   const compiledOutput = memoizedReasonExpToJs(output);
   return suggest(compiledInputs, compiledOutput);
 }

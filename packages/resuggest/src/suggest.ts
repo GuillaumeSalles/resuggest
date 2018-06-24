@@ -4,7 +4,8 @@ import {
   AstType,
   SuccessfulCompilationResult,
   Suggestion,
-  Input
+  Input,
+  CompiledInput
 } from "./types";
 
 import parseType from "./parseType";
@@ -87,11 +88,13 @@ function filterValidCompilationResults(
 }
 
 export default function suggest(
-  inputs: CompilationResult[],
+  inputs: CompiledInput[],
   output: CompilationResult
 ) {
   const validOuput = sucessfulCompilationResultOrNull(output);
-  const validInputs = filterValidCompilationResults(inputs);
+  const validInputs = filterValidCompilationResults(
+    inputs.map(i => i.expression)
+  );
 
   if (validInputs.length === 0 || validOuput === null) {
     return {

@@ -1,3 +1,8 @@
+export type Input = {
+  code: string;
+  expectedMutation: string | null;
+};
+
 export type EmptyCompilationResult = {
   kind: "empty";
   code: string;
@@ -21,9 +26,9 @@ export type CompilationResult =
   | FailedCompilationResult
   | EmptyCompilationResult;
 
-export type Input = {
-  code: string;
-  expectedMutation: string | null;
+export type CompiledInput = {
+  expression: CompilationResult;
+  expectedMutation: CompilationResult | null;
 };
 
 export type Suggestion = {
