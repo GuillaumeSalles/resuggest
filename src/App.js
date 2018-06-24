@@ -39,6 +39,14 @@ function waitUntilScriptsLoaded(done) {
   }, 10);
 }
 
+function functionNameToDisplayUsage(name) {
+  if (name[0] === "(") {
+    return name.substr(1, name.length - 2);
+  }
+
+  return name;
+}
+
 function functionNameToDocumentionLink(name) {
   var words = name.split(".");
   if (words.length === 1) {
@@ -46,14 +54,6 @@ function functionNameToDocumentionLink(name) {
   } else {
     return words[0] + ".html#VAL" + functionNameToReasonApiAnchorId(name);
   }
-}
-
-function functionNameToDisplayUsage(name) {
-  if (name[0] === "(") {
-    return name.substr(1, name.length - 2);
-  }
-
-  return name;
 }
 
 function renderDocumentationLink(functionName) {
@@ -72,73 +72,6 @@ function renderDocumentationLink(functionName) {
   );
 }
 
-function renderBasicFunctionUsage(suggestion) {
-  return (
-    functionNameToDisplayUsage(suggestion.functionName) +
-    "(" +
-    suggestion.inputs
-      .map(i => i.code.trim())
-      .join(", ")
-      .concat(") == ")
-      .concat(suggestion.output.code.trim())
-  );
-}
-
-function renderOperatorWith1Arg(suggestion) {
-  return `${functionNameToDisplayUsage(
-    suggestion.functionName
-  )} ${suggestion.inputs[0].code.trim()} == ${suggestion.output.code.trim()}`;
-}
-
-function renderOperatorWith2Args(suggestion) {
-  return `${suggestion.inputs[0].code.trim()} ${functionNameToDisplayUsage(
-    suggestion.functionName
-  )} ${suggestion.inputs[1].code.trim()} == ${suggestion.output.code.trim()}`;
-}
-
-function renderUsage(suggestion) {
-  switch (suggestion.functionName) {
-    case "(~-)":
-    case "(~+)":
-    case "(~-.)":
-    case "(~+.)":
-      return renderOperatorWith1Arg(suggestion);
-    case "(+)":
-    case "(-)":
-    case "(*)":
-    case "(/)":
-    case "(==)":
-    case "(===)":
-    case "(!=)":
-    case "(!==)":
-    case "(<=)":
-    case "(>=)":
-    case "(<)":
-    case "(>)":
-    case "(!)":
-    case "(&&)":
-    case "(||)":
-    case "(@)":
-    case "(|>)":
-    case "(@@)":
-    case "(mod)":
-    case "(land)":
-    case "(lor)":
-    case "(lxor)":
-    case "(lsl)":
-    case "(lsr)":
-    case "(asr)":
-    case "(+.)":
-    case "(-.)":
-    case "(*.)":
-    case "(/.)":
-    case "(**)":
-      return renderOperatorWith2Args(suggestion);
-    default:
-      return renderBasicFunctionUsage(suggestion);
-  }
-}
-
 function renderSuggestion(suggestion) {
   return (
     <div className="suggestion-header">
@@ -151,7 +84,7 @@ function renderSuggestion(suggestion) {
         }}
       />
       <pre className="suggestion-usage">
-        <code>{renderUsage(suggestion)}</code>
+        <code>{suggestion.example}</code>
       </pre>
       <div className="suggestion-links">
         {renderDocumentationLink(suggestion.functionName)}
@@ -165,7 +98,7 @@ function renderSuggestion(suggestion) {
 function makePlaygroundLink(suggestion) {
   return (
     "https://reasonml.github.io/en/try.html?rrjsx=true&reason=" +
-    lzString.compressToEncodedURIComponent(`Js.log(${renderUsage(suggestion)})`)
+    lzString.compressToEncodedURIComponent(`Js.log(${suggestion.example})`)
   );
 }
 

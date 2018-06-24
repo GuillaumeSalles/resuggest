@@ -1,28 +1,28 @@
 import { orderedSuggest } from "../suggest";
+import { SuccessfulCompilationResult, Suggestion } from "../types";
+
+function cr(
+  code: string,
+  jsValue: any,
+  type: string
+): SuccessfulCompilationResult {
+  return {
+    kind: "success",
+    code,
+    jsValue,
+    type
+  };
+}
+
+function suggestion(functionName: string, example: string): Suggestion {
+  return {
+    functionName,
+    example
+  };
+}
 
 test("(+)", () => {
   expect(
-    orderedSuggest(
-      [
-        {
-          kind: "success",
-          code: "1",
-          jsValue: 1,
-          type: "int"
-        },
-        {
-          kind: "success",
-          code: "3",
-          jsValue: 3,
-          type: "int"
-        }
-      ],
-      {
-        kind: "success",
-        code: "4",
-        jsValue: 4,
-        type: "int"
-      }
-    ).map(r => r.functionName)
-  ).toEqual(["(+)"]);
+    orderedSuggest([cr("1", 1, "int"), cr("3", 3, "int")], cr("4", 4, "int"))
+  ).toEqual([suggestion("(+)", "1 + 3 == 4")]);
 });

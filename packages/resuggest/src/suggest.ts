@@ -1,9 +1,9 @@
 import {
   CompilationResult,
-  AstFunctionType,
   AstTypeKind,
   AstType,
-  SuccessfulCompilationResult
+  SuccessfulCompilationResult,
+  Suggestion
 } from "./types";
 
 import parseType from "./parseType";
@@ -14,6 +14,7 @@ import reasonExpToJs from "./reasonExpToJs";
 import uniquePermutations from "./uniquePermutations";
 import flatten from "./flatten";
 import * as db from "./generated/db.js";
+import makeExample from "./makeExample";
 
 var compilationCache = new Map();
 
@@ -51,7 +52,7 @@ export function makeAstFunctionType(
 export function orderedSuggest(
   inputs: SuccessfulCompilationResult[],
   output: SuccessfulCompilationResult
-) {
+): Suggestion[] {
   const expectedFunctionType = makeAstFunctionType(inputs, output);
   const reasonInputs = inputs.map(i => i.jsValue);
   const functionsWithMatchingSignature = flatten(
@@ -75,8 +76,7 @@ export function orderedSuggest(
     .map(([_func, name]) => name)
     .map(functionName => ({
       functionName,
-      inputs,
-      output
+      example: makeExample(functionName, inputs, output)
     }));
 }
 
@@ -98,6 +98,17 @@ function filterValidCompilationResults(
   ) as SuccessfulCompilationResult[];
 }
 
+function suggestFromCompilationsResults(
+  inputs: SuccessfulCompilationResult[],
+  output: SuccessfulCompilationResult
+) {
+  return flatten(
+    uniquePermutations(inputs).map(permutedInputs =>
+      orderedSuggest(permutedInputs, output)
+    )
+  );
+}
+
 export default function suggest(inputs: string[], output: string) {
   const compiledInputs = inputs.map(memoizedReasonExpToJs);
   const compiledOutput = memoizedReasonExpToJs(output);
@@ -115,10 +126,6 @@ export default function suggest(inputs: string[], output: string) {
   return {
     inputs: compiledInputs,
     output: compiledOutput,
-    suggestions: flatten(
-      uniquePermutations(validInputs).map(permutedInputs =>
-        orderedSuggest(permutedInputs, validOuput)
-      )
-    )
+    suggestions: suggestFromCompilationsResults(validInputs, validOuput)
   };
 }

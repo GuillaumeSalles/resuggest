@@ -21,6 +21,11 @@ export type CompilationResult =
   | FailedCompilationResult
   | EmptyCompilationResult;
 
+export type Suggestion = {
+  functionName: string;
+  example: string;
+};
+
 export enum AstTypeKind {
   Simple,
   Array,
