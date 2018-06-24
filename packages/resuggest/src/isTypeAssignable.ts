@@ -55,5 +55,5 @@ export default function isTypeAssignable(left, right, genericsMap = {}) {
     );
   }
 
-  throw new Error("Unsupported type kind", left.kind);
+  throw new Error(`Unsupported type kind ${left.kind}`);
 }

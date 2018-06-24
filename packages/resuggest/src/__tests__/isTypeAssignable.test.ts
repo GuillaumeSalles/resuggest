@@ -1,6 +1,6 @@
-import isTypeAssignable from "./isTypeAssignable";
-import typeKinds from "./typeKinds";
-import parseType from "./parseType";
+import isTypeAssignable from "../isTypeAssignable";
+import typeKinds from "../typeKinds";
+import parseType from "../parseType";
 
 function testCase(left, right, result) {
   test(`${right} should ${

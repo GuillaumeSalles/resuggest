@@ -1,6 +1,6 @@
 const functions = require("./functions");
-require("../public/bsReasonReact");
-const { printML, parseRE } = require("../public/refmt");
+require("../../../public/bsReasonReact");
+const { printML, parseRE } = require("../../../public/refmt");
 var fs = require("fs");
 
 function compileReason(reason) {

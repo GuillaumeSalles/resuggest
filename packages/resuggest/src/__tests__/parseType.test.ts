@@ -2,8 +2,8 @@ import parseType, {
   createPostfixExpression,
   tokenStream,
   tokenKinds
-} from "./parseType";
-import typeKinds from "./typeKinds";
+} from "../parseType";
+import typeKinds from "../typeKinds";
 
 describe("createPostfixExpression", () => {
   it("should parse int * string -> int", () => {

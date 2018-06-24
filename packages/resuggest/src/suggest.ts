@@ -1,13 +1,12 @@
 import parseType from "./parseType";
 import typeKinds from "./typeKinds";
 import isTypeAssignable from "./isTypeAssignable";
-import { caml_equal } from "bs-platform/lib/js/caml_obj";
-import $$Array from "bs-platform/lib/js/array.js";
+import { caml_equal } from "../node_modules/bs-platform/lib/js/caml_obj";
+import * as $$Array from "../node_modules/bs-platform/lib/js/array.js";
 import reasonExpToJs from "./reasonExpToJs";
 import uniquePermutations from "./uniquePermutations";
 import flatten from "./flatten";
-
-const db = require("./generated/db.js");
+import * as db from "./generated/db.js";
 
 var compilationCache = new Map();
 

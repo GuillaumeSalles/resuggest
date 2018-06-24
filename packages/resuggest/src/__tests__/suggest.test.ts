@@ -1,4 +1,4 @@
-import { orderedSuggest } from "./suggest";
+import { orderedSuggest } from "../suggest";
 
 test("(+)", () => {
   expect(

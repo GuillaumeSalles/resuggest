@@ -4,8 +4,8 @@ function wrapInExports(code) {
 
 function compileReason(reason) {
   try {
-    const ocaml = window.printML(window.parseRE(reason));
-    return window.ocaml.compile(ocaml);
+    const ocaml = (<any>window).printML((<any>window).parseRE(reason));
+    return (<any>window).ocaml.compile(ocaml);
   } catch (er) {
     return {
       text: er.message
@@ -39,10 +39,10 @@ function reasonExpToJs(reasonExp) {
   const reasonCode = `let exp = ${reasonExp};`;
   const compilationResult = compileReason(reasonCode);
   if (compilationResult.js_code) {
-    window.eval(wrapInExports(compilationResult.js_code));
+    (<any>window).eval(wrapInExports(compilationResult.js_code));
     return {
       code: reasonExp,
-      jsValue: window.exports.exp,
+      jsValue: (<any>window).exports.exp,
       type: guessType(reasonExp),
       error: null
     };
