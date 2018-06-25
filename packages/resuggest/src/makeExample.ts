@@ -1,4 +1,4 @@
-import { ValidCompilationResult } from "./types";
+import { ValidCompilationResult, CompiledInput, AstTypeKind } from "./types";
 
 function functionNameToDisplayUsage(name: string) {
   if (name[0] === "(") {
@@ -8,53 +8,35 @@ function functionNameToDisplayUsage(name: string) {
   return name;
 }
 
-function renderBasicFunctionUsage(
-  functionName: string,
-  inputs: ValidCompilationResult[],
-  output: ValidCompilationResult
-) {
+function comparison(a: string, b: string): string {
+  return `${a} == ${b}`;
+}
+
+function functionCallWithNInputs(functionName: string, inputs: string[]) {
   return (
     functionNameToDisplayUsage(functionName) +
     "(" +
-    inputs
-      .map(i => i.code.trim())
-      .join(", ")
-      .concat(") == ")
-      .concat(output.code.trim())
+    inputs.join(", ").concat(")")
   );
 }
 
-function renderOperatorWith1Arg(
-  functionName: string,
-  inputs: ValidCompilationResult[],
-  output: ValidCompilationResult
-) {
-  return `${functionNameToDisplayUsage(
-    functionName
-  )} ${inputs[0].code.trim()} == ${output.code.trim()}`;
+function applyOperatorWithOneInput(functionName: string, input: string) {
+  return `${functionNameToDisplayUsage(functionName)} ${input}`;
 }
 
-function renderOperatorWith2Args(
-  functionName: string,
-  inputs: ValidCompilationResult[],
-  output: ValidCompilationResult
-) {
-  return `${inputs[0].code.trim()} ${functionNameToDisplayUsage(
-    functionName
-  )} ${inputs[1].code.trim()} == ${output.code.trim()}`;
+function applyOperatorWithTwoInputs(functionName: string, inputs: string[]) {
+  return `${inputs[0]} ${functionNameToDisplayUsage(functionName)} ${
+    inputs[1]
+  }`;
 }
 
-export default function makeExample(
-  functionName: string,
-  inputs: ValidCompilationResult[],
-  output: ValidCompilationResult
-): string {
+function functionCall(functionName: string, inputs: string[]): string {
   switch (functionName) {
     case "(~-)":
     case "(~+)":
     case "(~-.)":
     case "(~+.)":
-      return renderOperatorWith1Arg(functionName, inputs, output);
+      return applyOperatorWithOneInput(functionName, inputs[0]);
     case "(+)":
     case "(-)":
     case "(*)":
@@ -85,8 +67,70 @@ export default function makeExample(
     case "(*.)":
     case "(/.)":
     case "(**)":
-      return renderOperatorWith2Args(functionName, inputs, output);
+      return applyOperatorWithTwoInputs(functionName, inputs);
     default:
-      return renderBasicFunctionUsage(functionName, inputs, output);
+      return functionCallWithNInputs(functionName, inputs);
   }
+}
+
+function wrapWithJsLog(str: string) {
+  return `Js.log(${str}); /* true */`;
+}
+
+function assignment(argName: string, value: string): string {
+  return `let ${argName} = ${value};`;
+}
+
+function assignmentsForInputsWithMutation(inputs: CompiledInput[]) {
+  return inputs
+    .map((input, index) => {
+      if (input.expectedMutation === null) {
+        return null;
+      }
+      return assignment("arg" + (index + 1), input.expression.code);
+    })
+    .filter(str => str !== null);
+}
+
+function inputsOrPreviousAssigments(inputs: CompiledInput[]) {
+  return inputs.map((input, index) => {
+    if (input.expectedMutation === null) {
+      return input.expression.code;
+    } else {
+      return "arg" + (index + 1);
+    }
+  });
+}
+
+function compareExpectedMutation(inputs: CompiledInput[]) {
+  return inputs
+    .map((input, index) => {
+      if (input.expectedMutation === null) {
+        return null;
+      }
+      return wrapWithJsLog(
+        comparison("arg" + (index + 1), input.expectedMutation.code)
+      );
+    })
+    .filter(str => str !== null);
+}
+
+export default function makeExample(
+  functionName: string,
+  inputs: CompiledInput[],
+  output: ValidCompilationResult
+): string {
+  const assignments = assignmentsForInputsWithMutation(inputs);
+  let fnCall = functionCall(functionName, inputsOrPreviousAssigments(inputs));
+
+  if (output.type.kind !== AstTypeKind.Unit) {
+    fnCall = wrapWithJsLog(comparison(fnCall, output.code));
+  } else {
+    fnCall = fnCall + ";";
+  }
+
+  return assignments
+    .concat(fnCall)
+    .concat(compareExpectedMutation(inputs))
+    .join("\n");
 }

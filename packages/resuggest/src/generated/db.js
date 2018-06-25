@@ -1400,18 +1400,31 @@ var f61 = /* tuple */[
 
 var f62_001 = /* :: */[
   /* tuple */[
+    Caml_array.caml_array_set,
+    "Array.set"
+  ],
+  /* [] */0
+];
+
+var f62 = /* tuple */[
+  "'a array -> int -> 'a -> unit",
+  f62_001
+];
+
+var f63_001 = /* :: */[
+  /* tuple */[
     Caml_array.caml_make_vect,
     "Array.make"
   ],
   /* [] */0
 ];
 
-var f62 = /* tuple */[
+var f63 = /* tuple */[
   "int -> 'a -> 'a array",
-  f62_001
+  f63_001
 ];
 
-var f63_001 = /* :: */[
+var f64_001 = /* :: */[
   /* tuple */[
     $$Array.init,
     "Array.init"
@@ -1419,12 +1432,12 @@ var f63_001 = /* :: */[
   /* [] */0
 ];
 
-var f63 = /* tuple */[
+var f64 = /* tuple */[
   "int -> (int -> 'a) -> 'a array",
-  f63_001
+  f64_001
 ];
 
-var f64_001 = /* :: */[
+var f65_001 = /* :: */[
   /* tuple */[
     $$Array.make_matrix,
     "Array.make_matrix"
@@ -1432,12 +1445,12 @@ var f64_001 = /* :: */[
   /* [] */0
 ];
 
-var f64 = /* tuple */[
+var f65 = /* tuple */[
   "int -> int -> 'a -> 'a array array",
-  f64_001
+  f65_001
 ];
 
-var f65_001 = /* :: */[
+var f66_001 = /* :: */[
   /* tuple */[
     $$Array.append,
     "Array.append"
@@ -1445,12 +1458,12 @@ var f65_001 = /* :: */[
   /* [] */0
 ];
 
-var f65 = /* tuple */[
+var f66 = /* tuple */[
   "'a array -> 'a array -> 'a array",
-  f65_001
+  f66_001
 ];
 
-var f66_001 = /* :: */[
+var f67_001 = /* :: */[
   /* tuple */[
     $$Array.concat,
     "Array.concat"
@@ -1458,12 +1471,12 @@ var f66_001 = /* :: */[
   /* [] */0
 ];
 
-var f66 = /* tuple */[
+var f67 = /* tuple */[
   "'a array list -> 'a array",
-  f66_001
+  f67_001
 ];
 
-var f67_001 = /* :: */[
+var f68_001 = /* :: */[
   /* tuple */[
     $$Array.sub,
     "Array.sub"
@@ -1471,12 +1484,12 @@ var f67_001 = /* :: */[
   /* [] */0
 ];
 
-var f67 = /* tuple */[
+var f68 = /* tuple */[
   "'a array -> int -> int -> 'a array",
-  f67_001
+  f68_001
 ];
 
-var f68_001 = /* :: */[
+var f69_001 = /* :: */[
   /* tuple */[
     $$Array.copy,
     "Array.copy"
@@ -1484,12 +1497,12 @@ var f68_001 = /* :: */[
   /* [] */0
 ];
 
-var f68 = /* tuple */[
+var f69 = /* tuple */[
   "'a array -> 'a array",
-  f68_001
+  f69_001
 ];
 
-var f69_001 = /* :: */[
+var f70_001 = /* :: */[
   /* tuple */[
     $$Array.to_list,
     "Array.to_list"
@@ -1497,12 +1510,12 @@ var f69_001 = /* :: */[
   /* [] */0
 ];
 
-var f69 = /* tuple */[
+var f70 = /* tuple */[
   "'a array -> 'a list",
-  f69_001
+  f70_001
 ];
 
-var f70_001 = /* :: */[
+var f71_001 = /* :: */[
   /* tuple */[
     $$Array.of_list,
     "Array.of_list"
@@ -1510,12 +1523,12 @@ var f70_001 = /* :: */[
   /* [] */0
 ];
 
-var f70 = /* tuple */[
+var f71 = /* tuple */[
   "'a list -> 'a array",
-  f70_001
+  f71_001
 ];
 
-var f71_001 = /* :: */[
+var f72_001 = /* :: */[
   /* tuple */[
     $$Array.map,
     "Array.map"
@@ -1523,12 +1536,12 @@ var f71_001 = /* :: */[
   /* [] */0
 ];
 
-var f71 = /* tuple */[
+var f72 = /* tuple */[
   "('a -> 'b) -> 'a array -> 'b array",
-  f71_001
+  f72_001
 ];
 
-var f72_001 = /* :: */[
+var f73_001 = /* :: */[
   /* tuple */[
     $$Array.mapi,
     "Array.mapi"
@@ -1536,12 +1549,12 @@ var f72_001 = /* :: */[
   /* [] */0
 ];
 
-var f72 = /* tuple */[
+var f73 = /* tuple */[
   "(int -> 'a -> 'b) -> 'a array -> 'b array",
-  f72_001
+  f73_001
 ];
 
-var f73_001 = /* :: */[
+var f74_001 = /* :: */[
   /* tuple */[
     $$Array.fold_left,
     "Array.fold_left"
@@ -1549,12 +1562,12 @@ var f73_001 = /* :: */[
   /* [] */0
 ];
 
-var f73 = /* tuple */[
+var f74 = /* tuple */[
   "('a -> 'b -> 'a) -> 'a -> 'b array -> 'a",
-  f73_001
+  f74_001
 ];
 
-var f74_001 = /* :: */[
+var f75_001 = /* :: */[
   /* tuple */[
     $$Array.fold_right,
     "Array.fold_right"
@@ -1562,12 +1575,12 @@ var f74_001 = /* :: */[
   /* [] */0
 ];
 
-var f74 = /* tuple */[
+var f75 = /* tuple */[
   "('a -> 'b -> 'b) -> 'a array -> 'b -> 'b",
-  f74_001
+  f75_001
 ];
 
-var f75_001 = /* :: */[
+var f76_001 = /* :: */[
   /* tuple */[
     Caml_array.caml_make_float_vect,
     "Array.make_float"
@@ -1575,9 +1588,9 @@ var f75_001 = /* :: */[
   /* [] */0
 ];
 
-var f75 = /* tuple */[
+var f76 = /* tuple */[
   "int -> float array",
-  f75_001
+  f76_001
 ];
 
 exports.f0 = f0;
@@ -1656,4 +1669,5 @@ exports.f72 = f72;
 exports.f73 = f73;
 exports.f74 = f74;
 exports.f75 = f75;
+exports.f76 = f76;
 /* No side effect */

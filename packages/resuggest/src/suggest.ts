@@ -38,6 +38,42 @@ export function makeAstFunctionType(
   };
 }
 
+function prepareInputValues(inputs: CompiledInput[]): any[] {
+  return inputs.map(i => {
+    if (i.expectedMutation !== null) {
+      // If mutation is expected, we assume jsValue is an array so we clone it
+      return i.expectedMutation.jsValue.slice(0);
+    } else {
+      return i.expression.jsValue;
+    }
+  });
+}
+
+function doesFunctionPassExample(
+  func: Function,
+  inputs: CompiledInput[],
+  output: ValidCompilationResult
+): boolean {
+  try {
+    const preparedInputs = prepareInputValues(inputs);
+    const expectedOutput = output.jsValue;
+    const actualOutput = func.apply(null, preparedInputs);
+    const areOutputsEqual = caml_equal(actualOutput, expectedOutput) === true;
+    const areMutationsCorrect = preparedInputs.every((input, index) => {
+      if (inputs[index].expectedMutation === null) {
+        return caml_equal(input, inputs[index].expression.jsValue) === true;
+      } else {
+        return (
+          caml_equal(input, inputs[index].expectedMutation.jsValue) === true
+        );
+      }
+    });
+    return areOutputsEqual && areMutationsCorrect;
+  } catch (ex) {
+    return false;
+  }
+}
+
 export function orderedSuggest(
   inputs: CompiledInput[],
   output: ValidCompilationResult
@@ -46,7 +82,7 @@ export function orderedSuggest(
     inputs.map(i => i.expression.type),
     output.type
   );
-  const reasonInputs = inputs.map(i => i.expression.jsValue);
+
   const functionsWithMatchingSignature = flatten(
     astTypeToFunctionPairs
       .filter(([ast, funcs]) => {
@@ -57,26 +93,27 @@ export function orderedSuggest(
 
   return functionsWithMatchingSignature
     .filter(([func, _name]) => {
-      try {
-        return (
-          caml_equal(func.apply(null, reasonInputs), output.jsValue) === true
-        );
-      } catch (ex) {
-        return false;
-      }
+      return doesFunctionPassExample(func, inputs, output);
     })
     .map(([_func, name]) => name)
     .map(functionName => ({
       functionName,
-      example: makeExample(functionName, inputs.map(i => i.expression), output)
+      example: makeExample(functionName, inputs, output)
     }));
 }
 
-function validCompilationResultOrNull(
-  compilationResult: CompilationResult
+function validateOutput(
+  output: CompilationResult
 ): ValidCompilationResult | null {
-  if (compilationResult.kind === "valid") {
-    return compilationResult;
+  if (output.kind === "valid") {
+    return output;
+  } else if (output.kind === "empty") {
+    return {
+      kind: "valid",
+      code: "",
+      type: { kind: AstTypeKind.Unit },
+      jsValue: 0
+    };
   } else {
     return null;
   }
@@ -104,7 +141,7 @@ export default function suggest(
   }>,
   output: CompilationResult
 ) {
-  const validOuput = validCompilationResultOrNull(output);
+  const validOuput = validateOutput(output);
   const validInputs = filterValidInputs(inputs);
 
   if (validInputs.length === 0 || validOuput === null) {

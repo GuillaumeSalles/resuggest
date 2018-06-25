@@ -164,6 +164,7 @@ module.exports = [
 
   "Array.length",
   "Array.get",
+  "Array.set",
   "Array.make",
   "Array.init",
   "Array.make_matrix",
