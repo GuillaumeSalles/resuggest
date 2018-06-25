@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 const { JSDOM } = require("jsdom");
-const functions = require("./functions");
+const functions = require("../packages/resuggest/scripts/functions");
 const functionNameToReasonApiAnchorId = require("../src/functionNameToReasonApiAnchorId");
 
 function makeFnToDocMap(functionNameAndDocTuples) {

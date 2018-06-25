@@ -172,11 +172,16 @@ module.exports = [
   "Array.concat",
   "Array.sub",
   "Array.copy",
+  // "Array.fill",
+  // "Array.blit",
   "Array.to_list",
   "Array.of_list",
   "Array.map",
   "Array.mapi",
   "Array.fold_left",
   "Array.fold_right",
-  "Array.make_float"
+  "Array.make_float",
+  "Array.sort",
+  "Array.stable_sort",
+  "Array.fast_sort"
 ];

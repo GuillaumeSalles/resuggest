@@ -1593,6 +1593,31 @@ var f76 = /* tuple */[
   f76_001
 ];
 
+var f77_001 = /* :: */[
+  /* tuple */[
+    $$Array.sort,
+    "Array.sort"
+  ],
+  /* :: */[
+    /* tuple */[
+      $$Array.stable_sort,
+      "Array.stable_sort"
+    ],
+    /* :: */[
+      /* tuple */[
+        $$Array.fast_sort,
+        "Array.fast_sort"
+      ],
+      /* [] */0
+    ]
+  ]
+];
+
+var f77 = /* tuple */[
+  "('a -> 'a -> int) -> 'a array -> unit",
+  f77_001
+];
+
 exports.f0 = f0;
 exports.f1 = f1;
 exports.f2 = f2;
@@ -1670,4 +1695,5 @@ exports.f73 = f73;
 exports.f74 = f74;
 exports.f75 = f75;
 exports.f76 = f76;
+exports.f77 = f77;
 /* No side effect */

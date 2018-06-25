@@ -549,6 +549,14 @@ Return the length (number of elements) of the given array.<br>
 
    Raise <code class="code">Invalid_argument "index out of bounds"</code>
    if <code class="code">n</code> is outside the range 0 to <code class="code">(Array.length a - 1)</code>.<br>
+</p>`],["Array.set",`
+<code class="code">Array.set a n x</code> modifies array <code class="code">a</code> in place, replacing
+   element number <code class="code">n</code> with <code class="code">x</code>.
+   You can also write <code class="code">a.(n) &lt;- x</code> instead of <code class="code">Array.set a n x</code>.
+<p>
+
+   Raise <code class="code">Invalid_argument "index out of bounds"</code>
+   if <code class="code">n</code> is outside the range 0 to <code class="code">Array.length a - 1</code>.<br>
 </p>`],["Array.make",`
 <code class="code">Array.make n x</code> returns a fresh array of length <code class="code">n</code>,
    initialized with <code class="code">x</code>.
@@ -627,6 +635,47 @@ Same as <a href="https://reasonml.github.io/api/Array.html#VALmap" target="_blan
 <code class="code">Array.make_float n</code> returns a fresh float array of length <code class="code">n</code>,
     with uninitialized data.<br>
 <b>Since</b> 4.02<br>
+`],["Array.sort",`
+Sort an array in increasing order according to a comparison
+   function.  The comparison function must return 0 if its arguments
+   compare as equal, a positive integer if the first is greater,
+   and a negative integer if the first is smaller (see below for a
+   complete specification).  For example, <a href="https://reasonml.github.io/api/Pervasives.html#VALcompare" target="_blank"><code class="code">Pervasives.compare</code></a> is
+   a suitable comparison function, provided there are no floating-point
+   NaN values in the data.  After calling <code class="code">Array.sort</code>, the
+   array is sorted in place in increasing order.
+   <code class="code">Array.sort</code> is guaranteed to run in constant heap space
+   and (at most) logarithmic stack space.
+<p>
+
+   The current implementation uses Heap Sort.  It runs in constant
+   stack space.
+</p><p>
+
+   Specification of the comparison function:
+   Let <code class="code">a</code> be the array and <code class="code">cmp</code> the comparison function.  The following
+   must be true for all x, y, z in a :</p><ul>
+<li>  <code class="code">cmp x y</code> &gt; 0 if and only if <code class="code">cmp y x</code> &lt; 0</li>
+<li>  if <code class="code">cmp x y</code> &gt;= 0 and <code class="code">cmp y z</code> &gt;= 0 then <code class="code">cmp x z</code> &gt;= 0</li>
+</ul>
+
+   When <code class="code">Array.sort</code> returns, <code class="code">a</code> contains the same elements as before,
+   reordered in such a way that for all i and j valid indices of <code class="code">a</code> :<ul>
+<li>  <code class="code">cmp a.(i) a.(j)</code> &gt;= 0 if and only if i &gt;= j</li>
+</ul>
+<br>
+`],["Array.stable_sort",`
+Same as <a href="https://reasonml.github.io/api/Array.html#VALsort" target="_blank"><code class="code">Array.sort</code></a>, but the sorting algorithm is stable (i.e.
+   elements that compare equal are kept in their original order) and
+   not guaranteed to run in constant heap space.
+<p>
+
+   The current implementation uses Merge Sort. It uses <code class="code">n/2</code>
+   words of heap space, where <code class="code">n</code> is the length of the array.
+   It is usually faster than the current implementation of <a href="https://reasonml.github.io/api/Array.html#VALsort" target="_blank"><code class="code">Array.sort</code></a>.<br>
+</p>`],["Array.fast_sort",`
+Same as <a href="https://reasonml.github.io/api/Array.html#VALsort" target="_blank"><code class="code">Array.sort</code></a> or <a href="https://reasonml.github.io/api/Array.html#VALstable_sort" target="_blank"><code class="code">Array.stable_sort</code></a>, whichever is faster
+    on typical input.<br>
 `]
 ]);
 

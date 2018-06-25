@@ -57,7 +57,7 @@ main {
   margin: 15px;
   display: grid;
   grid-gap: 40px;
-  grid-template-columns: 395px auto;
+  grid-template-columns: 325px auto;
   grid-auto-columns: minmax(500px, auto);
 }
 
