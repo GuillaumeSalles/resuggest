@@ -1,5 +1,3 @@
-import { ValidCompilationResult, CompiledInput } from "./types";
-
 function permutator<T>(inputArr: T[]): T[][] {
   let result: T[][] = [];
   const permute = (arr: T[], m: T[] = []) => {
@@ -17,28 +15,16 @@ function permutator<T>(inputArr: T[]): T[][] {
   return result;
 }
 
-function makeKeyMap(inputs: CompiledInput[]): Map<string, number> {
-  let p2 = [1, 2, 4, 8];
-  let map = new Map();
-
-  for (let input of inputs) {
-    if (!map.has(input.expression.code)) {
-      map.set(input.expression.code, p2.pop());
-    }
-  }
-
-  return map;
-}
-
-function computeKey(
-  inputs: CompiledInput[],
+function computeKey<T>(
+  inputs: T[],
+  keySelector: (input: T) => string,
   keyMap: Map<string, number>
 ): number {
   var result = 0;
   for (let input of inputs) {
-    const value = keyMap.get(input.expression.code);
+    const value = keyMap.get(keySelector(input));
     if (value === undefined) {
-      throw new Error(`Key map does not contains ${input.expression.code}`);
+      throw new Error(`Key map does not contains ${keySelector(input)}`);
     }
     result += value;
   }
@@ -48,9 +34,10 @@ function computeKey(
 // Weird way to compute unique permutations but
 // that's the first idea that came to my brain ¯\_(ツ)_/¯
 // Todo: Handle input with mutation
-export default function uniquePermutations(
-  inputs: CompiledInput[]
-): CompiledInput[][] {
+export default function uniquePermutations<T>(
+  inputs: T[],
+  keySelector: (input: T) => string
+): T[][] {
   if (inputs.length === 0) {
     return [];
   }
@@ -59,14 +46,11 @@ export default function uniquePermutations(
     return [inputs];
   }
 
-  let keyMap = makeKeyMap(inputs);
-
   let uniquePermutations = [];
   let generatedKeys = new Set();
 
   for (let permutation of permutator(inputs)) {
-    let key = computeKey(permutation, keyMap);
-
+    let key = permutation.map(keySelector).join(",");
     if (!generatedKeys.has(key)) {
       generatedKeys.add(key);
       uniquePermutations.push(permutation);

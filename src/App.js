@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import Tooltip from "rc-tooltip";
 import "./App.css";
 import InputsForm from "./InputsForm";
+import ExpectedMutations from "./ExpectedMutations";
 import debounce from "./debounce";
 import ReasonExpressionInput from "./ReasonExpressionInput";
 import suggest from "resuggest";
@@ -11,7 +13,17 @@ import functionNameToReasonApiAnchorId from "./functionNameToReasonApiAnchorId";
 function safeSuggest(inputs, output) {
   try {
     return suggest(
-      inputs.map(input => ({ code: input, expectedMutation: null })),
+      inputs.map(input => {
+        return {
+          code: input.expression.code,
+          expectedMutation:
+            input.expression.type &&
+            input.expression.type.kind === 1 &&
+            input.expectedMutation.code.trim().length > 0
+              ? input.expectedMutation.code
+              : null
+        };
+      }),
       output
     );
   } catch (er) {
@@ -101,7 +113,7 @@ function renderSuggestion(suggestion) {
 function makePlaygroundLink(suggestion) {
   return (
     "https://reasonml.github.io/en/try.html?rrjsx=true&reason=" +
-    lzString.compressToEncodedURIComponent(`Js.log(${suggestion.example})`)
+    lzString.compressToEncodedURIComponent(suggestion.example)
   );
 }
 
@@ -118,15 +130,34 @@ function renderPlaygroundLink(suggestion) {
   );
 }
 
+function emptyExpression() {
+  return {
+    code: "",
+    error: null
+  };
+}
+
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
       inputs: [
-        { code: '"Hello World"', error: null },
-        { code: "", error: null },
-        { code: "", error: null }
+        {
+          expression: {
+            code: '"Hello World"',
+            error: null
+          },
+          expectedMutation: emptyExpression()
+        },
+        {
+          expression: emptyExpression(),
+          expectedMutation: emptyExpression()
+        },
+        {
+          expression: emptyExpression(),
+          expectedMutation: emptyExpression()
+        }
       ],
       output: { code: '"HELLO WORLD"', error: null },
       suggestions: null,
@@ -160,11 +191,15 @@ class App extends Component {
     );
   };
 
-  suggest = debounce((newInputs, newOutput) => {
+  suggest = debounce((newInputs, newOutput, newMutations) => {
     const t0 = performance.now();
-    const result = safeSuggest(newInputs.map(n => n.code), newOutput.code);
+    const result = safeSuggest(newInputs, newOutput.code);
     this.setState({
-      inputs: result.inputs,
+      inputs: result.inputs.map((input, index) => ({
+        ...input,
+        expectedMutation:
+          input.expectedMutation || newInputs[index].expectedMutation
+      })),
       output: result.output,
       suggestions: result.suggestions,
       duration: performance.now() - t0
@@ -204,6 +239,31 @@ class App extends Component {
               code={this.state.output.code}
               error={this.state.output.error}
               onChange={this.onOutputChange}
+            />
+            <div className="desired-mutations-title-container">
+              <h4>Desired Mutations</h4>
+              <div className="desired-mutations-help-icon">
+                <svg
+                  data-tip="hello world"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                </svg>
+                <div className="desired-mutations-help-tooltip">
+                  Some functions do not return anything, instead they mutate can
+                  their inputs (E.g. Array.set). If you are looking for a
+                  function that mutates arguments, provide arguments with a
+                  mutable type (E.g. array).
+                </div>
+              </div>
+            </div>
+            <ExpectedMutations
+              inputs={this.state.inputs}
+              onChange={this.onInputsChange}
             />
           </section>
           <section>

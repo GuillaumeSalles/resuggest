@@ -24,7 +24,7 @@ export default function(inputs: Input[], output: string) {
   }));
   const compiledOutput = memoizedReasonExpToJs(output);
   return {
-    inputs: compiledInputs.map(i => i.expression),
+    inputs: compiledInputs,
     output: compiledOutput,
     suggestions: suggest(compiledInputs, compiledOutput)
   };

@@ -38,9 +38,9 @@ pre {
 }
 
 input {
-  width: 300px;
+  width: 250px;
   margin-bottom: 10px;
-  padding: 10px 20px;
+  padding: 8px 16px;
   background: #333;
   border: 2px solid #db4d3f;
   transition: all 0.2s ease;
@@ -48,7 +48,7 @@ input {
   border-radius: 5px;
   line-height: 1.8em;
   font-family: monospace;
-  font-size: 19px;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
   -webkit-font-smoothing: antialiased;
 }
@@ -80,6 +80,42 @@ section {
 .app-description {
   margin: 0 15px;
   font-style: italic;
+}
+
+.info {
+  margin: 5px 0;
+  font-style: italic;
+}
+
+.desired-mutations-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.desired-mutations-help-icon {
+  position: relative;
+  display: inline-block;
+  margin: 6px;
+  fill: #333;
+}
+
+.desired-mutations-help-icon .desired-mutations-help-tooltip {
+  visibility: hidden;
+  width: 300px;
+  background-color: #333;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+  padding: 8px 16px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  left: 30px;
+  top: 0px;
+}
+
+.desired-mutations-help-icon:hover .desired-mutations-help-tooltip {
+  visibility: visible;
 }
 
 .logo {

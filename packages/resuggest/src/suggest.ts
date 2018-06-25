@@ -42,7 +42,7 @@ function prepareInputValues(inputs: CompiledInput[]): any[] {
   return inputs.map(i => {
     if (i.expectedMutation !== null) {
       // If mutation is expected, we assume jsValue is an array so we clone it
-      return i.expectedMutation.jsValue.slice(0);
+      return i.expression.jsValue.slice(0);
     } else {
       return i.expression.jsValue;
     }
@@ -59,7 +59,7 @@ function doesFunctionPassExample(
     const expectedOutput = output.jsValue;
     const actualOutput = func.apply(null, preparedInputs);
     const areOutputsEqual = caml_equal(actualOutput, expectedOutput) === true;
-    const areMutationsCorrect = preparedInputs.every((input, index) => {
+    const mutationsEqualityResult = preparedInputs.map((input, index) => {
       if (inputs[index].expectedMutation === null) {
         return caml_equal(input, inputs[index].expression.jsValue) === true;
       } else {
@@ -68,7 +68,7 @@ function doesFunctionPassExample(
         );
       }
     });
-    return areOutputsEqual && areMutationsCorrect;
+    return areOutputsEqual && mutationsEqualityResult.every(r => r);
   } catch (ex) {
     return false;
   }
@@ -144,13 +144,18 @@ export default function suggest(
   const validOuput = validateOutput(output);
   const validInputs = filterValidInputs(inputs);
 
-  if (validInputs.length === 0 || validOuput === null) {
+  if (
+    validInputs.length === 0 ||
+    validOuput === null ||
+    (validOuput.type.kind === AstTypeKind.Unit &&
+      validInputs.every(i => i.expectedMutation === null))
+  ) {
     return [];
   }
 
   return flatten(
-    uniquePermutations(validInputs).map(permutedInputs =>
-      orderedSuggest(permutedInputs, validOuput)
+    uniquePermutations(validInputs, input => input.expression.code).map(
+      permutedInputs => orderedSuggest(permutedInputs, validOuput)
     )
   );
 }
