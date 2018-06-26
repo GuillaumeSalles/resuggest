@@ -67,6 +67,7 @@ function functionCall(functionName: string, inputs: string[]): string {
     case "(*.)":
     case "(/.)":
     case "(**)":
+    case "(++)":
       return applyOperatorWithTwoInputs(functionName, inputs);
     default:
       return functionCallWithNInputs(functionName, inputs);
