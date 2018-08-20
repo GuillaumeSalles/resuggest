@@ -1,5 +1,7 @@
 # [resuggest](https://GuillaumeSalles.github.io/resuggest)
 
+![Blazing Fast](https://img.shields.io/badge/speed-blazing%20%F0%9F%94%A5-brightgreen.svg)
+ 
 ![resuggest screenshot](https://github.com/GuillaumeSalles/resuggest/blob/master/docs/example.png?raw=true)
 
 Discover [Reason](https://reasonml.github.io/) functions based on examples. You supply some arguments and the desired output, then it makes suggestions.
